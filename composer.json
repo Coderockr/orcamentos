@@ -1,0 +1,16 @@
+{
+    "name": "eminetto/silex-sample",
+    "description": "Silex sample",
+    "require": {
+        "silex/silex": "1.0.*",
+        "symfony/http-kernel": "*",
+        "symfony/browser-kit": "*",
+        "symfony/console": "*",
+        "doctrine/dbal": "2.2.*",
+        "doctrine/orm": "*",
+        "twig/twig": ">=1.8,<2.0-dev",
+        "symfony/twig-bridge": "2.1.*",
+        "swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev"
+    },
+    "minimum-stability": "dev"
+}

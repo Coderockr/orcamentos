@@ -1,0 +1,30 @@
+{% extends 'index.twig' %}
+{% block content %}
+<h2>Users</h2>
+<table>
+	<tr>
+		<td>Id</td>
+		<td>Name</td>
+		<td>E-mail</td>
+	</tr>
+	{% for user in users %}
+		<tr>
+    		<td>{{ user.id }}</td>
+    		<td>{{ user.name }}</td>
+    		<td>{{ user.email }}</td>
+    	</tr>
+	{% endfor %}
+</table>
+
+
+<h2>Create user</h2>
+<form name="create" id="create" action="/user" method="post">
+	<label>Name</label>
+	<input type="text" name="name">
+	<label>Login</label>
+	<input type="text" name="login">
+	<label>E-mail</label>
+	<input type="text" name="email">
+	<input type="submit" value="Create">
+</form>
+{% endblock %}

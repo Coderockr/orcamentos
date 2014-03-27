@@ -1,0 +1,15 @@
+{
+    "packages": {
+    	"name": "eminetto/silex-sample",
+    	"version": "1.0.0",
+		"dist": {
+	        "url": "https://github.com/eminetto/silex-sample/zipball/master",
+	        "type": "zip"
+		},
+		"source": {
+            "url": "https://github.com/eminetto/silex-sample",
+            "type": "git",
+            "reference": ""
+        }
+    }
+}
