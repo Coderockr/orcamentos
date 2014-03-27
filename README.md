@@ -1,19 +1,5 @@
-#Silex and Doctrine
+#Aplicativo de gerenciamento de Orçamentos
 
-#Install
-
-### Install composer
-	curl -s https://getcomposer.org/installer | php
-### Execute
-
-	php composer.phar create-project -s dev eminetto/silex-sample project_name
-
-### Configure database connection
-	Modify database connection parameters in bootstrap.php
-	Create database
-### Execute
-	./bin/doctrine orm:schema-tool:create
-	
 ### Configure Apache VirtualHost
 
 	<VirtualHost *:80>
