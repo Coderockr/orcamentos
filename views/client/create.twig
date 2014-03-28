@@ -1,0 +1,71 @@
+{% extends "layout.twig" %}
+{% block content %}
+<div id="main" class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h3>Novo Cliente</h4>
+                </div>
+                <div class="col-md-3">
+
+                </div>
+            </div>
+
+            <form class="form">
+                <div class="row">
+                    <div class="col-md-6">
+                            <div>
+                                <label for="nome">Nome</label>
+                                <input type="text" name="nome" id="nome" class="form-control" />
+                            </div>
+                            <div>
+                                <label for="responsavel">Responsável</label>
+                                <input type="text" name="responsavel" id="responsavel" class="form-control" />
+                            </div>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="logo-file" class="photo-upload">
+
+                                        </label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <label for="logo-file">Logotipo</label>
+                                        <div class="input-group form-search">
+                                            <input type="text" name="logo-name" id="logo-name" class="form-control" />
+                                            <input type="file" name="logo-file" id="logo-file" title="Buscar Arquivo" />
+                                            <span class="input-group-btn">
+                                                <button data-type="last" class="btn btn-primary" type="submit">Buscar Arquivo</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-md-6">
+                            <div>
+                                <label for="cnpj">CNPJ</label>
+                                <input type="text" name="cnpj" id="cnpj" class="form-control" />
+                            </div>
+                            <div>
+                                <label for="email">E-mail</label>
+                                <input type="text" name="email" id="email" class="form-control" />
+                            </div>
+                            <div>
+                                <label for="telfone">Telfone</label>
+                                <input type="text" name="telfone" id="telfone" class="form-control" />
+                            </div>
+
+                    </div>
+                </div>
+                <div class="row submit">
+
+                    <div class="col-md-6">
+                        <a href="clients.html" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+{% endblock %}

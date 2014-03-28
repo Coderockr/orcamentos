@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        {% include "header.twig" %}
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <header>
+            <nav class="navbar navbar-custom" role="navigation">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                  <span class="sr-only">Toggle navigation</span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                                </button>
+                                <h1>
+                                    <a href="#">
+                                        <img src="/public/img/logo-coderockr.png" width="100" height="100" />
+                                        <span>Coderockr</span>
+                                        <small>editar</small>
+                                    </a>
+                                </h1>
+                            <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="collapse navbar-collapse">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="/" title="Dashboard" class="current">Painel</a></li>
+                                    <li><a href="#" title="Gerencie seus leads">Leads</a></li>
+                                    <li><a href="/client" title="Gerenice seus clientes">Clientes</a></li>
+                                    <li><a href="/project" title="Gerencie seus projetos">Projetos</a></li>
+                                    <li><a href="#" title="Gerencie sues orçamentos">Orçamentos</a></li>
+                                </ul>
+                            <div class="clearfix"></div>
+                            </div>
+                        </div>
+                </div>
+            </nav>
+        </header>
+        {% block content %}{% endblock %}
+        <footer>
+            <div class="container">
+                <div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span>Sistema de Orçamentos Coderockr</span>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="mailto:suporte@coderockr.com?subject=Sistema de Orçamento" title="Dúvidas? Sugestão? Precisa de Ajuda?">suporte@coderockr.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        {% include "scripts.twig" %}
+    </body>
+</html>

@@ -12,32 +12,13 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 
-//actions
-$app->get('/', function ()  use ($app, $em) {
-	$q = $em->createQuery("select u from Coderockr\Model\User u");
-    $users = $q->getResult();
-	
-    return $app['twig']->render('user.twig', array(
-        'users' => $users
-	));
-});
+// Index Controller / Dashboard
+$app->get('/', 'Orcamentos\Controller\IndexController::index');
 
-$app->post('/user', function() use ($app, $em) {
-    $name = $app['request']->get('name');
-    $login = $app['request']->get('login');
-    $email = $app['request']->get('email');
-    $user = $em->getRepository('Coderockr\Model\User')->findBy(array('login' => $login));
-    if (count($user) == 0) {
-        $user = new Coderockr\Model\User();
-        $user->setName($name);
-        $user->setLogin($login);
-        $user->setEmail($email);
+// Client controller  
+$app->get('/client', 'Orcamentos\Controller\ClientController::index');
+$app->get('/client/create', 'Orcamentos\Controller\ClientController::create');
+$app->get('/client/detail/{client}', 'Orcamentos\Controller\ClientController::detail');
 
-        $em->persist($user);
-        $em->flush();
-        return $app->redirect('/');
-    }
-    return $app['twig']->render('message.twig', array(
-        'message' => 'User exists'
-    ));
-});
+// Project Controller
+$app->get('/project', 'Orcamentos\Controller\ProjectController::index');

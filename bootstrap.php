@@ -10,7 +10,7 @@ use Doctrine\ORM\Tools\Setup,
     Doctrine\Common\ClassLoader;
 
 $loader = require __DIR__.'/vendor/autoload.php';
-$loader->add('Coderockr', __DIR__.'/src');
+$loader->add('Orcamentos', __DIR__.'/src');
 
 //doctrine
 $config = new Configuration();
@@ -39,7 +39,7 @@ $em = EntityManager::create(
     	'port'    => '3306',
     	'user'    => 'root',
 	    'password'  => '',
-    	'dbname'  => 'silex',
+    	'dbname'  => 'orcamentos',
     ),
     $config
 );
