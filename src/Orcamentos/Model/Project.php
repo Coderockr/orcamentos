@@ -150,6 +150,16 @@ class Project
         return $this->client = $client;
     }
 
+    public function getCompany()
+    {
+        return $this->company;
+    }
+    
+    public function setCompany($company)
+    {
+        return $this->company = $company;
+    }
+
     public function getQuoteCollection()
     {
         return $this->quoteCollection;

@@ -12,28 +12,29 @@
             <div class="col-md-3">
             </div>
         </div>
-        <form class="form" action="/client/create" method="POST" enctype="multipart/form-data">
+        <form class="form" id="edit_client" action="/client/create" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="{{ client ? client.id : "" }}" />
             <div class="row">
                 <div class="col-md-6">
                     <div>
                         <label for="name">Nome *</label>
-                        <input type="text" name="name" id="name" minlength="2" required value="{{ client ? client.name : "" }}" class="form-control" />
+                        <input type="text" name="name" id="name" minlength="2" required value="{{ client and client.name ? client.name : "" }}" class="form-control" />
                     </div>
                     <div>
                         <label for="responsable">Responsável *</label>
-                        <input type="text" name="responsable" id="responsable" required value="{{ client ? client.responsable : "" }}" class="form-control" />
+                        <input type="text" name="responsable" id="responsable" required value="{{ client and client.responsable ? client.responsable : "" }}" class="form-control" />
                     </div>
                     <div>
                         <div class="row">
                             <div class="col-md-2">
                                 <label for="logo-file" class="photo-upload">
-                                    <img src="{{ client ? '/public/img/' ~ client.logotype : "" }}" width="66" height="66">
+                                    <img src="{{ client and client.logotype ? '/public/img/logotypes/' ~ client.logotype : "/public/img/photo_g.png" }}" width="66" height="66">
                                 </label>
                             </div>
                             <div class="col-md-10">
                                 <label for="logo-file">Logotipo</label>
                                 <div class="input-group form-search">
-                                    <input type="text" name="logo-name" id="logo-file" tabindex="-1" value="{{ client ? client.logotype : "" }}" class="form-control" />
+                                    <input type="text" name="logo-name" id="logo-file" tabindex="-1" value="{{ client and client.logotype ? client.logotype : "" }}" class="form-control" />
                                     <input type="file" name="logotype" id="logotype" readonly title="Buscar Arquivo" />
                                     <span class="input-group-btn">
                                         <button data-type="last" class="btn btn-primary" type="submit">Buscar Arquivo</button>
@@ -50,7 +51,7 @@
                     </div>
                     <div>
                         <label for="email">E-mail *</label>
-                        <input type="text" name="email" id="email" value="{{ client ? client.email : "" }}" required class="form-control" />
+                        <input type="email" name="email" id="email" required value="{{ client ? client.email : "" }}" class="form-control" />
                     </div>
                     <div>
                         <label for="telephone">Telefone</label>

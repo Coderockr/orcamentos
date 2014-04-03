@@ -19,20 +19,29 @@ class Client
      *
      * @return                Function used to save a new Client
      */
-    public static function newClient($data, $logotype, $em)
+    public static function save($data, $logotype, $em)
     {
         $data = json_decode($data);
 
-        if (!isset($data->name) || !isset($data->cnpj) || !isset($data->companyId)) {
+        if (!isset($data->name) || !isset($data->responsable) || !isset($data->email) || !isset($data->companyId)) {
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $client = new ClientModel();
-        $client->setName($data->name);
-        $client->setCnpj($data->cnpj);
+        $client = null;
+        if ( isset($data->id) ) {
+            $client = $em->getRepository("Orcamentos\Model\Client")->find($data->id);
+        }
 
-        if (isset($data->email)) {
-            $client->setEmail($data->email);
+        if (!$client) {
+            $client = new ClientModel();
+        }
+
+        $client->setName($data->name);
+        $client->setResponsable($data->responsable);
+        $client->setEmail($data->email);
+
+        if (isset($data->cnpj)) {
+            $client->setCnpj($data->cnpj);
         }
         
         if (isset($data->telephone)) {
@@ -45,10 +54,6 @@ class Client
             $client->setCompany($company);
         }
 
-        if (isset($responsable)) {
-            $client->setResponsable($responsable);
-        }
-        
         if (isset($logotype)) {
             $originalName = $logotype->getClientOriginalName();
             $components = explode('.', $originalName);

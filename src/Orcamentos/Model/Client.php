@@ -52,7 +52,7 @@ class Client
     private $email;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @var string
      */
@@ -73,7 +73,7 @@ class Client
     protected $company;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
      *
      * @var string
      */
@@ -88,7 +88,7 @@ class Client
 
     public function __construct()
     {
-        $this->setCreated(new DateTime());
+        $this->setCreated(date("Y-m-d H:i:s"));
     }
 
     public function getName()

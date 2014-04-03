@@ -23,11 +23,22 @@ $app->get('/', 'Orcamentos\Controller\IndexController::index');
 $app->get('/client', 'Orcamentos\Controller\ClientController::index');
 $app->get('/client/edit/{clientId}', 'Orcamentos\Controller\ClientController::edit')->value( "clientId", null );
 $app->get('/client/detail/{clientId}', 'Orcamentos\Controller\ClientController::detail');
+
 $app->post('/client/create', 'Orcamentos\Controller\ClientController::create');
+
+// User controller  
+$app->get('/user', 'Orcamentos\Controller\UserController::index');
+$app->get('/user/edit/{userId}', 'Orcamentos\Controller\UserController::edit')->value( "userId", null );
+$app->get('/user/detail/{userId}', 'Orcamentos\Controller\UserController::detail');
+
+$app->post('/user/create', 'Orcamentos\Controller\UserController::create');
 
 // Project Controller
 $app->get('/project', 'Orcamentos\Controller\ProjectController::index');
-$app->get('/project/edit', 'Orcamentos\Controller\ProjectController::edit');
+$app->get('/project/edit/{projectId}', 'Orcamentos\Controller\ProjectController::edit')->value( "projectId", null );
+$app->get('/project/detail/{projectId}', 'Orcamentos\Controller\ProjectController::detail');
+
+$app->post('/project/create', 'Orcamentos\Controller\ProjectController::create');
 
 //Company Controller
 $app->get('/company', 'Orcamentos\Controller\CompanyController::index');

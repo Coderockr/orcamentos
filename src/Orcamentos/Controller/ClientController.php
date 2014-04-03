@@ -30,6 +30,7 @@ class ClientController
 
 	public function edit(Request $request, Application $app, $clientId)
 	{	
+		$client = null;
 		if ( isset($clientId) ) {
 			$client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
 		}
@@ -46,13 +47,13 @@ class ClientController
 	{	
 		$data = $request->request->all();
 		$logotype = $request->files->get('logotype');
-		
+
 		// Pegar da session
 		$data['companyId'] = 1;
 
     	$data = json_encode($data);
 		$clientService = new ClientService();
-		$client = $clientService->newClient($data, $logotype, $app['orm.em']);
+		$client = $clientService->save($data, $logotype, $app['orm.em']);
 
 		return $app->redirect('/client/detail/' . $client->getId());
 	}

@@ -3,25 +3,22 @@
     <div id="main" class="container">
         <div class="row">
             <div class="col-md-9">
-                <h3>Projetos</h4>
+                <h3>Usuários</h4>
             </div>
             <div class="col-md-3">
-                <a href="/project/edit" class="btn btn-primary" title="Cadastre um novo projeto">Novo Projeto</a>
+                <a href="/user/edit" class="btn btn-primary" title="Cadastre um novo usuário">Novo Cliente</a>
             </div>
         </div>
         <div class="row cards">
-            {% for project in projectCollection %}
+            {% for user in users %}
                 <div class="col-md-4">
-                    <a href="/project/detail/{{ project.id }}" class="thumbnail" title="Visualizar projeto">
+                    <a href="/user/detail/{{ user.id }}" class="thumbnail" title="Visualizar usuário">
                         <span class="caption">
-                            <h4>{{ project.name }}</h4>
-                            <p>
-                                {{ project.client.name }}<br />
-                                {{ project.tags }}
-                            </p>
+                            <h4>{{ user.name }}</h4>
+                            <p>{{ user.email }}</p>
                         </span>
                     </a>
-                    <a href="/project/edit/{{ project.id }}" title="Editar projeto" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                    <a href="/user/edit/{{ user.id }}" title="Editar usuário" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
                 </div>
             {% endfor %}
         </div>

@@ -14,7 +14,7 @@
             <div class="col-md-4">
                 <a href="/client/detail/{{ client.id }}" class="thumbnail" title="Visualizar projetos e orçamentos">
                     <span class="caption">
-                        <span class="img-rounded"><span></span><img src="/public/img/logotypes/{{ client.logotype }}" alt="" width="80" height="80" /></span>
+                        <span class="img-rounded"><span></span><img src="{{ client and client.logotype ? '/public/img/logotypes/' ~ client.logotype : "/public/img/photo_g.png" }}" alt="" width="80" height="80" /></span>
                         <h4>{{ client.name }}</h4>
                         <p>
                             {{ client.projectCollection | length }} Projetos
@@ -43,7 +43,7 @@
                                                 <h5>{{ quote.version }}</h5>
                                                 <p>
                                                     <time datetime="2013-11-09T13:40">{{ quote.created }}</time><br />
-                                                    R${{ quote.cost }}
+                                                 <!--    R$ quote.cost  -->
                                                 </p>
                                             </span>
                                         </a>
