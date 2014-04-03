@@ -3,7 +3,7 @@
     <div id="main" class="container">
         <div class="row">
             <div class="col-md-9">
-                  {% if user is not null %}
+                  {% if project is not null %}
                     <h3>Editar Projeto</h4>
                  {% else %}
                     <h3>Novo Projeto</h4>
@@ -21,30 +21,30 @@
                         <input type="text" name="name" id="name" value="{{ project and project.name ? project.name : "" }}" required class="form-control" />
                     </div>
                     <div>
-                        <label for="client">Cliente</label>
-                          <select id="client" name="client">
+                        <label for="client">Cliente *</label><br>
+                        <select id="client" name="client">
                             {% for client in clients %}
                                 <option value="{{ client.id }}" {{ client.id == project.client.id ? 'selected="selected"' : "" }}>{{ client.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div>
-                        <label for="tags">Tags</label>
-                        <input type="text" name="tags" id="tags" value="{{ project and project.tags ? project.tags : "" }}" class="form-control" />
+                        <label for="tags">Tags *</label>
+                        <input type="text" name="tags" id="tags" value="{{ project and project.tags ? project.tags : "" }}" required class="form-control" />
                     </div>
                     <div>
                         <label for="privateNotes">Observações privadas</label>
-                        <textarea name="privateNotes" id="privateNotes" class="form-control" >{{ project and project.privateNotes ? project.privateNotes : "" }}</textarea>
+                        <textarea name="privateNotes" id="privateNotes" class="form-control" rows="4">{{ project and project.privateNotes ? project.privateNotes : "" }}</textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div>
-                        <label for="description">Description</label>
-                        <textarea name="description" id="description" class="form-control" >{{ project and project.description ? project.description : "" }}</textarea>
+                        <label for="description">Descrição *</label>
+                        <textarea name="description" id="description" class="form-control" required rows="10">{{ project and project.description ? project.description : "" }}</textarea>
                     </div> 
                     <div>
                         <label for="clientNotes">Observações para o Cliente</label>
-                        <textarea name="clientNotes" id="clientNotes" class="form-control" >{{ project and project.clientNotes ? project.clientNotes : "" }}</textarea>
+                        <textarea name="clientNotes" id="clientNotes" class="form-control" rows="4">{{ project and project.clientNotes ? project.clientNotes : "" }}</textarea>
                     </div>
                     
                 </div>
