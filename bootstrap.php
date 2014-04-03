@@ -26,20 +26,7 @@ AnnotationRegistry::registerFile(__DIR__. DIRECTORY_SEPARATOR . 'vendor' . DIREC
 
 $driver = new Doctrine\ORM\Mapping\Driver\AnnotationDriver(
     new Doctrine\Common\Annotations\AnnotationReader(),
-    array(__DIR__ . DIRECTORY_SEPARATOR . 'src')
+    array(__DIR__.'/src/Orcamentos/Model')
 );
 $config->setMetadataDriverImpl($driver);
 $config->setMetadataCacheImpl($cache);
-
-//getting the EntityManager
-$em = EntityManager::create(
-    array(
-    	'driver'  => 'pdo_mysql',
-    	'host'    => 'localhost',
-    	'port'    => '3306',
-    	'user'    => 'root',
-	    'password'  => '',
-    	'dbname'  => 'orcamentos',
-    ),
-    $config
-);

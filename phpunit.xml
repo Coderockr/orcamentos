@@ -8,9 +8,10 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
+         bootstrap="phpunit_bootstrap.php"
 >
     <testsuites>
-        <testsuite name="Silex-Sample Test Suite">
+        <testsuite name="Orcamentos Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

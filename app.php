@@ -1,7 +1,11 @@
 <?php
 require_once __DIR__.'/bootstrap.php';
 
-$app = new Silex\Application();
+use Silex\Application,
+    Silex\Provider\DoctrineServiceProvider,
+    Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
+
+$app = new Application();
 
 //configuration
 $app->register(new Silex\Provider\SessionServiceProvider());
@@ -17,8 +21,41 @@ $app->get('/', 'Orcamentos\Controller\IndexController::index');
 
 // Client controller  
 $app->get('/client', 'Orcamentos\Controller\ClientController::index');
-$app->get('/client/create', 'Orcamentos\Controller\ClientController::create');
-$app->get('/client/detail/{client}', 'Orcamentos\Controller\ClientController::detail');
+$app->get('/client/edit/{clientId}', 'Orcamentos\Controller\ClientController::edit')->value( "clientId", null );
+$app->get('/client/detail/{clientId}', 'Orcamentos\Controller\ClientController::detail');
+$app->post('/client/create', 'Orcamentos\Controller\ClientController::create');
 
 // Project Controller
 $app->get('/project', 'Orcamentos\Controller\ProjectController::index');
+$app->get('/project/edit', 'Orcamentos\Controller\ProjectController::edit');
+
+//Company Controller
+$app->get('/company', 'Orcamentos\Controller\CompanyController::index');
+
+//getting the EntityManager
+$app->register(new DoctrineServiceProvider, array(
+    'db.options' => array(
+        'driver' => 'pdo_mysql',
+        'host' => 'localhost',
+        'port' => '3306',
+        'user' => 'root',
+        'password' => '',
+        'dbname' => 'orcamentos'
+    )
+));
+
+$app->register(new DoctrineOrmServiceProvider(), array(
+    'orm.proxies_dir' => '/tmp/' . getenv('APPLICATION_ENV'),
+    'orm.em.options' => array(
+        'mappings' => array(
+            array(
+                'type' => 'annotation',
+                'use_simple_annotation_reader' => false,
+                'namespace' => 'Orcamentos\Model',
+                'path' => __DIR__ . '/src'
+            )
+        )
+    ),
+    'orm.proxies_namespace' => 'EntityProxy',
+    'orm.auto_generate_proxies' => true
+));
