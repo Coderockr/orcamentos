@@ -1,0 +1,71 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <div id="main" class="container">
+        <div class="row">
+            <div class="col-md-9">
+                {% if client is not null %}
+                    <h3>Editar Cliente</h4>
+                 {% else %}
+                    <h3>Novo Cliente</h4>
+                 {% endif %}   
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+        <form class="form" action="/client/create" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <label for="name">Nome *</label>
+                        <input type="text" name="name" id="name" minlength="2" required value="{{ client ? client.name : "" }}" class="form-control" />
+                    </div>
+                    <div>
+                        <label for="responsable">Responsável *</label>
+                        <input type="text" name="responsable" id="responsable" required value="{{ client ? client.responsable : "" }}" class="form-control" />
+                    </div>
+                    <div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="logo-file" class="photo-upload">
+                                    <img src="{{ client ? '/public/img/' ~ client.logotype : "" }}" width="66" height="66">
+                                </label>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="logo-file">Logotipo</label>
+                                <div class="input-group form-search">
+                                    <input type="text" name="logo-name" id="logo-file" tabindex="-1" value="{{ client ? client.logotype : "" }}" class="form-control" />
+                                    <input type="file" name="logotype" id="logotype" readonly title="Buscar Arquivo" />
+                                    <span class="input-group-btn">
+                                        <button data-type="last" class="btn btn-primary" type="submit">Buscar Arquivo</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <label for="cnpj">CNPJ</label>
+                        <input type="text" name="cnpj" id="cnpj" value="{{ client ? client.cnpj : "" }}" class="form-control" />
+                    </div>
+                    <div>
+                        <label for="email">E-mail *</label>
+                        <input type="text" name="email" id="email" value="{{ client ? client.email : "" }}" required class="form-control" />
+                    </div>
+                    <div>
+                        <label for="telephone">Telefone</label>
+                        <input type="text" name="telephone" id="telephone" value="{{ client ? client.telephone : "" }}" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row submit">
+                <div class="col-md-6">
+                    <a href="/client" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>  
+{% endblock %}

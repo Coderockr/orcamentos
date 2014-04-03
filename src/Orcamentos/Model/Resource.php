@@ -5,9 +5,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="User")
+ * @ORM\Table(name="Resource")
  */
-class User
+class Resource
 {
 
     /**
@@ -37,32 +37,11 @@ class User
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=20, unique=true)
+     * @ORM\Column(type="float")
      *
-     * @var string
+     * @var float
      */
-    private $login;
-
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     *
-     * @var string
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     *
-     * @var string
-     */
-    private $password;
-    
-    /**
-     * @ORM\Column(type="boolean")
-     *
-     * @var string
-     */
-    private $admin;
+    private $cost;
 
     /**
      * @ORM\ManyToOne(targetEntity="Company", cascade={"persist", "merge", "refresh"})
@@ -70,6 +49,13 @@ class User
      * @var Company
      */
     protected $company;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Quote", cascade={"persist", "merge", "refresh"})
+     * 
+     * @var Quote
+     */
+    protected $quote;
 
     public function __construct()
     {
@@ -86,48 +72,44 @@ class User
         return $this->name = filter_var($name, FILTER_SANITIZE_STRING);
     }
     
-    public function getLogin()
+    public function getPrivateNotes()
     {
-        return $this->login;
+        return $this->privateNotes;
     }
     
-    public function setLogin($login)
+    public function setPrivateNotes($privateNotes)
     {
-        return $this->login = $login;
+        return $this->privateNotes = $privateNotes;
     }
     
-    public function getEmail()
+    public function getDescription()
     {
-        return $this->email;
+        return $this->description;
     }
     
-    public function setEmail($email)
+    public function setDescription($description)
     {
-    	if (FALSE === filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    		throw new \InvalidArgumentException('INVALID EMAIL');
-    	}
-        return $this->email = $email;
+        return $this->description = $description;
     }
     
-      public function getPassword()
+      public function getClientNotes()
     {
-        return $this->password;
+        return $this->clientNotes;
     }
     
-    public function setPassword($password)
+    public function setClientNotes($clientNotes)
     {
-
-        return $this->password = $password;
+        return $this->clientNotes = $clientNotes;
     }
 
-    public function getAdmin()
+    public function getTags()
     {
-        return $this->admin;
+        return $this->tags;
     }
     
-    public function setAdmin($admin)
+    public function setTags($tags)
     {
-        return $this->admin = $admin;
+        return $this->tags = $tags;
     }
 
     /**

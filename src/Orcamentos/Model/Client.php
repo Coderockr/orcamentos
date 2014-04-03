@@ -2,12 +2,13 @@
 namespace Orcamentos\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="User")
+ * @ORM\Table(name="Client")
  */
-class User
+class Client
 {
 
     /**
@@ -30,39 +31,39 @@ class User
     protected $updated;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string")
      *
      * @var string
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=20, unique=true)
+     * @ORM\Column(type="string", length=14, unique=true)
      *
      * @var string
      */
-    private $login;
+    private $cnpj;
 
     /**
-     * @ORM\Column(type="string", length=150, nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      *
      * @var string
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string")
      *
      * @var string
      */
-    private $password;
-    
+    private $logotype;
+
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=13, nullable=true)
      *
      * @var string
      */
-    private $admin;
+    private $telephone;
 
     /**
      * @ORM\ManyToOne(targetEntity="Company", cascade={"persist", "merge", "refresh"})
@@ -71,9 +72,23 @@ class User
      */
     protected $company;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    private $responsable;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Project", mappedBy="client", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * 
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $projectCollection;
+
     public function __construct()
     {
-        $this->setCreated(date('Y-m-d H:i:s'));
+        $this->setCreated(new DateTime());
     }
 
     public function getName()
@@ -86,14 +101,14 @@ class User
         return $this->name = filter_var($name, FILTER_SANITIZE_STRING);
     }
     
-    public function getLogin()
+    public function getCnpj()
     {
-        return $this->login;
+        return $this->cnpj;
     }
     
-    public function setLogin($login)
+    public function setCnpj($cnpj)
     {
-        return $this->login = $login;
+        return $this->cnpj = $cnpj;
     }
     
     public function getEmail()
@@ -109,25 +124,54 @@ class User
         return $this->email = $email;
     }
     
-      public function getPassword()
+      public function getLogotype()
     {
-        return $this->password;
+        return $this->logotype;
     }
     
-    public function setPassword($password)
+    public function setLogotype($logotype)
     {
-
-        return $this->password = $password;
+        return $this->logotype = $logotype;
     }
 
-    public function getAdmin()
+    public function getTelephone()
     {
-        return $this->admin;
+        return $this->telephone;
     }
     
-    public function setAdmin($admin)
+    public function setTelephone($telephone)
     {
-        return $this->admin = $admin;
+        return $this->telephone = $telephone;
+    }
+
+    public function getCompany()
+    {
+        return $this->company;
+    }
+    
+    public function setCompany($company)
+    {
+        return $this->company = $company;
+    }
+
+    public function getProjectCollection()
+    {
+        return $this->projectCollection;
+    }
+    
+    public function setProjectCollection($projectCollection)
+    {
+        return $this->projectCollection = $projectCollection;
+    }
+    
+    public function getResponsable()
+    {
+        return $this->responsable;
+    }
+    
+    public function setResponsable($responsable)
+    {
+        return $this->responsable = $responsable;
     }
 
     /**

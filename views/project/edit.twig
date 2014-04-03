@@ -1,0 +1,54 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <div id="main" class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <h3>Novo Projeto</h4>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+        <form class="form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <label for="name">Nome</label>
+                        <input type="text" name="name" id="name" class="form-control" />
+                    </div>
+                    <div>
+                        <label for="client">Cliente</label>
+                        <input type="text" name="client" id="client" class="form-control" />
+                    </div>
+                    <div>
+                        <label for="tags">Tags</label>
+                        <input type="text" name="tags" id="tags" class="form-control" />
+                    </div>
+                    <div>
+                        <label for="privateNotes">Observações privadas</label>
+                        <textarea name="privateNotes" id="privateNotes" class="form-control" ></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <label for="description">Description</label>
+                        <textarea name="description" id="description" class="form-control" ></textarea>
+                    </div> 
+                    <div>
+                        <label for="clientNotes">Observações para o Cliente</label>
+                        <textarea name="clientNotes" id="clientNotes" class="form-control" ></textarea>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row submit">
+
+                <div class="col-md-6">
+                    <a href="/client" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>  
+{% endblock %}

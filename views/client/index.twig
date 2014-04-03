@@ -6,128 +6,31 @@
                 <h3>Clientes</h4>
             </div>
             <div class="col-md-3">
-                <a href="/client/create" class="btn btn-primary" title="Cadastre um novo cliente">Novo Cliente</a>
+                <a href="/client/edit" class="btn btn-primary" title="Cadastre um novo cliente">Novo Cliente</a>
             </div>
         </div>
-
         <div class="row cards">
-            <div class="col-md-4">
-                <a href="/client/detail/1" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <span class="img-rounded"><span></span><img src="http://placehold.it/80x80" alt="" width="80" height="80" /></span>
-                        <h4>SocialBase</h4>
-                        <p>
-                            2 Orçamentos<br />
-                            1 Projeto
-                        </p>
-                    </span>
-                </a>
-                <a href="client-new.html" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/client/detail/1" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <span class="img-rounded"><span></span><img src="http://placehold.it/80x80" alt="" width="80" height="80" /></span>
-                        <h4>Barking</h4>
-                        <p>
-                            2 Orçamentos<br />
-                            1 Projeto
-                        </p>
-                    </span>
-                </a>
-                <a href="client-new.html" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/client/detail/1" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <span class="img-rounded"><span></span><img src="http://placehold.it/80x80" alt="" width="80" height="80" /></span>
-                        <h4>Softplan</h4>
-                        <p>
-                            2 Orçamentos<br />
-                            1 Projeto
-                        </p>
-                    </span>
-                </a>
-                <a href="client-new.html" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/client/detail/1" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <span class="img-rounded"><span></span><img src="http://placehold.it/80x80" alt="" width="80" height="80" /></span>
-                        <h4>WEG</h4>
-                        <p>
-                            2 Orçamentos<br />
-                            1 Projeto
-                        </p>
-                    </span>
-                </a>
-                <a href="client-new.html" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/client/detail/1" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <span class="img-rounded"><span></span><img src="http://placehold.it/80x80" alt="" width="80" height="80" /></span>
-                        <h4>EXS</h4>
-                        <p>
-                            2 Orçamentos<br />
-                            1 Projeto
-                        </p>
-                    </span>
-                </a>
-                <a href="client-new.html" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/client/detail/1" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <span class="img-rounded"><span></span><img src="http://placehold.it/80x80" alt="" width="80" height="80" /></span>
-                        <h4>SysSquad</h4>
-                        <p>
-                            2 Orçamentos<br />
-                            1 Projeto
-                        </p>
-                    </span>
-                </a>
-                <a href="client-new.html" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/client/detail/1" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <span class="img-rounded"><span></span><img src="http://placehold.it/80x80" alt="" width="80" height="80" /></span>
-                        <h4>Unocapecó</h4>
-                        <p>
-                            2 Orçamentos<br />
-                            1 Projeto
-                        </p>
-                    </span>
-                </a>
-                <a href="client-new.html" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/client/detail/1" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <span class="img-rounded"><span></span><img src="http://placehold.it/80x80" alt="" width="80" height="80" /></span>
-                        <h4>Bet9</h4>
-                        <p>
-                            2 Orçamentos<br />
-                            1 Projeto
-                        </p>
-                    </span>
-                </a>
-                <a href="client-new.html" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/client/detail/1" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <span class="img-rounded"><span></span><img src="http://placehold.it/80x80" alt="" width="80" height="80" /></span>
-                        <h4>Oxford</h4>
-                        <p>
-                            2 Orçamentos<br />
-                            1 Projeto
-                        </p>
-                    </span>
-                </a>
-                <a href="client-new.html" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
+            {% for client in clients %}
+                <div class="col-md-4">
+                    <a href="/client/detail/{{ client.id }}" class="thumbnail" title="Visualizar projetos e orçamentos">
+                        <span class="caption">
+                            <span class="img-rounded"><span></span>
+                                {% if client.logotype %}
+                                    <img src="/public/img/logotypes/{{ client.logotype }}" alt="" width="80" height="80" />
+                                {% else %}
+                                    <img src="/public/img/logo-coderockr.png" alt="" width="80" height="80" />
+                                {% endif %}
+                            </span>
+                            <h4>{{ client.name }}</h4>
+                            <p>
+                                {{ client.numProjects }} Projetos<br>
+                                {{ client.numQuotes | default("0") }} Orçamentos
+                            </p>
+                        </span>
+                    </a>
+                    <a href="/client/edit/{{ client.id }}" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                </div>
+            {% endfor %}
         </div>
 
         <div class="row">
@@ -142,5 +45,6 @@
                 </ul>
             </div>
         </div>
+        
     </div>
 {% endblock %}

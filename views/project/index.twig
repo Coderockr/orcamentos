@@ -6,83 +6,25 @@
                 <h3>Projetos</h4>
             </div>
             <div class="col-md-3">
-                <a href="project-new.html" class="btn btn-primary" title="Cadastre um novo projeto">Novo Projeto</a>
+                <a href="/project/edit" class="btn btn-primary" title="Cadastre um novo projeto">Novo Projeto</a>
             </div>
         </div>
 
         <div class="row cards">
-            <div class="col-md-4">
-                <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <h4>SocialBase</h4>
-                        <p>
-                            SocialBase<br />
-                            iOS, Android, Smartphone, Tablet
-                        </p>
-                    </span>
-                </a>
-                <a href="#" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <h4>Barking</h4>
-                        <p>
-                            Barking<br />
-                            iOS, Android, Smartphone, Web
-                        </p>
-                    </span>
-                </a>
-                <a href="#" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <h4>ROI</h4>
-                        <p>
-                            WEG<br />
-                            OS, Android, Smartphone, Tablet, Web
-                        </p>
-                    </span>
-                </a>
-                <a href="#" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <h4>MinhaUno</h4>
-                        <p>
-                            Unochapecó<br />
-                            Web
-                        </p>
-                    </span>
-                </a>
-                <a href="#" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <h4>RPS Fácil</h4>
-                        <p>
-                            EXS<br />
-                            iOS, Smartphone
-                        </p>
-                    </span>
-                </a>
-                <a href="#" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
-                    <span class="caption">
-                        <h4>Meu Sorriso</h4>
-                        <p>
-                            Evodonto<br />
-                            Web, iOS, Android
-                        </p>
-                    </span>
-                </a>
-                <a href="#" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-            </div>
+            {% for project in projectCollection %}
+                <div class="col-md-4">
+                    <a href="/project/edit/{{ project.id }}" class="thumbnail" title="Visualizar projetos e orçamentos">
+                        <span class="caption">
+                            <h4>{{ project.name }}</h4>
+                            <p>
+                                {{ project.client.name }}<br />
+                                {{ project.tags }}
+                            </p>
+                        </span>
+                    </a>
+                    <a href="#" title="Editar projeto" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                </div>
+            {% endfor %}
         </div>
 
         <div class="row">

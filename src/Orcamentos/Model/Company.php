@@ -5,9 +5,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="User")
+ * @ORM\Table(name="Company")
  */
-class User
+class Company
 {
 
     /**
@@ -30,46 +30,60 @@ class User
     protected $updated;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string")
      *
      * @var string
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=20, unique=true)
+     * @ORM\Column(type="string", nullable=true)
      *
      * @var string
      */
-    private $login;
+    private $site;
 
     /**
-     * @ORM\Column(type="string", length=150, nullable=true)
+     * @ORM\Column(type="string")
      *
      * @var string
      */
-    private $email;
+    private $logotype;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      *
      * @var string
      */
-    private $password;
-    
-    /**
-     * @ORM\Column(type="boolean")
-     *
-     * @var string
-     */
-    private $admin;
+    private $responsable;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Company", cascade={"persist", "merge", "refresh"})
+     * @ORM\OneToMany(targetEntity="Client", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
-     * @var Company
+     * @var Doctrine\Common\Collections\Collection
      */
-    protected $company;
+    protected $clientCollection;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Project", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * 
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $projectCollection;  
+
+    /**
+     * @ORM\OneToMany(targetEntity="Resource", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * 
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $resourceCollection;
+
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * 
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $userCollection;
 
     public function __construct()
     {
@@ -86,48 +100,35 @@ class User
         return $this->name = filter_var($name, FILTER_SANITIZE_STRING);
     }
     
-    public function getLogin()
+    public function getSite()
     {
-        return $this->login;
+        return $this->site;
     }
     
-    public function setLogin($login)
+    public function setSite($site)
     {
-        return $this->login = $login;
+        return $this->site = $site;
     }
     
-    public function getEmail()
+    public function getLogotype()
     {
-        return $this->email;
+        return $this->logotype;
     }
     
-    public function setEmail($email)
+    public function setLogotype($logotype)
     {
-    	if (FALSE === filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    		throw new \InvalidArgumentException('INVALID EMAIL');
-    	}
-        return $this->email = $email;
+        return $this->logotype = $logotype;
     }
     
-      public function getPassword()
+    public function getResponsable()
     {
-        return $this->password;
+        return $this->responsable;
     }
     
-    public function setPassword($password)
+    public function setResponsable($responsable)
     {
 
-        return $this->password = $password;
-    }
-
-    public function getAdmin()
-    {
-        return $this->admin;
-    }
-    
-    public function setAdmin($admin)
-    {
-        return $this->admin = $admin;
+        return $this->responsable = $responsable;
     }
 
     /**

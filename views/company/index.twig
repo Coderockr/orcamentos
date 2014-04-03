@@ -1,0 +1,203 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <div id="main" class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <h3>Dados da Empresa</h4>
+            </div>
+            <div class="col-md-3">
+                <a href="client-new.html" class="btn btn-primary" title="Cadastre um novo cliente">Usuários</a>
+            </div>
+        </div>
+
+        <form class="form">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div>
+                        <label for="nome">Nome</label>
+                        <input type="text" name="nome" id="nome" class="form-control" value="Coderockr" />
+                    </div>
+                    <div>
+                        <label for="responsavel">Responsável</label>
+                        <input type="text" name="responsavel" id="responsavel" class="form-control" />
+                    </div>
+                     <div>
+                        <label for="fone">Telefone</label>
+                        <input type="text" name="fone" id="fone" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+
+                    <div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="logo-file" class="photo-upload">
+
+                                </label>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="logo-file">Logotipo</label>
+                                <div class="input-group form-search">
+                                    <input type="text" name="logo-name" id="logo-name" class="form-control" />
+                                    <input type="file" name="logo-file" id="logo-file" title="Buscar Arquivo" />
+                                    <span class="input-group-btn">
+                                        <button data-type="last" class="btn btn-primary" type="submit">Buscar Arquivo</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="site">Site</label>
+                        <input type="text" name="site" id="site" class="form-control" />
+                    </div>
+                   
+
+                </div>
+
+            </div>
+
+            <!--div class="row submit">
+
+                <div class="col-md-6">
+                    <a href="clients.html" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
+                </div>
+            </div-->
+        </form>
+
+        <h4>Recursos</h4>
+        <div class="row resources">
+            <div class="col-md-3">
+                <h5>
+                    Equipamentos
+                    <a href="#" class="glyphicon glyphicon-plus" title="Adicionar equipamento"></a>
+                    <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de equipamento"></a>
+                </h5>
+                <div class="thumbnail">
+                    <form class="form">
+                        <div class="caption">
+                            <div>
+                                <label for="nome-equip">Nome</label>
+                                <input type="text" name="nome-equip" id="nome-equip" class="form-control" />
+                            </div>
+                            <div>
+                                <label for="custo-equip">Custo</label>
+                                <input type="text" name="custo-equip" id="custo-equip" class="form-control" />
+                            </div>
+                            <div>
+                                <label for="tipo-equip">Tipo</label>
+                                <input type="text" name="tipo-equip" id="tipo-equip" class="form-control" />
+                            </div>
+                            <div>
+                                <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <span class="thumbnail">
+                    <div class="caption">
+                        <h4>Mac Mini 1</h4>
+                        <p>
+                            R$2.200,00<br />
+                            Computador
+                        </p>
+                    </div>
+                    <a href="#" class="glyphicon glyphicon-remove" title="Apagar equipamento"></a>
+                </span>
+            </div>
+
+            <div class="col-md-3">
+                <h5>
+                    Matéria-prima
+                    <a href="#" class="glyphicon glyphicon-plus" title="Adicionar matéria-prima"></a>
+                </h5>
+                <span class="thumbnail">
+                    <div class="caption">
+                        <h4>Papel Sufite</h4>
+                        <p>
+                            R$30,00<br />
+                            Resma<br />
+                            Papel
+                        </p>
+                    </div>
+                    <a href="#" class="glyphicon glyphicon-remove" title="Apagar matéria-prima"></a>
+                </span>
+            </div>
+
+            <div class="col-md-3">
+                <h5>
+                    Pessoas
+                    <a href="#" class="glyphicon glyphicon-plus" title="Adicionar pessoa"></a>
+                </h5>
+                <span class="thumbnail">
+                    <div class="caption">
+                        <h4>Designer</h4>
+                        <p>
+                            R$40,00 / h<br />
+                            Integral<br />
+                            CLT
+                        </p>
+                    </div>
+                    <a href="#" class="glyphicon glyphicon-remove" title="Apagar pessoa"></a>
+                </span>
+                <span class="thumbnail">
+                    <div class="caption">
+                        <h4>Prog. Android</h4>
+                        <p>
+                            R$40,00 / h<br />
+                            Integral<br />
+                            CLT
+                        </p>
+                    </div>
+                    <a href="#" class="glyphicon glyphicon-remove" title="Apagar pessoa"></a>
+                </span>
+                <span class="thumbnail">
+                    <div class="caption">
+                        <h4>Estaigário Android</h4>
+                        <p>
+                            R$20,00 / h<br />
+                            Integral<br />
+                            CLT
+                        </p>
+                    </div>
+                    <a href="#" class="glyphicon glyphicon-remove" title="Apagar pessoa"></a>
+                </span>
+                <span class="thumbnail">
+                    <div class="caption">
+                        <h4>Prog. PHP</h4>
+                        <p>
+                            R$40,00 / h<br />
+                            Integral<br />
+                            CLT
+                        </p>
+                    </div>
+                    <a href="#" class="glyphicon glyphicon-remove" title="Apagar pessoa"></a>
+                </span>
+            </div>
+
+            <div class="col-md-3">
+                <h5>
+                    Outros
+                    <a href="#" class="glyphicon glyphicon-plus" title="Adicionar outro recurso"></a>
+                </h5>
+                <span class="thumbnail">
+                    <div class="caption">
+                        <h4>Mac Mini 1</h4>
+                        <p>
+                            R$2.200,00<br />
+                            Computador
+                        </p>
+                    </div>
+                    <a href="#" class="glyphicon glyphicon-remove" title="Apagar recurso"></a>
+                </span>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+    

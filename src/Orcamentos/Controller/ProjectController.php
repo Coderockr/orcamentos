@@ -10,6 +10,14 @@ class ProjectController
 {
 	public function index(Request $request, Application $app)
 	{
-		return $app['twig']->render('project/index.twig', array());
+		$em = $app['orm.em'];
+		$projects = $em->getRepository('Orcamentos\Model\Project')->findAll();
+		return $app['twig']->render('project/index.twig', array( 'projectCollection' => $projects ));
 	}
+
+	public function edit(Request $request, Application $app)
+	{
+		return $app['twig']->render('project/edit.twig', array());
+	}
+	
 }
