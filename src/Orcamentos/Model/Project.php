@@ -37,25 +37,11 @@ class Project
     private $name;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     *
-     * @var string
-     */
-    private $privateNotes;
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      *
      * @var string
      */
     private $description;
-
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    private $clientNotes;
 
     /**
      * @ORM\Column(type="string", nullable=true)
