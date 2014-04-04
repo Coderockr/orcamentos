@@ -3,7 +3,6 @@
 namespace Orcamentos\Service;
 
 use Orcamentos\Model\Project as ProjectModel;
-use Intervention\Image\Image;
   
 /**
  * Project Entity
@@ -55,14 +54,6 @@ class Project
             $project->setCompany($company);
         }
 
-        if (isset($data->privateNotes)) {
-            $project->setPrivateNotes($data->privateNotes);
-        }
-      
-        if (isset($data->clientNotes)) {
-            $project->setClientNotes($data->clientNotes);
-        }
-      
         $em->persist($project);
         $em->flush();
 

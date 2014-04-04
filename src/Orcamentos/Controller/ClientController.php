@@ -7,9 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Orcamentos\Service\Client as ClientService;
 
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\View\TwitterBootstrapView;
+use Pagerfanta\Adapter\ArrayAdapter;
+
 class ClientController
 {
-	public function index(Request $request, Application $app)
+	public function index(Request $request, Application $app, $page)
 	{
 		$clientObjs = $app['orm.em']->getRepository('Orcamentos\Model\Client')->findAll();
 		$clients = array();
@@ -23,8 +27,18 @@ class ClientController
 				$clients[$i]['numQuotes'] += count($project->getQuoteCollection());
 			}
 		}
+
+		$adapter = new ArrayAdapter($clients);
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setCurrentPage($page);
+		$view = new TwitterBootstrapView();
+		$routeGenerator = function($page) use ($app) {
+	        return '/user/'.$page;
+	    };
+		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
 		return $app['twig']->render('client/index.twig', array( 
-			'clients' => $clients
+			'htmlPagination' => $htmlPagination,
+			'pagerfanta' => $pagerfanta
 		));
 	}	
 

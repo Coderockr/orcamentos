@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="row cards">
-            {% for project in projectCollection %}
+            {% for project in pagerfanta %}
                 <div class="col-md-4">
                     <a href="/project/detail/{{ project.id }}" class="thumbnail" title="Visualizar projeto">
                         <span class="caption">
@@ -27,14 +27,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <ul class="pagination btn-primary">
-                    <li class="active"><a href="#">&lt;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li class="active"><a href="#">&gt;</a></li>
-                </ul>
+                {{ htmlPagination|raw }}
             </div>
         </div>
     </div>

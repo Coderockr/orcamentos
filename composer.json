@@ -14,7 +14,9 @@
         "swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev",
         "dflydev/doctrine-orm-service-provider": "1.0.*@dev",
         "mockery/mockery": "dev-master@dev",
-        "phpunit/phpunit": "*"
+        "zendframework/zend-crypt": "*",    
+        "phpunit/phpunit": "*",
+        "pagerfanta/pagerfanta": "1.0.*@dev"
     },
     "minimum-stability": "dev"
 }

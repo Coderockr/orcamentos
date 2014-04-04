@@ -6,11 +6,11 @@
                 <h3>Usuários</h4>
             </div>
             <div class="col-md-3">
-                <a href="/user/edit" class="btn btn-primary" title="Cadastre um novo usuário">Novo Cliente</a>
+                <a href="/user/edit" class="btn btn-primary" title="Cadastre um novo usuário">Novo Usuário</a>
             </div>
         </div>
         <div class="row cards">
-            {% for user in users %}
+            {% for user in pagerfanta %}
                 <div class="col-md-4">
                     <a href="/user/detail/{{ user.id }}" class="thumbnail" title="Visualizar usuário">
                         <span class="caption">
@@ -22,16 +22,10 @@
                 </div>
             {% endfor %}
         </div>
+         
         <div class="row">
             <div class="col-md-12">
-                <ul class="pagination btn-primary">
-                    <li class="active"><a href="#">&lt;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li class="active"><a href="#">&gt;</a></li>
-                </ul>
+                {{ htmlPagination|raw }}
             </div>
         </div>
     </div>

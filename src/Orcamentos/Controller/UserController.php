@@ -5,52 +5,65 @@ namespace Orcamentos\Controller;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Orcamentos\Service\User as UserService;
+
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\View\TwitterBootstrapView;
+use Pagerfanta\Adapter\ArrayAdapter;;
 
 class UserController
 {
-	public function index(Request $request, Application $app)
+	public function index(Request $request, Application $app, $page)
 	{
-		$usersObjs = $app['orm.em']->getRepository('Orcamentos\Model\User')->findAll();
+		$users = $app['orm.em']->getRepository('Orcamentos\Model\User')->findAll();
+		
+		$adapter = new ArrayAdapter($users);
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setCurrentPage($page);
+		$view = new TwitterBootstrapView();
+		$routeGenerator = function($page) use ($app) {
+	        return '/user/'.$page;
+	    };
+		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
 		return $app['twig']->render('user/index.twig', array( 
-			'users' => $usersObjs
+			'htmlPagination' => $htmlPagination,
+			'pagerfanta' => $pagerfanta
 		));
 	}	
 
-	// public function edit(Request $request, Application $app, $clientId)
-	// {	
-	// 	$client = null;
-	// 	if ( isset($clientId) ) {
-	// 		$client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
-	// 	}
+	public function edit(Request $request, Application $app, $userId)
+	{	
+		$user = null;
+		if ( isset($userId) ) {
+			$user = $app['orm.em']->getRepository('Orcamentos\Model\User')->find($userId);
+		}
 
-	// 	return $app['twig']->render('client/edit.twig', 
-	// 		array(
-	// 			'client' => $client
-	// 		)
-	// 	);
-	// }
+		return $app['twig']->render('user/edit.twig', 
+			array(
+				'user' => $user
+			)
+		);
+	}
 
-	// // Funcao usada para criar o cliente, via post
-	// public function create(Request $request, Application $app)
-	// {	
-	// 	$data = $request->request->all();
-	// 	$logotype = $request->files->get('logotype');
+	// Funcao usada para criar o cliente, via post
+	public function create(Request $request, Application $app)
+	{	
+		$data = $request->request->all();
 
-	// 	// Pegar da session
-	// 	$data['companyId'] = 1;
+		// Pegar da session
+		$data['companyId'] = 1;
 
- //    	$data = json_encode($data);
-	// 	$clientService = new ClientService();
-	// 	$client = $clientService->save($data, $logotype, $app['orm.em']);
+    	$data = json_encode($data);
+		$userService = new UserService();
+		$user = $userService->save($data, $app['orm.em']);
+		return $app->redirect('/user');
+	}
 
-	// 	return $app->redirect('/client/detail/' . $client->getId());
-	// }
-
-	// public function detail(Request $request, Application $app, $clientId )
-	// {
-	// 	$client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
-	// 	return $app['twig']->render('client/detail.twig', array( 
-	// 		'client' => $client
-	// 	));
-	// }
+	public function detail(Request $request, Application $app, $userId )
+	{
+		$user = $app['orm.em']->getRepository('Orcamentos\Model\User')->find($userId);
+		return $app['twig']->render('user/detail.twig', array( 
+			'user' => $user
+		));
+	}
 }

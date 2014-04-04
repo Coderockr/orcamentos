@@ -37,28 +37,28 @@ class User
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=20, unique=true)
+     * @ORM\Column(type="string", length=20)
      *
      * @var string
      */
     private $login;
 
     /**
-     * @ORM\Column(type="string", length=150, nullable=true)
+     * @ORM\Column(type="string", length=150, unique=true)
      *
      * @var string
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=100)
      *
      * @var string
      */
     private $password;
     
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      *
      * @var string
      */
@@ -95,6 +95,16 @@ class User
     {
         return $this->login = $login;
     }
+
+    public function getCompany()
+    {
+        return $this->company;
+    }
+    
+    public function setCompany($company)
+    {
+        return $this->company = $company;
+    }
     
     public function getEmail()
     {
@@ -109,7 +119,7 @@ class User
         return $this->email = $email;
     }
     
-      public function getPassword()
+    public function getPassword()
     {
         return $this->password;
     }

@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="row cards">
-            {% for client in clients %}
+            {% for client in pagerfanta %}
                 <div class="col-md-4">
                     <a href="/client/detail/{{ client.id }}" class="thumbnail" title="Visualizar projetos e orçamentos">
                         <span class="caption">
@@ -35,14 +35,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <ul class="pagination btn-primary">
-                    <li class="active"><a href="#">&lt;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li class="active"><a href="#">&gt;</a></li>
-                </ul>
+                {{ htmlPagination|raw }}
             </div>
         </div>
         

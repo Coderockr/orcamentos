@@ -13,32 +13,30 @@ $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
-
+    
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 
 // Index Controller / Dashboard
 $app->get('/', 'Orcamentos\Controller\IndexController::index');
 
 // Client controller  
-$app->get('/client', 'Orcamentos\Controller\ClientController::index');
 $app->get('/client/edit/{clientId}', 'Orcamentos\Controller\ClientController::edit')->value( "clientId", null );
 $app->get('/client/detail/{clientId}', 'Orcamentos\Controller\ClientController::detail');
-
 $app->post('/client/create', 'Orcamentos\Controller\ClientController::create');
 
+$app->get('/client/{page}', 'Orcamentos\Controller\ClientController::index')->value('page', 1);
+
 // User controller  
-$app->get('/user', 'Orcamentos\Controller\UserController::index');
 $app->get('/user/edit/{userId}', 'Orcamentos\Controller\UserController::edit')->value( "userId", null );
 $app->get('/user/detail/{userId}', 'Orcamentos\Controller\UserController::detail');
-
 $app->post('/user/create', 'Orcamentos\Controller\UserController::create');
+$app->get('/user/{page}', 'Orcamentos\Controller\UserController::index')->value('page', 1);
 
 // Project Controller
-$app->get('/project', 'Orcamentos\Controller\ProjectController::index');
 $app->get('/project/edit/{projectId}', 'Orcamentos\Controller\ProjectController::edit')->value( "projectId", null );
 $app->get('/project/detail/{projectId}', 'Orcamentos\Controller\ProjectController::detail');
-
 $app->post('/project/create', 'Orcamentos\Controller\ProjectController::create');
+$app->get('/project/{page}', 'Orcamentos\Controller\ProjectController::index')->value('page', 1);
 
 //Company Controller
 $app->get('/company', 'Orcamentos\Controller\CompanyController::index');

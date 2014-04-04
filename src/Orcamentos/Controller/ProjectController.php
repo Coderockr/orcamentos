@@ -7,14 +7,30 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Orcamentos\Service\Project as ProjectService;
 
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\View\TwitterBootstrapView;
+use Pagerfanta\Adapter\ArrayAdapter;
+
 class ProjectController
 {
-	public function index(Request $request, Application $app)
+	public function index(Request $request, Application $app, $page)
 	{
 		$em = $app['orm.em'];
 		$projects = $em->getRepository('Orcamentos\Model\Project')->findAll();
 
-		return $app['twig']->render('project/index.twig', array( 'projectCollection' => $projects ));
+
+		$adapter = new ArrayAdapter($projects);
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setCurrentPage($page);
+		$view = new TwitterBootstrapView();
+		$routeGenerator = function($page) use ($app) {
+	        return '/user/'.$page;
+	    };
+		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
+		return $app['twig']->render('project/index.twig', array( 
+			'htmlPagination' => $htmlPagination,
+			'pagerfanta' => $pagerfanta
+		));
 	}
 
 	public function edit(Request $request, Application $app, $projectId)

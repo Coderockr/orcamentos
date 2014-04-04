@@ -19,20 +19,12 @@
                         <label for="tags">Tags</label>
                         <p>{{ project and project.tags ? project.tags : "" }}</p>
                     </div>
-                    <div>
-                        <label for="privateNotes">Observações privadas</label>
-                        <p>{{ project and project.privateNotes ? project.privateNotes : "" }}</p>
-                    </div>
                 </div>
                 <div class="col-md-6">
                     <div>
                         <label for="description">Descrição</label>
                         <p>{{ project and project.description ? project.description : "" }}</p>
                     </div> 
-                    <div>
-                        <label for="clientNotes">Observações para o Cliente</label>
-                        <p>{{ project and project.clientNotes ? project.clientNotes : "" }}</p>
-                    </div>
                 </div>
             </div>
             {% if project.quoteCollection | length > 0 %}
