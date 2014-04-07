@@ -9,7 +9,7 @@ use Orcamentos\Service\User as UserService;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\TwitterBootstrapView;
-use Pagerfanta\Adapter\ArrayAdapter;;
+use Pagerfanta\Adapter\ArrayAdapter;
 
 class UserController
 {
@@ -27,7 +27,8 @@ class UserController
 		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
 		return $app['twig']->render('user/index.twig', array( 
 			'htmlPagination' => $htmlPagination,
-			'pagerfanta' => $pagerfanta
+			'pagerfanta' => $pagerfanta,
+			'active_page' => 'user'
 		));
 	}	
 
@@ -40,7 +41,8 @@ class UserController
 
 		return $app['twig']->render('user/edit.twig', 
 			array(
-				'user' => $user
+				'user' => $user,
+				'active_page' => 'user'
 			)
 		);
 	}
@@ -63,7 +65,8 @@ class UserController
 	{
 		$user = $app['orm.em']->getRepository('Orcamentos\Model\User')->find($userId);
 		return $app['twig']->render('user/detail.twig', array( 
-			'user' => $user
+			'user' => $user,
+			'active_page' => 'user'
 		));
 	}
 }

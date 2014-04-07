@@ -10,6 +10,6 @@ class CompanyController
 {
 	public function index(Request $request, Application $app)
 	{
-		return $app['twig']->render('company/index.twig', array());
+		return $app['twig']->render('company/index.twig', array( ));
 	}
 }

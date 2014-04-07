@@ -10,6 +10,6 @@ class IndexController
 {
 	public function index(Request $request, Application $app)
 	{
-		return $app['twig']->render('index/index.twig', array());
+		return $app['twig']->render('index/index.twig', array( 'active_page' => 'panel' ));
 	}
 }

@@ -38,7 +38,8 @@ class ClientController
 		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
 		return $app['twig']->render('client/index.twig', array( 
 			'htmlPagination' => $htmlPagination,
-			'pagerfanta' => $pagerfanta
+			'pagerfanta' => $pagerfanta,
+			'active_page' => 'client'
 		));
 	}	
 
@@ -51,7 +52,8 @@ class ClientController
 
 		return $app['twig']->render('client/edit.twig', 
 			array(
-				'client' => $client
+				'client' => $client,
+				'active_page' => 'client'
 			)
 		);
 	}
@@ -76,7 +78,8 @@ class ClientController
 	{
 		$client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
 		return $app['twig']->render('client/detail.twig', array( 
-			'client' => $client
+			'client' => $client,
+			'active_page' => 'client'
 		));
 	}
 }

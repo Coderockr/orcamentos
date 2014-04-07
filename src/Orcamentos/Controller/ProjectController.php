@@ -29,7 +29,8 @@ class ProjectController
 		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
 		return $app['twig']->render('project/index.twig', array( 
 			'htmlPagination' => $htmlPagination,
-			'pagerfanta' => $pagerfanta
+			'pagerfanta' => $pagerfanta,
+			'active_page' => 'project'
 		));
 	}
 
@@ -44,7 +45,8 @@ class ProjectController
 		return $app['twig']->render('project/edit.twig', 
 			array(
 				'clients' => $clients,
-				'project' => $project
+				'project' => $project,
+				'active_page' => 'project'
 			)
 		);
 	}
@@ -69,7 +71,8 @@ class ProjectController
 	{
 		$project = $app['orm.em']->getRepository('Orcamentos\Model\Project')->find($projectId);
 		return $app['twig']->render('project/detail.twig', array( 
-			'project' => $project
+			'project' => $project,
+			'active_page' => 'project'
 		));
 	}
 

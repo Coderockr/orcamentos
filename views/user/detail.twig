@@ -1,0 +1,37 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <div id="main" class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <h3>Usuário {{ user.name }}</h4>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+        <div class="div">
+            <input type="hidden" name="id" value="{{ user ? user.id : "" }}" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <label for="name">Nome *</label>
+                        <p>{{ user and user.name ? user.name : "" }}</p>
+                    </div>
+                    <div>
+                        <label for="email">E-mail</label>
+                        <p>{{ user ? user.email : "" }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <label for="login">Login</label>
+                        <p>{{ user and user.login ? user.login : "" }}</p>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="admin" id="admin" {{ user and user.admin ? 'checked="checked"' : "" }} readonly />
+                        <label for="admin">Admin</label> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+{% endblock %}
