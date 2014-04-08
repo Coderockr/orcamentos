@@ -6,13 +6,15 @@
                 <h3>Clientes</h4>
             </div>
             <div class="col-md-3">
-                <a href="/client/edit" class="btn btn-primary" title="Cadastre um novo cliente">Novo Projeto</a>
+                {% if app.session.get('isAdmin') %}
+                    <a href="/client/edit" class="btn btn-primary" title="Cadastre um novo cliente">Novo Projeto</a>
+                {% endif %}
             </div>
         </div>
 
         <div class="row cards">
             <div class="col-md-4">
-                <a href="/client/detail/{{ client.id }}" class="thumbnail" title="Visualizar projetos e orçamentos">
+                <div class="thumbnail">
                     <span class="caption">
                         <span class="img-rounded"><span></span><img src="{{ client and client.logotype ? '/public/img/logotypes/' ~ client.logotype : "/public/img/photo_g.png" }}" alt="" width="80" height="80" /></span>
                         <h4>{{ client.name }}</h4>
@@ -20,8 +22,10 @@
                             {{ client.projectCollection | length }} Projetos
                         </p>
                     </span>
-                </a>
-                <a href="/client/edit/{{ client.id }}" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                </div>
+                {% if app.session.get('isAdmin') %}
+                    <a href="/client/edit/{{ client.id }}" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                {% endif %}
             </div>
             <div class="col-md-8 projects">
                 <h4>Projetos</h4>
@@ -30,7 +34,9 @@
                     <div class="caption">
                         <h4>
                             {{ project.name }}
-                            <a href="#" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                            {% if app.session.get('isAdmin') %}
+                                <a href="#" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                            {% endif %}
                         </h4>
                         <p>
                             {{ project.tags }}

@@ -2,15 +2,23 @@ header, header nav .bg {
 	background: #2B363C;
 	height: 80px;
 }
-header h1 {
-	font-size: 2em;
+
+header .navbar-header {
 	margin-top: 10px;
 }
-header h1 a {
+
+header h1 {
+	font-size: 2em;
+	margin: 0px 0px;
+	color:#3bafda;
+}
+
+header span {
 	display: block;
 	padding-top: 16px;
 }
-header h1 a img {
+
+header span img {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -20,30 +28,41 @@ header h1 a img {
 	margin-top: -16px;
 	border: 1px solid #2B363C;
 }
-header h1 a span {
+
+header span h1 {
 	display: block;
 	float: left;
 	width: -webkit-calc(100% - 120px);
 	width: -moz-calc(100% - 120px);
 	width: calc(100% - 120px);
 }
-header h1 a small {
+
+header span small {
 	float: left;
-	font-size: 0.45em;
+	font-size: 0.7	em;
 	margin-top: 3px;
 	opacity: 0;
 }
-header h1 a:hover small {
+
+header span a small {
+	color: #fff;
+	margin-right: 10px;
+}
+
+header .navbar-header:hover small {
 	opacity: 1;
 }
+
 header nav .bg {
 	display: block;
 	position: absolute;
 	width: 100%;
 }
+
 .navbar-custom {
 	background: transparent;
 }
+
 .navbar-nav > li > a {
 	margin: 15px 6px 0;
 	padding-bottom: 30px;
@@ -269,6 +288,6 @@ a *{
 #new_project select { margin: 10px 0px 5px 0px;}
 
 .margin20 { margin-top: 20px;}
-.margin30 { margin-top: 30px;}
+.margin30 { margin-top: 32px;}
 
 #project_detail .col-md-6:first-child { border-right: 1px solid #ddd ;};

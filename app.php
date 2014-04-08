@@ -20,7 +20,7 @@ $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 // where does the user want to go?
 $app->before(function (Request $request) use ($app) {
     $requestUri = $request->getRequestUri();
-    if ( $requestUri !== '/'  && $requestUri !== '/logout' && $requestUri !== '/login'  && $app['session']->get('email') == null ) {
+    if ( $requestUri !== '/'  && $requestUri !== '/logout' && $requestUri !== '/login' && $app['session']->get('email') == null ) {
         return $app->redirect('/');
     }
 });
@@ -49,6 +49,7 @@ $app->get('/project/{page}', 'Orcamentos\Controller\ProjectController::index')->
 
 //Company Controller
 $app->get('/company', 'Orcamentos\Controller\CompanyController::index');
+$app->get('/company/edit', 'Orcamentos\Controller\CompanyController::edit');
 
 //Admin Controller
 $app->post('/login', 'Orcamentos\Controller\AdminController::login');

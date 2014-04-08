@@ -50,7 +50,30 @@ class Resource
      */
     protected $company;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Type", inversedBy="resourceCollection", cascade={"persist", "merge", "refresh"})
+     * 
+     * @var Type
+     */
+    protected $type;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     *
+     * @var integer
+     */
+    private $equipmentLife;
+
+    public function getLifetime()
+    {
+        return $this->lifetime;
+    }
+    
+    public function setLifetime($lifetime)
+    {
+        return $this->lifetime = $lifetime;
+    }
+    
     public function __construct()
     {
         $this->setCreated(date('Y-m-d H:i:s'));
@@ -64,6 +87,16 @@ class Resource
     public function setName($name)
     {
         return $this->name = filter_var($name, FILTER_SANITIZE_STRING);
+    }
+    
+    public function getCost()
+    {
+        return $this->cost;
+    }
+    
+    public function setCost($cost)
+    {
+        return $this->cost = $cost;
     }
     
     public function getPrivateNotes()
@@ -104,6 +137,16 @@ class Resource
     public function setTags($tags)
     {
         return $this->tags = $tags;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+    
+    public function setType($type)
+    {
+        return $this->type = $type;
     }
 
     /**

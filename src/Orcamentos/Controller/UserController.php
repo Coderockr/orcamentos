@@ -17,7 +17,7 @@ class UserController
 	{
 		$company = $app['orm.em']->getRepository('Orcamentos\Model\Company')->find($app['session']->get('companyId'));
 		$users = $company->getUserCollection();
-		
+
 		$adapter = new DoctrineCollectionAdapter($users);
 		$pagerfanta = new Pagerfanta($adapter);
 		$pagerfanta->setCurrentPage($page);
@@ -29,7 +29,7 @@ class UserController
 		return $app['twig']->render('user/index.twig', array( 
 			'htmlPagination' => $htmlPagination,
 			'pagerfanta' => $pagerfanta,
-			'active_page' => 'user'
+			'active_page' => 'user' 
 		));
 	}	
 

@@ -37,6 +37,13 @@ class Company
     private $name;
 
     /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    private $telephone;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      *
      * @var string
@@ -99,6 +106,16 @@ class Company
     {
         return $this->name = filter_var($name, FILTER_SANITIZE_STRING);
     }
+
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+    
+    public function setTelephone($telephone)
+    {
+        return $this->telephone = $telephone;
+    }
     
     public function getSite()
     {
@@ -159,6 +176,16 @@ class Company
     public function setProjectCollection($projectCollection)
     {
         return $this->projectCollection = $projectCollection;
+    }
+
+    public function getResourceCollection()
+    {
+        return $this->resourceCollection;
+    }
+    
+    public function setResourceCollection($resourceCollection)
+    {
+        return $this->resourceCollection = $resourceCollection;
     }
 
     /**
