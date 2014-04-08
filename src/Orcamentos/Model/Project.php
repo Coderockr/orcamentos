@@ -51,14 +51,14 @@ class Project
     private $tags;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Client", cascade={"persist", "merge", "refresh"})
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="projectCollection", cascade={"persist", "merge", "refresh"})
      * 
      * @var Client
      */
     protected $client;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Company", cascade={"persist", "merge", "refresh"})
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="projectCollection",  cascade={"persist", "merge", "refresh"})
      * 
      * @var Company
      */

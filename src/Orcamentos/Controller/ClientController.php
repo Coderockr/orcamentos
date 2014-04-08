@@ -35,6 +35,7 @@ class ClientController
 		$routeGenerator = function($page) use ($app) {
 	        return '/user/'.$page;
 	    };
+
 		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
 		return $app['twig']->render('client/index.twig', array( 
 			'htmlPagination' => $htmlPagination,

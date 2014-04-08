@@ -15,15 +15,10 @@
                 <span class="bg"></span>
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-5">
-                            <div class="navbar-header">
-                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                  <span class="sr-only">Toggle navigation</span>
-                                  <span class="icon-bar"></span>
-                                  <span class="icon-bar"></span>
-                                  <span class="icon-bar"></span>
-                                </button>
-                                <h1>
+                        <div class="col-md-5 clearfix">
+                            <div class="navbar-header clearfix">
+                                <a href="/logout" class="pull-right margin30"><small>sair</small></a>
+                                <h1 class="pull-left">
                                     <a href="/company">
                                         <img src="/public/img/logo-coderockr.png" width="100" height="100" />
                                         <span>Coderockr</span>
@@ -33,7 +28,6 @@
                             <div class="clearfix"></div>
                             </div>
                         </div>
-
                         <div class="col-md-7">
                             <div class="collapse navbar-collapse">
                                 <ul class="nav navbar-nav navbar-right">
@@ -50,7 +44,7 @@
             </nav>
         </header>
         {% block content %}{% endblock %}
-        <footer>
+        <footer class="margin20">
             <div class="container">
                 <div>
                     <div class="row">

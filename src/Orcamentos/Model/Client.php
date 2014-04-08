@@ -66,7 +66,7 @@ class Client
     private $telephone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Company", cascade={"persist", "merge", "refresh"})
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="clientCollection",  cascade={"persist", "merge", "refresh"})
      * 
      * @var Company
      */

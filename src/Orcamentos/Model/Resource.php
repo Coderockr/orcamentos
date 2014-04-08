@@ -44,18 +44,12 @@ class Resource
     private $cost;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Company", cascade={"persist", "merge", "refresh"})
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="resourceCollection", cascade={"persist", "merge", "refresh"})
      * 
      * @var Company
      */
     protected $company;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Quote", cascade={"persist", "merge", "refresh"})
-     * 
-     * @var Quote
-     */
-    protected $quote;
 
     public function __construct()
     {

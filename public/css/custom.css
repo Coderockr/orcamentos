@@ -269,5 +269,6 @@ a *{
 #new_project select { margin: 10px 0px 5px 0px;}
 
 .margin20 { margin-top: 20px;}
+.margin30 { margin-top: 30px;}
 
 #project_detail .col-md-6:first-child { border-right: 1px solid #ddd ;};

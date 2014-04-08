@@ -37,13 +37,6 @@ class User
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=20)
-     *
-     * @var string
-     */
-    private $login;
-
-    /**
      * @ORM\Column(type="string", length=150, unique=true)
      *
      * @var string
@@ -65,7 +58,7 @@ class User
     private $admin;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Company", cascade={"persist", "merge", "refresh"})
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="userCollection", cascade={"persist", "merge", "refresh"})
      * 
      * @var Company
      */
@@ -86,16 +79,6 @@ class User
         return $this->name = filter_var($name, FILTER_SANITIZE_STRING);
     }
     
-    public function getLogin()
-    {
-        return $this->login;
-    }
-    
-    public function setLogin($login)
-    {
-        return $this->login = $login;
-    }
-
     public function getCompany()
     {
         return $this->company;

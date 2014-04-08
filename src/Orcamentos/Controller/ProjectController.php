@@ -9,17 +9,18 @@ use Orcamentos\Service\Project as ProjectService;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\TwitterBootstrapView;
-use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 
 class ProjectController
 {
 	public function index(Request $request, Application $app, $page)
 	{
 		$em = $app['orm.em'];
-		$projects = $em->getRepository('Orcamentos\Model\Project')->findAll();
+		
+		$company = $app['orm.em']->getRepository('Orcamentos\Model\Company')->find($app['session']->get('companyId'));
+		$projects = $company->getProjectCollection();
 
-
-		$adapter = new ArrayAdapter($projects);
+		$adapter = new DoctrineCollectionAdapter($projects);
 		$pagerfanta = new Pagerfanta($adapter);
 		$pagerfanta->setCurrentPage($page);
 		$view = new TwitterBootstrapView();

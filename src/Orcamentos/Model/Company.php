@@ -131,6 +131,36 @@ class Company
         return $this->responsable = $responsable;
     }
 
+    public function getClientCollection()
+    {
+        return $this->clientCollection;
+    }
+    
+    public function setClientCollection($clientCollection)
+    {
+        return $this->clientCollection = $clientCollection;
+    }
+    
+    public function getUserCollection()
+    {
+        return $this->userCollection;
+    }
+    
+    public function setUserCollection($userCollection)
+    {
+        return $this->userCollection = $userCollection;
+    }
+
+    public function getProjectCollection()
+    {
+        return $this->projectCollection;
+    }
+    
+    public function setProjectCollection($projectCollection)
+    {
+        return $this->projectCollection = $projectCollection;
+    }
+
     /**
      * @return integer
      */

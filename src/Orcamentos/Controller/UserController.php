@@ -9,15 +9,16 @@ use Orcamentos\Service\User as UserService;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\TwitterBootstrapView;
-use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 
 class UserController
 {
 	public function index(Request $request, Application $app, $page)
 	{
-		$users = $app['orm.em']->getRepository('Orcamentos\Model\User')->findAll();
+		$company = $app['orm.em']->getRepository('Orcamentos\Model\Company')->find($app['session']->get('companyId'));
+		$users = $company->getUserCollection();
 		
-		$adapter = new ArrayAdapter($users);
+		$adapter = new DoctrineCollectionAdapter($users);
 		$pagerfanta = new Pagerfanta($adapter);
 		$pagerfanta->setCurrentPage($page);
 		$view = new TwitterBootstrapView();

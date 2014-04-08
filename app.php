@@ -3,6 +3,7 @@ require_once __DIR__.'/bootstrap.php';
 
 use Silex\Application,
     Silex\Provider\DoctrineServiceProvider,
+    Symfony\Component\HttpFoundation\Request,
     Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 
 $app = new Application();
@@ -16,6 +17,14 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 
+// where does the user want to go?
+$app->before(function (Request $request) use ($app) {
+    $requestUri = $request->getRequestUri();
+    if ( $requestUri !== '/'  && $requestUri !== '/logout' && $requestUri !== '/login'  && $app['session']->get('email') == null ) {
+        return $app->redirect('/');
+    }
+});
+    
 // Index Controller / Dashboard
 $app->get('/', 'Orcamentos\Controller\IndexController::index');
 
@@ -40,6 +49,10 @@ $app->get('/project/{page}', 'Orcamentos\Controller\ProjectController::index')->
 
 //Company Controller
 $app->get('/company', 'Orcamentos\Controller\CompanyController::index');
+
+//Admin Controller
+$app->post('/login', 'Orcamentos\Controller\AdminController::login');
+$app->get('/logout', 'Orcamentos\Controller\AdminController::logout');
 
 //getting the EntityManager
 $app->register(new DoctrineServiceProvider, array(

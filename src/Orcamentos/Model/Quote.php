@@ -37,32 +37,39 @@ class Quote
     private $version;
 
     /**
-     * @ORM\Column(type="string", length=100, unique=true)
-     *
-     * @var string
-     */
-    private $insideNotes;
-
-    /**
      * @ORM\Column(type="string", length=150)
      *
      * @var string
      */
-    private $clientNotes;
+    private $shareUrl;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project", cascade={"persist", "merge", "refresh"})
+     * @ORM\Column(type="integer")
+     *
+     * @var integer
+     */
+    private $status;
+
+    /**
+     * @ORM\Column(type="text")
+     *
+     * @var text
+     */
+    private $privateNotes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="quoteCollection", cascade={"persist", "merge", "refresh"})
      * 
      * @var Project
      */
     protected $project;
 
     /**
-     * @ORM\OneToMany(targetEntity="Resource", mappedBy="quote", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="ClientNote", mappedBy="quote", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
      * @var Doctrine\Common\Collections\Collection
      */
-    protected $resourceCollection;
+    protected $clientNotesCollection;
 
     public function __construct()
     {
@@ -79,14 +86,44 @@ class Quote
         return $this->version = $version;
     }
     
-    public function getInsideNotes()
+    public function getPrivateNotes()
     {
-        return $this->insideNotes;
+        return $this->privateNotes;
     }
     
-    public function setInsideNotes($insideNotes)
+    public function setPrivateNotes($privateNotes)
     {
-        return $this->insideNotes = $insideNotes;
+        return $this->privateNotes = $privateNotes;
+    } 
+
+    public function getShareUrl()
+    {
+        return $this->shareUrl;
+    }
+    
+    public function setShareUrl($shareUrl)
+    {
+        return $this->shareUrl = $shareUrl;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    
+    public function setStatus($status)
+    {
+        return $this->status = $status;
+    }    
+
+    public function getProject()
+    {
+        return $this->project;
+    }
+    
+    public function setProject($project)
+    {
+        return $this->project = $project;
     }
 
     public function getClientNotes()
@@ -97,6 +134,16 @@ class Quote
     public function setClientNotes($clientNotes)
     {
         return $this->clientNotes = $clientNotes;
+    }
+
+    public function getResourceCollection()
+    {
+        return $this->ResourceCollection;
+    }
+    
+    public function setResourceCollection($ResourceCollection)
+    {
+        return $this->ResourceCollection = $ResourceCollection;
     }
 
     /**
