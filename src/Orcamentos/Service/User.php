@@ -4,6 +4,7 @@ namespace Orcamentos\Service;
 
 use Orcamentos\Model\User as UserModel;
 use Zend\Crypt\Password\Bcrypt;
+use Exception;
 
 /**
  * User Entity

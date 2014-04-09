@@ -1,54 +1,51 @@
 {% extends "layout.twig" %}
 {% block content %}
-    <div id="main" class="container">
+    <div class="row">
+        <div class="col-md-9">
+              {% if project is not null %}
+                <h3>Editar Projeto</h4>
+             {% else %}
+                <h3>Novo Projeto</h4>
+             {% endif %}   
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+    <form class="form" id="new_project" method="POST" action="/project/create">
+        <input type="hidden" name="id" value="{{ project ? project.id : "" }}" />
         <div class="row">
-            <div class="col-md-9">
-                  {% if project is not null %}
-                    <h3>Editar Projeto</h4>
-                 {% else %}
-                    <h3>Novo Projeto</h4>
-                 {% endif %}   
+            <div class="col-md-6">
+                <div>
+                    <label for="name">Nome *</label>
+                    <input type="text" name="name" id="name" value="{{ project and project.name ? project.name : "" }}" required class="form-control" />
+                </div>
+                <div>
+                    <label for="client">Cliente *</label><br>
+                    <select id="client" name="client">
+                        {% for client in clients %}
+                            <option value="{{ client.id }}" {{ project and client.id == project.client.id ? 'selected="selected"' : "" }}>{{ client.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="tags">Tags *</label>
+                    <input type="text" name="tags" id="tags" value="{{ project and project.tags ? project.tags : "" }}" required class="form-control" />
+                </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
+                <div>
+                    <label for="description">Descrição *</label>
+                    <textarea name="description" id="description" class="form-control" required rows="10">{{ project and project.description ? project.description : "" }}</textarea>
+                </div> 
             </div>
         </div>
-        <form class="form" id="new_project" method="POST" action="/project/create">
-            <input type="hidden" name="id" value="{{ project ? project.id : "" }}" />
-            <div class="row">
-                <div class="col-md-6">
-                    <div>
-                        <label for="name">Nome *</label>
-                        <input type="text" name="name" id="name" value="{{ project and project.name ? project.name : "" }}" required class="form-control" />
-                    </div>
-                    <div>
-                        <label for="client">Cliente *</label><br>
-                        <select id="client" name="client">
-                            {% for client in clients %}
-                                <option value="{{ client.id }}" {{ client.id == project.client.id ? 'selected="selected"' : "" }}>{{ client.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div>
-                        <label for="tags">Tags *</label>
-                        <input type="text" name="tags" id="tags" value="{{ project and project.tags ? project.tags : "" }}" required class="form-control" />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div>
-                        <label for="description">Descrição *</label>
-                        <textarea name="description" id="description" class="form-control" required rows="10">{{ project and project.description ? project.description : "" }}</textarea>
-                    </div> 
-                </div>
+        <div class="row submit">
+            <div class="col-md-6">
+                <a href="/project" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
             </div>
-            <div class="row submit">
-
-                <div class="col-md-6">
-                    <a href="/client" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
-                </div>
-                <div class="col-md-6">
-                    <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
-                </div>
+            <div class="col-md-6">
+                <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
             </div>
-        </form>
-    </div>  
+        </div>
+    </form>
 {% endblock %}

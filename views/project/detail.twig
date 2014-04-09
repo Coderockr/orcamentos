@@ -1,59 +1,57 @@
 {% extends "layout.twig" %}
 {% block content %}
-    <div id="main" class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <h3>Projeto {{ project.name }}</h4>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+    <div class="form" id="project_detail">
         <div class="row">
-            <div class="col-md-9">
-                <h3>Projeto {{ project.name }}</h4>
+            <div class="col-md-6">
+                <div>
+                    <label for="client">Cliente</label><br>
+                    <p>{{ project and project.client ? project.client.name : "" }}</p>
+                </div>
+                <div>
+                    <label for="tags">Tags</label>
+                    <p>{{ project and project.tags ? project.tags : "" }}</p>
+                </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
+                <div>
+                    <label for="description">Descrição</label>
+                    <p>{{ project and project.description ? project.description : "" }}</p>
+                </div> 
             </div>
         </div>
-        <div class="form" id="project_detail">
-            <div class="row">
-                <div class="col-md-6">
-                    <div>
-                        <label for="client">Cliente</label><br>
-                        <p>{{ project and project.client ? project.client.name : "" }}</p>
-                    </div>
-                    <div>
-                        <label for="tags">Tags</label>
-                        <p>{{ project and project.tags ? project.tags : "" }}</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div>
-                        <label for="description">Descrição</label>
-                        <p>{{ project and project.description ? project.description : "" }}</p>
-                    </div> 
-                </div>
-            </div>
-            {% if project.quoteCollection | length > 0 %}
-                <div class="row margin20">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <div class="row">
-                                <div class="col-md-12 projects">
-                                    <label for="quotes">Orcamentos</label><br>
-                                    {% for quote in project.quoteCollection %}
-                                       <div class="col-md-4">
-                                            <a data-href="/quote/delete/{{ quote.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar orçamento"></a>
-                                            <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
-                                                <span class="caption">
-                                                    <h5>{{ quote.version }}</h5>
-                                                    <p>
-                                                        <time datetime="2013-11-09T13:40">{{ quote.created }}</time><br />
-                                                     <!--    R$ quote.cost  -->
-                                                    </p>
-                                                </span>
-                                            </a>
-                                        </div>
-                                    {% endfor %}
-                                </div>
+        {% if project.quoteCollection | length > 0 %}
+            <div class="row margin20">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <div class="row">
+                            <div class="col-md-12 projects">
+                                <label for="quotes">Orcamentos</label><br>
+                                {% for quote in project.quoteCollection %}
+                                   <div class="col-md-4">
+                                        <a data-href="/quote/delete/{{ quote.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar orçamento"></a>
+                                        <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
+                                            <span class="caption">
+                                                <h5>{{ quote.version }}</h5>
+                                                <p>
+                                                    <time datetime="2013-11-09T13:40">{{ quote.created }}</time><br />
+                                                 <!--    R$ quote.cost  -->
+                                                </p>
+                                            </span>
+                                        </a>
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
                 </div>
-            {% endif %}
-        </div>
-    </div>  
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -60,10 +60,22 @@
                             <div class="clearfix"></div>
                             </div>
                         </div>
+                    </div>
                 </div>
             </nav>
         </header>
-        {% block content %}{% endblock %}
+        <div id="main" class="container">
+            {% for flashMessage in app.session.flashbag.get('message') %}
+                <div class="text-center center-block">
+                    <h4>
+                        <span class="label label-danger">
+                            {{ flashMessage }}
+                        </span>
+                    </h4>
+                </div>
+            {% endfor %}            
+            {% block content %}{% endblock %}
+        </div>
         <footer class="margin20">
             <div class="container">
                 <div>

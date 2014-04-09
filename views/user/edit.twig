@@ -1,53 +1,48 @@
 {% extends "layout.twig" %}
 {% block content %}
-    <div id="main" class="container">
+    <div class="row">
+        <div class="col-md-9">
+              {% if user is not null %}
+                <h3>Editar Usuário</h4>
+             {% else %}
+                <h3>Novo Usuário</h4>
+             {% endif %}   
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+    <form class="form" id="new_user" method="POST" action="/user/create">
+        <input type="hidden" name="id" value="{{ user ? user.id : "" }}" />
         <div class="row">
-            <div class="col-md-9">
-                  {% if user is not null %}
-                    <h3>Editar Usuário</h4>
-                 {% else %}
-                    <h3>Novo Usuário</h4>
-                 {% endif %}   
+            <div class="col-md-6">
+                <div>
+                    <label for="name">Nome *</label>
+                    <input type="text" name="name" id="name" value="{{ user and user.name ? user.name : "" }}" required class="form-control" />
+                </div>
+                <div>
+                    <label for="email">E-mail *</label>
+                    <input type="email" name="email" id="email" required value="{{ user ? user.email : "" }}" class="form-control" />
+                </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
+                <div>
+                    <label for="password">Senha *</label>
+                    <input type="password" name="password" id="password" value="{{ user and user.password ? user.password : "" }}" required class="form-control" />
+                </div>
+                <div>
+                    <br/><br/>
+                    <input type="checkbox" name="admin" id="admin" {{ user and user.admin ? 'checked="checked"' : "" }}>
+                    <label for="admin">Admin</label>
+                </div>
             </div>
         </div>
-        <form class="form" id="new_user" method="POST" action="/user/create">
-            <input type="hidden" name="id" value="{{ user ? user.id : "" }}" />
-            <div class="row">
-                <div class="col-md-6">
-                    <div>
-                        <label for="name">Nome *</label>
-                        <input type="text" name="name" id="name" value="{{ user and user.name ? user.name : "" }}" required class="form-control" />
-                    </div>
-                    <div>
-                        <label for="email">E-mail *</label>
-                        <input type="email" name="email" id="email" required value="{{ user ? user.email : "" }}" class="form-control" />
-                    </div>
-                    <div>
-                        <input type="checkbox" name="admin" id="admin" {{ user and user.admin ? 'checked="checked"' : "" }}>
-                        <label for="admin">Admin</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div>
-                        <label for="login">Login</label>
-                        <input type="text" name="login" id="login" value="{{ user and user.login ? user.login : "" }}" class="form-control" />
-                    </div>
-                    <div>
-                        <label for="password">Senha *</label>
-                        <input type="password" name="password" id="password" value="{{ user and user.password ? user.password : "" }}" required class="form-control" />
-                    </div>
-                </div>
+        <div class="row submit">
+            <div class="col-md-6">
+                <a href="/user" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
             </div>
-            <div class="row submit">
-                <div class="col-md-6">
-                    <a href="/user" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
-                </div>
-                <div class="col-md-6">
-                    <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
-                </div>
+            <div class="col-md-6">
+                <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
             </div>
-        </form>
-    </div>  
+        </div>
+    </form>
 {% endblock %}

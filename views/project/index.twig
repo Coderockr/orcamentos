@@ -1,35 +1,33 @@
 {% extends "layout.twig" %}
 {% block content %}
-    <div id="main" class="container">
-        <div class="row">
-            <div class="col-md-9">
-                <h3>Projetos</h4>
-            </div>
-            <div class="col-md-3">
-                <a href="/project/edit" class="btn btn-primary" title="Cadastre um novo projeto">Novo Projeto</a>
-            </div>
+    <div class="row">
+        <div class="col-md-9">
+            <h3>Projetos</h4>
         </div>
-        <div class="row cards">
-            {% for project in pagerfanta %}
-                <div class="col-md-4">
-                    <a data-href="/project/delete/{{ project.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar projeto"></a>
-                    <a href="/project/detail/{{ project.id }}" class="thumbnail" title="Visualizar projeto">
-                        <span class="caption">
-                            <h4>{{ project.name }}</h4>
-                            <p>
-                                {{ project.client.name }}<br />
-                                {{ project.tags }}
-                            </p>
-                        </span>
-                    </a>
-                    <a href="/project/edit/{{ project.id }}" title="Editar projeto" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-                </div>
-            {% endfor %}
+        <div class="col-md-3">
+            <a href="/project/edit" class="btn btn-primary" title="Cadastre um novo projeto">Novo Projeto</a>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                {{ htmlPagination|raw }}
+    </div>
+    <div class="row cards">
+        {% for project in pagerfanta %}
+            <div class="col-md-4">
+                <a data-href="/project/delete/{{ project.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar projeto"></a>
+                <a href="/project/detail/{{ project.id }}" class="thumbnail" title="Visualizar projeto">
+                    <span class="caption">
+                        <h4>{{ project.name }}</h4>
+                        <p>
+                            {{ project.client.name }}<br />
+                            {{ project.tags }}
+                        </p>
+                    </span>
+                </a>
+                <a href="/project/edit/{{ project.id }}" title="Editar projeto" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
             </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ htmlPagination|raw }}
         </div>
     </div>
 {% endblock %}

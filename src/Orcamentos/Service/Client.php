@@ -43,7 +43,6 @@ class Client
         if (isset($data->cnpj)) {
             $client->setCnpj($data->cnpj);
         }
-        
         if (isset($data->telephone)) {
             $client->setTelephone($data->telephone);
         }
@@ -53,7 +52,7 @@ class Client
         if (isset($company)) {
             $client->setCompany($company);
         }
-
+        
         if (isset($logotype)) {
             $originalName = $logotype->getClientOriginalName();
             $components = explode('.', $originalName);

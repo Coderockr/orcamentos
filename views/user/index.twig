@@ -1,32 +1,30 @@
 {% extends "layout.twig" %}
 {% block content %}
-    <div id="main" class="container">
-        <div class="row">
-            <div class="col-md-9">
-                <h3>Usuários</h4>
-            </div>
-            <div class="col-md-3">
-                <a href="/user/edit" class="btn btn-primary" title="Cadastre um novo usuário">Novo Usuário</a>
-            </div>
+    <div class="row">
+        <div class="col-md-9">
+            <h3>Usuários</h4>
         </div>
-        <div class="row cards">
-            {% for user in pagerfanta %}
-                <div class="col-md-4">
-                    <a href="/user/detail/{{ user.id }}" class="thumbnail" title="Visualizar usuário">
-                        <span class="caption">
-                            <h4>{{ user.name }}</h4>
-                            <p>{{ user.email }}</p>
-                        </span>
-                    </a>
-                    <a href="/user/edit/{{ user.id }}" title="Editar usuário" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-                </div>
-            {% endfor %}
+        <div class="col-md-3">
+            <a href="/user/edit" class="btn btn-primary" title="Cadastre um novo usuário">Novo Usuário</a>
         </div>
-         
-        <div class="row">
-            <div class="col-md-12">
-                {{ htmlPagination|raw }}
+    </div>
+    <div class="row cards">
+        {% for user in pagerfanta %}
+            <div class="col-md-4">
+                <a data-href="/user/delete/{{ user.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar usuário"></a>
+                <a href="/user/detail/{{ user.id }}" class="thumbnail" title="Visualizar usuário">
+                    <span class="caption">
+                        <h4>{{ user.name }}</h4>
+                        <p>{{ user.email }}</p>
+                    </span>
+                </a>
+                <a href="/user/edit/{{ user.id }}" title="Editar usuário" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
             </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ htmlPagination|raw }}
         </div>
     </div>
 {% endblock %}

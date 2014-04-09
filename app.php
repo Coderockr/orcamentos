@@ -23,6 +23,12 @@ $app->before(function (Request $request) use ($app) {
     if ( $requestUri !== '/'  && $requestUri !== '/logout' && $requestUri !== '/login' && $app['session']->get('email') == null ) {
         return $app->redirect('/');
     }
+    if( ( stripos($requestUri, 'client') == true
+        || stripos($requestUri, 'project')   == true
+        || stripos($requestUri, 'quote')  == true
+        || stripos($requestUri, 'lead') == true ) && $app['session']->get('isAdmin') == false ) {
+        return $app->redirect('/');
+    }
 });
     
 // Index Controller / Dashboard
@@ -52,6 +58,7 @@ $app->get('/project/{page}', 'Orcamentos\Controller\ProjectController::index')->
 
 //Company Controller
 $app->get('/company', 'Orcamentos\Controller\CompanyController::edit');
+$app->post('/company/create', 'Orcamentos\Controller\CompanyController::create');
 
 //Admin Controller
 $app->post('/login', 'Orcamentos\Controller\AdminController::login');

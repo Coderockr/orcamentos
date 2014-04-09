@@ -6,6 +6,8 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Orcamentos\Service\Company as CompanyService;
+
 class CompanyController
 {
 
@@ -51,5 +53,18 @@ class CompanyController
 				'equipmentTypes' => $equipmentTypes
 			)
 		);
+	}
+
+	public function create(Request $request, Application $app)
+	{
+		$data = $request->request->all();
+		$logotype = $request->files->get('logotype');
+
+		$data['companyId'] = $app['session']->get('companyId');
+    	$data = json_encode($data);
+		$companyService = new CompanyService();
+		$company = $companyService->save($data, $logotype, $app['orm.em']);
+
+		return $app->redirect('/company');
 	}
 }

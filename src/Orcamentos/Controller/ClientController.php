@@ -65,8 +65,7 @@ class ClientController
 		$data = $request->request->all();
 		$logotype = $request->files->get('logotype');
 
-		// Pegar da session
-		$data['companyId'] = 1;
+		$data['companyId']= $app['session']->get('companyId');
 
     	$data = json_encode($data);
 		$clientService = new ClientService();

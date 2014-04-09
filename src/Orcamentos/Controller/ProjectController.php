@@ -57,8 +57,7 @@ class ProjectController
 	{	
 		$data = $request->request->all();
 		
-		// Pegar da session
-		$data['companyId'] = 1;
+		$data['companyId']= $app['session']->get('companyId');
 
     	$data = json_encode($data);
 

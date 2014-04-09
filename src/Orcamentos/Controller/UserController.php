@@ -53,8 +53,7 @@ class UserController
 	{	
 		$data = $request->request->all();
 
-		// Pegar da session
-		$data['companyId'] = 1;
+		$data['companyId']= $app['session']->get('companyId');
 
     	$data = json_encode($data);
 		$userService = new UserService();
@@ -71,13 +70,13 @@ class UserController
 		));
 	}
 
-	
 	public function delete(Request $request, Application $app, $userId)
 	{	
 		$em = $app['orm.em'];
-		$project = $em->getRepository('Orcamentos\Model\Project')->find($userId);
-		$em->remove($project);
+		$users = $em->getRepository('Orcamentos\Model\User')->find($userId);
+		$em->remove($users);
 		$em->flush();
 
-		return $app->redirect('/project');
+		return $app->redirect('/users');
 	}
+}

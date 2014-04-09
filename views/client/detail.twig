@@ -1,66 +1,64 @@
 {% extends "layout.twig" %}
 {% block content %}
-    <div id="main" class="container">
-        <div class="row">
-            <div class="col-md-9">
-                <h3>Clientes</h4>
-            </div>
-            <div class="col-md-3">
-                {% if app.session.get('isAdmin') %}
-                    <a href="/client/edit" class="btn btn-primary" title="Cadastre um novo cliente">Novo Projeto</a>
-                {% endif %}
-            </div>
+    <div class="row">
+        <div class="col-md-9">
+            <h3>Clientes</h4>
         </div>
+        <div class="col-md-3">
+            {% if app.session.get('isAdmin') %}
+                <a href="/client/edit" class="btn btn-primary" title="Cadastre um novo cliente">Novo Projeto</a>
+            {% endif %}
+        </div>
+    </div>
 
-        <div class="row cards">
-            <div class="col-md-4">
-                <a data-href="/client/delete/{{ client.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar cliente"></a>
-                <div class="thumbnail">
-                    <span class="caption">
-                        <span class="img-rounded"><span></span><img src="{{ client and client.logotype ? '/public/img/logotypes/' ~ client.logotype : "/public/img/photo_g.png" }}" alt="" width="80" height="80" /></span>
-                        <h4>{{ client.name }}</h4>
-                        <p>
-                            {{ client.projectCollection | length }} Projetos
-                        </p>
-                    </span>
-                </div>
-                {% if app.session.get('isAdmin') %}
-                    <a href="/client/edit/{{ client.id }}" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-                {% endif %}
+    <div class="row cards">
+        <div class="col-md-4">
+            <a data-href="/client/delete/{{ client.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar cliente"></a>
+            <div class="thumbnail">
+                <span class="caption">
+                    <span class="img-rounded"><span></span><img src="{{ client and client.logotype ? '/public/img/logotypes/' ~ client.logotype : "/public/img/photo_g.png" }}" alt="" width="80" height="80" /></span>
+                    <h4>{{ client.name }}</h4>
+                    <p>
+                        {{ client.projectCollection | length }} Projetos
+                    </p>
+                </span>
             </div>
-            <div class="col-md-8 projects">
-                <h4>Projetos</h4>
-                {% for project in client.projectCollection %}
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h4>
-                            {{ project.name }}
-                            {% if app.session.get('isAdmin') %}
-                                <a href="#" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-                            {% endif %}
-                        </h4>
-                        <p>
-                            {{ project.tags }}
-                        </p>
-                            <div class="row">
-                                {% for quote in project.quoteCollection %}
-                                    <div class="col-md-4">
-                                        <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
-                                            <span class="caption">
-                                                <h5>{{ quote.version }}</h5>
-                                                <p>
-                                                    <time datetime="2013-11-09T13:40">{{ quote.created }}</time><br />
-                                                 <!--    R$ quote.cost  -->
-                                                </p>
-                                            </span>
-                                        </a>
-                                    </div>
-                                {% endfor %}
-                            </div>
+            {% if app.session.get('isAdmin') %}
+                <a href="/client/edit/{{ client.id }}" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+            {% endif %}
+        </div>
+        <div class="col-md-8 projects">
+            <h4>Projetos</h4>
+            {% for project in client.projectCollection %}
+            <div class="thumbnail">
+                <div class="caption">
+                    <h4>
+                        {{ project.name }}
+                        {% if app.session.get('isAdmin') %}
+                            <a href="#" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                        {% endif %}
+                    </h4>
+                    <p>
+                        {{ project.tags }}
+                    </p>
+                        <div class="row">
+                            {% for quote in project.quoteCollection %}
+                                <div class="col-md-4">
+                                    <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
+                                        <span class="caption">
+                                            <h5>{{ quote.version }}</h5>
+                                            <p>
+                                                <time datetime="2013-11-09T13:40">{{ quote.created }}</time><br />
+                                             <!--    R$ quote.cost  -->
+                                            </p>
+                                        </span>
+                                    </a>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
