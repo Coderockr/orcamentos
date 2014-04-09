@@ -70,4 +70,14 @@ class UserController
 			'active_page' => 'user'
 		));
 	}
-}
+
+	
+	public function delete(Request $request, Application $app, $userId)
+	{	
+		$em = $app['orm.em'];
+		$project = $em->getRepository('Orcamentos\Model\Project')->find($userId);
+		$em->remove($project);
+		$em->flush();
+
+		return $app->redirect('/project');
+	}

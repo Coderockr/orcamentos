@@ -77,4 +77,13 @@ class ProjectController
 		));
 	}
 
+	public function delete(Request $request, Application $app, $projectId)
+	{	
+		$em = $app['orm.em'];
+		$project = $em->getRepository('Orcamentos\Model\Project')->find($projectId);
+		$em->remove($project);
+		$em->flush();
+
+		return $app->redirect('/project');
+	}
 }

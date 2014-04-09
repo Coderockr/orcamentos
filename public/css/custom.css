@@ -46,7 +46,7 @@ header span small {
 
 header span a small {
 	color: #fff;
-	margin-right: 10px;
+	margin: 0px 5px;
 }
 
 header .navbar-header:hover small {
@@ -290,4 +290,6 @@ a *{
 .margin20 { margin-top: 20px;}
 .margin30 { margin-top: 32px;}
 
-#project_detail .col-md-6:first-child { border-right: 1px solid #ddd ;};
+#project_detail .col-md-6:first-child { border-right: 1px solid #ddd; }
+
+.edit { cursor:pointer}

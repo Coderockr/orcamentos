@@ -7,4 +7,5 @@ $(document).ready(function(){
 		$(this).parent().parent().find("div.thumbnail").slideUp();
 		$(this).parent().removeClass("add");
 	});
+	$('[data-toggle="confirmation"]').confirmation();
 });

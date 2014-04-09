@@ -14,6 +14,7 @@
 
         <div class="row cards">
             <div class="col-md-4">
+                <a data-href="/client/delete/{{ client.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar cliente"></a>
                 <div class="thumbnail">
                     <span class="caption">
                         <span class="img-rounded"><span></span><img src="{{ client and client.logotype ? '/public/img/logotypes/' ~ client.logotype : "/public/img/photo_g.png" }}" alt="" width="80" height="80" /></span>

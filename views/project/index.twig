@@ -12,6 +12,7 @@
         <div class="row cards">
             {% for project in pagerfanta %}
                 <div class="col-md-4">
+                    <a data-href="/project/delete/{{ project.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar projeto"></a>
                     <a href="/project/detail/{{ project.id }}" class="thumbnail" title="Visualizar projeto">
                         <span class="caption">
                             <h4>{{ project.name }}</h4>

@@ -36,6 +36,7 @@
                                     <label for="quotes">Orcamentos</label><br>
                                     {% for quote in project.quoteCollection %}
                                        <div class="col-md-4">
+                                            <a data-href="/quote/delete/{{ quote.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar orçamento"></a>
                                             <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
                                                 <span class="caption">
                                                     <h5>{{ quote.version }}</h5>

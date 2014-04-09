@@ -14,6 +14,7 @@
         <div class="row cards">
             {% for client in pagerfanta %}
                 <div class="col-md-4">
+                    <a data-href="/client/delete/{{ client.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove pull-right margin20 edit" title="Apagar cliente"></a>
                     <a href="/client/detail/{{ client.id }}" class="thumbnail" title="Visualizar projetos e orçamentos">
                         <span class="caption">
                             <span class="img-rounded"><span></span>
@@ -30,9 +31,7 @@
                             </p>
                         </span>
                     </a>
-                    {% if app.session.get('isAdmin') %}
-                        <a href="/client/edit/{{ client.id }}" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-                    {% endif %}
+                    <a href="/client/edit/{{ client.id }}" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
                 </div>
             {% endfor %}
         </div>

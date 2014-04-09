@@ -8,17 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CompanyController
 {
-	public function index(Request $request, Application $app)
-	{
-		$company = $app['orm.em']->getRepository('Orcamentos\Model\Company')->find($app['session']->get("companyId"));
-
-		return $app['twig']->render('company/index.twig', 
-			array(
-				'active_page' => '',
-				'company' => $company
-			)
-		);
-	}
 
 	public function edit(Request $request, Application $app)
 	{

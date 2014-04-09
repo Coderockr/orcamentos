@@ -83,4 +83,14 @@ class ClientController
 			'active_page' => 'client'
 		));
 	}
+
+	public function delete(Request $request, Application $app, $clientId)
+	{	
+		$em = $app['orm.em'];
+		$client = $em->getRepository('Orcamentos\Model\Client')->find($clientId);
+		$em->remove($client);
+		$em->flush();
+
+		return $app->redirect('/client');
+	}
 }
