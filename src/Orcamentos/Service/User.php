@@ -24,7 +24,7 @@ class User
     {
         $data = json_decode($data);
 
-        if (!isset($data->name) || !isset($data->email) || !isset($data->login) || !isset($data->password)) {
+        if (!isset($data->name) || !isset($data->email) || !isset($data->password) || !isset($data->companyId)) {
             throw new Exception("Invalid Parameters", 1);
         }
 
@@ -44,10 +44,9 @@ class User
         }
 
         $user->setName($data->name);
-        $user->setLogin($data->login); 
         $user->setEmail($data->email); 
 
-        $company = $em->getRepository('Orcamentos\Model\Company')->find($app['session']->get('companyId'));
+        $company = $em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
         
         $user->setCompany($company);
 

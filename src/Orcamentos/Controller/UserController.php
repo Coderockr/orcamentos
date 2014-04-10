@@ -52,8 +52,7 @@ class UserController
 	public function create(Request $request, Application $app)
 	{	
 		$data = $request->request->all();
-
-		$data['companyId']= $app['session']->get('companyId');
+		$data['companyId'] = $app['session']->get('companyId');
 
     	$data = json_encode($data);
 		$userService = new UserService();
