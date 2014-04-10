@@ -62,6 +62,7 @@ $app->post('/company/create', 'Orcamentos\Controller\CompanyController::create')
 
 //Resource Controller
 $app->post('/resource/create', 'Orcamentos\Controller\ResourceController::create');
+$app->get('/resource/delete/{resourceId}', 'Orcamentos\Controller\ResourceController::delete');
 
 //Admin Controller
 $app->post('/login', 'Orcamentos\Controller\AdminController::login');

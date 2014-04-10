@@ -28,8 +28,8 @@ class ResourceController
 	public function delete(Request $request, Application $app, $resourceId)
 	{	
 		$em = $app['orm.em'];
-		$resource = $em->getRepository('Orcamentos\Model\Resource')->find($projectId);
-		$em->remove($project);
+		$resource = $em->getRepository('Orcamentos\Model\Resource')->find($resourceId);
+		$em->remove($resource);
 		$em->flush();
 
 		return $app->redirect('/company');

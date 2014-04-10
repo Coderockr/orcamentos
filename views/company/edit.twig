@@ -98,7 +98,7 @@
                                     {{ equipment.type.name }}
                                 </p>
                             </div>
-                            <a href="#" class="glyphicon glyphicon-remove" title="Apagar equipamento"></a>
+                            <a data-href="/resource/delete/{{ equipment.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar equipamento"></a>
                         </span>
                     {% endfor %}
                 </div>
@@ -144,7 +144,7 @@
                                     {{ service.type.name }}
                                 </p>
                             </div>
-                            <a href="#" class="glyphicon glyphicon-remove" title="Apagar matéria-prima"></a>
+                            <a data-href="/resource/delete/{{ service.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar matéria-prima"></a>
                         </span>
                     {% endfor %}
                 </div>
@@ -190,7 +190,7 @@
                                     {{ human.type.contractType }}
                                 </p>
                             </div>
-                            <a href="#" class="glyphicon glyphicon-remove" title="Apagar pessoa"></a>
+                            <a data-href="/resource/delete/{{ human.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar pessoa"></a>
                         </span>
                     {% endfor %}
                 </div>
