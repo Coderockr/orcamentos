@@ -77,6 +77,6 @@ class UserController
 		$em->remove($users);
 		$em->flush();
 
-		return $app->redirect('/users');
+		return $app->redirect('/user');
 	}
 }

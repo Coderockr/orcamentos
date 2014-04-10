@@ -1,0 +1,201 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-9">
+            <h3>Dados da Empresa</h4>
+        </div>
+        <div class="col-md-3">
+            <a href="/user" class="btn btn-primary" title="Cadastre um novo cliente">Usuários</a>
+        </div>
+    </div>
+    <form class="form" method="POST" action="/company/create" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <label for="name">Nome *</label>
+                    <input type="text" name="name" id="name" class="form-control" required value="{{ company and company.name ? company.name : "" }}" />
+                </div>
+                <div>
+                    <label for="responsable">Responsável *</label>
+                    <input type="text" name="responsable" id="responsable" class="form-control" required value="{{ company and company.responsable ? company.responsable : "" }}"/>
+                </div>
+                <div class="col-md-2">
+                    <label for="logo-file" class="photo-upload">
+                        <img src="{{ company and company.logotype ? '/public/img/logotypes/' ~ company.logotype : "/public/img/photo_g.png" }}" width="61" height="66">
+                    </label>
+                </div>
+                <div class="col-md-10">
+                    <label for="logo-file">Logotipo</label>
+                    <div class="input-group form-search">
+                        <input type="text" name="logoname" id="logoname" tabindex="-1" value="{{ company and company.logotype ? company.logotype : "" }}" class="form-control" />
+                        <input type="file" name="logotype" id="logotype" readonly title="Buscar Arquivo" />
+                        <span class="input-group-btn">
+                            <button data-type="last" class="btn btn-primary" type="submit">Buscar Arquivo</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <label for="telephone">Telefone *</label>
+                    <input type="text" name="telephone" id="telephone" required class="form-control" value="{{ company and company.telephone ? company.telephone : "" }}" />
+                </div>
+                <div>
+                    <label for="site">Site</label>
+                    <input type="text" name="site" id="site" class="form-control" value="{{ company and company.site ? company.site : "" }}" />
+                </div>
+                <div class="pull-right margin30">
+                    <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="margin30">
+        <h4>Recursos</h4>
+        <div class="row resources">
+            {% if equipmentResources | length > 0 %}
+                <div class="col-md-3">
+                    <h5>
+                        Equipamentos
+                        <a href="#" class="glyphicon glyphicon-plus" title="Adicionar equipamento"></a>
+                        <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de equipamento"></a>
+                    </h5>
+                    <div class="thumbnail">
+                        <form class="form">
+                            <div class="caption">
+                                <div>
+                                    <label for="nome-equip">Nome</label>
+                                    <input type="text" name="nome-equip" id="nome-equip" class="form-control" />
+                                </div>
+                                <div>
+                                    <label for="custo-equip">Custo</label>
+                                    <input type="text" name="custo-equip" id="custo-equip" class="form-control" />
+                                </div>  
+                                <div>
+                                    <label for="equipmentLife">Vida Útil ( Horas )</label>
+                                    <input type="text" name="equipmentLife" id="equipmentLife" class="form-control" />
+                                </div>
+                                <div>
+                                    <label for="equipmentType">Tipo</label><br/>
+                                    <select id="equipmentType">
+                                        {% for type in equipmentTypes %}
+                                            <option value="type.id">{{ type.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div>
+                                    <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    {% for equipment in equipmentResources %}
+                        <span class="thumbnail">
+                            <div class="caption">
+                                <h4>{{ equipment.name }}</h4>
+                                <p>
+                                    R${{ equipment.cost }}<br />
+                                    {{ equipment.type.name }}
+                                </p>
+                            </div>
+                            <a href="#" class="glyphicon glyphicon-remove" title="Apagar equipamento"></a>
+                        </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if serviceResources | length > 0 %}
+                <div class="col-md-3">
+                    <h5>
+                        Serviço
+                        <a href="#" class="glyphicon glyphicon-plus" title="Adicionar matéria-prima"></a>
+                        <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de matéria-prima"></a>
+                    </h5>
+                    <div class="thumbnail">
+                        <form class="form">
+                            <div class="caption">
+                                <div>
+                                    <label for="nome-equip">Nome</label>
+                                    <input type="text" name="nome-equip" id="nome-equip" class="form-control" />
+                                </div>
+                                <div>
+                                    <label for="custo-equip">Custo</label>
+                                    <input type="text" name="custo-equip" id="custo-equip" class="form-control" />
+                                </div>
+                                <div>
+                                    <label for="serviceType">Tipo</label><br/>
+                                    <select id="serviceType">
+                                        {% for type in serviceTypes %}
+                                            <option value="type.id">{{ type.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div>
+                                    <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    {% for service in serviceResources %}
+                        <span class="thumbnail">
+                            <div class="caption">
+                                <h4>{{ service.name }}</h4>
+                                <p>
+                                    R${{ service.cost }} / h<br />
+                                    {{ service.type.name }}
+                                </p>
+                            </div>
+                            <a href="#" class="glyphicon glyphicon-remove" title="Apagar matéria-prima"></a>
+                        </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if humanResources | length > 0 %}
+                <div class="col-md-3">
+                    <h5>
+                        RH
+                        <a href="#" class="glyphicon glyphicon-plus" title="Adicionar pessoa"></a>
+                        <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de pessoa"></a>
+                    </h5>
+                    <div class="thumbnail">
+                        <form class="form">
+                            <div class="caption">
+                                <div>
+                                    <label for="name">Funçao</label>
+                                    <input type="text" name="name" id="name" class="form-control" />
+                                </div>
+                                <div>
+                                    <label for="custo-equip">Custo</label>
+                                    <input type="text" name="custo-equip" id="custo-equip" class="form-control" />
+                                </div>
+                                <div>
+                                    <label for="humanType">Tipo</label><br/>
+                                    <select id="humanType">
+                                        {% for type in humanTypes %}
+                                            <option value="type.id">{{ type.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div>
+                                    <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    {% for human in humanResources %}
+                        <span class="thumbnail">
+                            <div class="caption">
+                                <h4>{{ human.name }}</h4>
+                                <p>
+                                    R${{ human.cost }} / hr<br />
+                                    {{ human.type.contractType }}
+                                </p>
+                            </div>
+                            <a href="#" class="glyphicon glyphicon-remove" title="Apagar pessoa"></a>
+                        </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>  
+    </div>  
+{% endblock %}
+    

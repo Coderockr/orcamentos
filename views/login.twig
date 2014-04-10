@@ -1,0 +1,29 @@
+{% extends "layout_not_logged.twig" %}
+{% block content %}
+	<div class="container margin20">
+		<div class="col-md-4 col-md-offset-4 ">
+			{% for flashMessage in app.session.flashbag.get('message') %}
+				<div class="text-center center-block">
+		            <h4>
+		            	<span class="label label-danger">
+			                {{ flashMessage }}
+			            </span>
+			        </h4>
+			    </div>
+	        {% endfor %}
+			<form class="form-signin" role="form" method="post" action="/login">
+			    <div id="form">
+			    	<div>
+			    		<label for="email" class="required">Email</label>
+			    		<input type="text" id="email" name="email" required="required" class="form-control">
+			    	</div>
+					<div class="margin20">
+						<label for="password" class="required">Password</label>
+						<input type="password" id="password" name="password" required="required" class="form-control">
+					</div>
+				</div>
+				<button class="btn btn-lg btn-primary btn-block margin20" type="submit">Entrar</button>
+			</form>
+		</div>
+	</div>
+{% endblock %}
