@@ -60,6 +60,9 @@ $app->get('/project/{page}', 'Orcamentos\Controller\ProjectController::index')->
 $app->get('/company', 'Orcamentos\Controller\CompanyController::edit');
 $app->post('/company/create', 'Orcamentos\Controller\CompanyController::create');
 
+//Resource Controller
+$app->post('/resource/create', 'Orcamentos\Controller\ResourceController::create');
+
 //Admin Controller
 $app->post('/login', 'Orcamentos\Controller\AdminController::login');
 $app->get('/logout', 'Orcamentos\Controller\AdminController::logout');

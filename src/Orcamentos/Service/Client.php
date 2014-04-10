@@ -46,7 +46,6 @@ class Client
         if (isset($data->telephone)) {
             $client->setTelephone($data->telephone);
         }
-
         $company = $em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
         
         if (isset($company)) {

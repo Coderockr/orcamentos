@@ -8,5 +8,5 @@ $(document).ready(function(){
 		$(this).parent().removeClass("add");
 	});
 	$('[data-toggle="confirmation"]').confirmation();
-	$('#telephone').mask("( 00 ) 9999-9999[9]");
+	$('#telephone').mask("(99) 9999-99999");
 });

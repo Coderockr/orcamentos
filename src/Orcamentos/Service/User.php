@@ -2,63 +2,68 @@
 
 namespace Orcamentos\Service;
 
-use Orcamentos\Model\User as UserModel;
-use Zend\Crypt\Password\Bcrypt;
-use Exception;
-
+use Orcamentos\Model\Resource as ResourceModel;
+  
 /**
- * User Entity
+ * Resource Entity
  *
  * @category Orcamentos
  * @package Service
  * @author  Mateus Guerra<mateus@coderockr.com>
  */
-class User
+class Resource
 {
     /**
-     * Function that saves a new User
+     * Function that saves a new Resource
      *
-     * @return                Function used to save a new User
+     * @return                Function used to save a new Resource
      */
-    public static function save($data, $em)
+    public static function save($data, $logotype, $em)
     {
         $data = json_decode($data);
 
-        if (!isset($data->name) || !isset($data->email) || !isset($data->password) || !isset($data->companyId)) {
+        if (!isset($data->name) || !isset($data->responsable) || !isset($data->email) || !isset($data->companyId)) {
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $user = null;
-
+        $resource = null;
         if ( isset($data->id) ) {
-            $user = $em->getRepository("Orcamentos\Model\User")->find($data->id);
+            $resource = $em->getRepository("Orcamentos\Model\Resource")->find($data->id);
         }
 
-        if (!$user) {
-            $user = new UserModel();
+        if (!$resource) {
+            $resource = new ResourceModel();
         }
 
-        if( !isset($user->password) || $data->password != $user->password) {
-            $bcrypt = new Bcrypt;
-            $user->setPassword($bcrypt->create($data->password));
+        $resource->setName($data->name);
+        $resource->setResponsable($data->responsable);
+        $resource->setEmail($data->email);
+
+        if (isset($data->cnpj)) {
+            $resource->setCnpj($data->cnpj);
         }
-
-        $user->setName($data->name);
-        $user->setEmail($data->email); 
-
+        if (isset($data->telephone)) {
+            $resource->setTelephone($data->telephone);
+        }
         $company = $em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
         
-        $user->setCompany($company);
-
-        $user->setAdmin(false);
-        
-        if (isset($data->admin)) {
-            $user->setAdmin(true);
+        if (isset($company)) {
+            $resource->setCompany($company);
         }
-      
-        $em->persist($user);
+        
+        if (isset($logotype)) {
+            $originalName = $logotype->getResourceOriginalName();
+            $components = explode('.', $originalName);
+            $fileName = md5(time()) . '.' . end($components);
+            
+            $file = Image::make($logotype->getPathName())->resize(null, 80, true, false);
+            $file->save("public/img/logotypes/" . $fileName );
+            $resource->setLogotype($fileName);
+        }
+
+        $em->persist($resource);
         $em->flush();
 
-        return $user;
+        return $resource;
     }
 }

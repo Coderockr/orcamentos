@@ -39,7 +39,6 @@ class UserController
 		if ( isset($userId) ) {
 			$user = $app['orm.em']->getRepository('Orcamentos\Model\User')->find($userId);
 		}
-
 		return $app['twig']->render('user/edit.twig', 
 			array(
 				'user' => $user,

@@ -64,14 +64,14 @@ class Resource
      */
     private $equipmentLife;
 
-    public function getLifetime()
+    public function getEquipmentLife()
     {
-        return $this->lifetime;
+        return $this->equipmentLife;
     }
     
-    public function setLifetime($lifetime)
+    public function setEquipmentLife($equipmentLife)
     {
-        return $this->lifetime = $lifetime;
+        return $this->equipmentLife = $equipmentLife;
     }
     
     public function __construct()
@@ -97,6 +97,16 @@ class Resource
     public function setCost($cost)
     {
         return $this->cost = $cost;
+    }
+        
+    public function getCompany()
+    {
+        return $this->company;
+    }
+    
+    public function setCompany($company)
+    {
+        return $this->company = $company;
     }
     
     public function getPrivateNotes()

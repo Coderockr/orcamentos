@@ -59,7 +59,7 @@ class Client
     private $logotype;
 
     /**
-     * @ORM\Column(type="string", length=13, nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      *
      * @var string
      */

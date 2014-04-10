@@ -31,7 +31,12 @@
                 </div>
                 <div>
                     <br/><br/>
-                    <input type="checkbox" name="admin" id="admin" {{ user and user.admin ? 'checked="checked"' : "" }}>
+                    {% if user and user.email == app.session.get("email") %} 
+                        <input type="hidden" name="admin" value="user.admin" />
+                        {{ user and user.admin ? '<i class="glyphicon glyphicon-ok"></i>' : '<i class="glyphicon glyphicon-remove"></i>' }}
+                    {% else %}
+                        <input type="checkbox" name="admin" id="admin" {{ user and user.admin ? 'checked="checked"' : "" }}>
+                    {% endif %}
                     <label for="admin">Admin</label>
                 </div>
             </div>
