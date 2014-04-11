@@ -43,7 +43,6 @@ class CompanyController
 
 		return $app['twig']->render('company/edit.twig', 
 			array(
-				'active_page' => '',
 				'company' => $company,
 				'equipmentResources' => $equipmentResources,
 				'serviceResources' => $serviceResources,

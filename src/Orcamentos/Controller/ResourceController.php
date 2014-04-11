@@ -31,7 +31,6 @@ class ResourceController
 		$resource = $em->getRepository('Orcamentos\Model\Resource')->find($resourceId);
 		$em->remove($resource);
 		$em->flush();
-
 		return $app->redirect('/company');
 	}
 }

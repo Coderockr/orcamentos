@@ -15,7 +15,8 @@ class ClientController
 {
 	public function index(Request $request, Application $app, $page)
 	{
-		$clientObjs = $app['orm.em']->getRepository('Orcamentos\Model\Client')->findAll();
+		$company = $app['orm.em']->getRepository('Orcamentos\Model\Company')->find($app['session']->get("companyId"));
+		$clientObjs = $company->getClientCollection();
 		$clients = array();
 		foreach ($clientObjs as $i => $client) {
 			$clients[$i]['id'] = $client->getId();
@@ -23,6 +24,7 @@ class ClientController
 			$clients[$i]['logotype'] = $client->getLogotype();
 			$projectCollection = $client->getProjectCollection();
 			$clients[$i]['numProjects'] = count($projectCollection);
+			$clients[$i]['numQuotes'] = 0;
 			foreach ($projectCollection as  $project) {
 				$clients[$i]['numQuotes'] += count($project->getQuoteCollection());
 			}

@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Quote
 {
-
     /**
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue
@@ -64,13 +63,6 @@ class Quote
      */
     protected $project;
 
-    /**
-     * @ORM\OneToMany(targetEntity="ClientNote", mappedBy="quote", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
-     * 
-     * @var Doctrine\Common\Collections\Collection
-     */
-    protected $clientNotesCollection;
-
     public function __construct()
     {
         $this->setCreated(date('Y-m-d H:i:s'));
@@ -124,26 +116,6 @@ class Quote
     public function setProject($project)
     {
         return $this->project = $project;
-    }
-
-    public function getClientNotes()
-    {
-        return $this->clientNotes;
-    }
-    
-    public function setClientNotes($clientNotes)
-    {
-        return $this->clientNotes = $clientNotes;
-    }
-
-    public function getResourceCollection()
-    {
-        return $this->ResourceCollection;
-    }
-    
-    public function setResourceCollection($ResourceCollection)
-    {
-        return $this->ResourceCollection = $ResourceCollection;
     }
 
     /**

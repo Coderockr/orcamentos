@@ -60,6 +60,10 @@ $app->get('/project/{page}', 'Orcamentos\Controller\ProjectController::index')->
 $app->get('/company', 'Orcamentos\Controller\CompanyController::edit');
 $app->post('/company/create', 'Orcamentos\Controller\CompanyController::create');
 
+//quote Controller
+$app->get('/quote/edit/{quoteId}', 'Orcamentos\Controller\QuoteController::edit')->value('quoteId', null);
+$app->post('/quote/create', 'Orcamentos\Controller\QuoteController::create');
+
 //Resource Controller
 $app->post('/resource/create', 'Orcamentos\Controller\ResourceController::create');
 $app->get('/resource/delete/{resourceId}', 'Orcamentos\Controller\ResourceController::delete');
