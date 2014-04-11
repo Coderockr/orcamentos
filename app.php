@@ -61,7 +61,11 @@ $app->get('/company', 'Orcamentos\Controller\CompanyController::edit');
 $app->post('/company/create', 'Orcamentos\Controller\CompanyController::create');
 
 //quote Controller
-$app->get('/quote/edit/{quoteId}', 'Orcamentos\Controller\QuoteController::edit')->value('quoteId', null);
+
+$app->get('/quote/new/{projectId}', 'Orcamentos\Controller\QuoteController::edit');
+$app->get('/quote/edit/{quoteId}', 'Orcamentos\Controller\QuoteController::edit');
+
+$app->get('/quote/detail/{quoteId}', 'Orcamentos\Controller\QuoteController::detail');
 $app->post('/quote/create', 'Orcamentos\Controller\QuoteController::create');
 
 //Resource Controller

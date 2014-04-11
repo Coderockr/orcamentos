@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Resource
 {
-
     /**
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue
@@ -63,6 +62,13 @@ class Resource
      * @var integer
      */
     private $equipmentLife;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ResourceQuote", mappedBy="resource", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * 
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $resourceQuoteCollection;
 
     public function getEquipmentLife()
     {

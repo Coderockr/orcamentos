@@ -33,15 +33,16 @@
             {% for quote in project.quoteCollection %}
                <div class="col-md-4">
                     <a data-href="/quote/delete/{{ quote.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar orçamento"></a>
-                    <a href="/quote/edit/{{quote.id}}" class="thumbnail" title="Visualizar projetos e orçamentos">
+                    <a href="/quote/detail/{{quote.id}}" class="thumbnail" title="Visualizar projetos e orçamentos">
                         <span class="caption">
                             <h5>{{ quote.version }}</h5>
                             <p>
                                 <time datetime="2013-11-09T13:40">{{ quote.created }}</time><br />
-                             <!--    R$ quote.cost  -->
                             </p>
                         </span>
                     </a>
+                    <a href="/quote/edit/{{ quote.id }}" title="Editar orçamento" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+
                 </div>
             {% endfor %}
         </div>

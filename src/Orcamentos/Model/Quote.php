@@ -63,6 +63,20 @@ class Quote
      */
     protected $project;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ClientNote", mappedBy="quote", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * 
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $clientNotesCollection;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ResourceQuote", mappedBy="quote", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * 
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $resourceQuoteCollection;
+    
     public function __construct()
     {
         $this->setCreated(date('Y-m-d H:i:s'));
@@ -116,6 +130,26 @@ class Quote
     public function setProject($project)
     {
         return $this->project = $project;
+    }    
+
+    public function getClientNotesCollection()
+    {
+        return $this->clientNotesCollection;
+    }
+    
+    public function setClientNotesCollection($clientNotesCollection)
+    {
+        return $this->clientNotesCollection = $clientNotesCollection;
+    }
+
+    public function getResourceQuoteCollection()
+    {
+        return $this->resourceQuoteCollection;
+    }
+    
+    public function setResourceQuoteCollection($resourceQuoteCollection)
+    {
+        return $this->resourceQuoteCollection = $resourceQuoteCollection;
     }
 
     /**

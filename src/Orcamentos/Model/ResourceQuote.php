@@ -30,14 +30,14 @@ class ResourceQuote
     protected $updated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Resource", cascade={"persist", "merge", "refresh"})
+     * @ORM\ManyToOne(targetEntity="Resource", inversedBy="resourceQuoteCollection",cascade={"persist", "merge", "refresh"})
      * 
      * @var Resource
      */
     protected $resource; 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Quote", cascade={"persist", "merge", "refresh"})
+     * @ORM\ManyToOne(targetEntity="Quote", inversedBy="resourceQuoteCollection", cascade={"persist", "merge", "refresh"})
      * 
      * @var Quote
      */

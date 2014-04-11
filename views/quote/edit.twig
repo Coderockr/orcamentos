@@ -1,5 +1,117 @@
 {% extends "layout.twig" %}
 {% block content %}
-   
+    <div class="row">
+        <div class="col-md-9">
+            <h3>Dados do Orçamento</h4>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+    <div class="form margin20">
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <label for="name">Cliente</label>
+                    <p>{{ project.client.name }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <label for="project">Projeto</label>
+                    <p>{{ project.name }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <label for="logo-file">Versão</label>
+                    <p>{{ version }}</p>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="margin30">
+        <h4>Recursos</h4>
+        <div class="row resources">
+            <div class="col-md-3">
+                <h5>
+                    Equipamentos
+                    <a href="#" class="glyphicon glyphicon-plus" title="Adicionar equipamento"></a>
+                    <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de equipamento"></a>
+                </h5>
+                <div class="thumbnail">
+                    <form class="form" method="POST" action="/resource/create">
+                        <div class="caption">
+                            <div>
+                                <label for="amount">Quantidade</label>
+                                <input type="text" name="amount" id="amount" required class="form-control" />
+                            </div>
+                            <div>
+                                <label for="resource">Recurso</label>
+                                <select name="resource">
+                                    
+                                    <option value="resourceid"></option>
+
+                                </select>
+                            </div> 
+                            <div>
+                                <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+               
+            </div>
+            <div class="col-md-3">
+                <h5>
+                    Serviço
+                    <a href="#" class="glyphicon glyphicon-plus" title="Adicionar matéria-prima"></a>
+                    <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de matéria-prima"></a>
+                </h5>
+                <div class="thumbnail">
+                    <form class="form" method="POST" action="/resource/create">
+                        <div class="caption">
+                            <div>
+                                <label for="name">Nome *</label>
+                                <input type="text" name="name" id="name" class="form-control" />
+                            </div>
+                            <div>
+                                <label for="cost">Custo *</label>
+                                <input type="text" name="cost" id="cost" class="form-control" />
+                            </div>
+                            <div>
+                                <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+               
+            </div>
+            <div class="col-md-3">
+                <h5>
+                    RH
+                    <a href="#" class="glyphicon glyphicon-plus" title="Adicionar pessoa"></a>
+                    <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de pessoa"></a>
+                </h5>
+                <div class="thumbnail">
+                    <form class="form" method="POST" action="/resource/create">
+                        <div class="caption">
+                            <div>
+                                <label for="name">Funçao *</label>
+                                <input type="text" name="name" id="name" class="form-control" />
+                            </div>
+                            <div>
+                                <label for="cost">Custo *</label>
+                                <input type="text" name="cost" id="cost" class="form-control" />
+                            </div>
+                            <div>
+                                <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+             
+            </div>
+        </div>  
+    </div>  
 {% endblock %}
     
