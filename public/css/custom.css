@@ -291,6 +291,7 @@ a *{
 
 #new_project select { margin: 10px 0px 5px 0px;}
 
+.margin10 { margin-top: 10px;}
 .margin20 { margin-top: 20px;}
 .margin30 { margin-top: 32px;}
 
@@ -301,3 +302,5 @@ a *{
 .thumbnail  {
 	padding: 0px 10px;
 }
+
+a.small { color: #fff; font-size: 10px }

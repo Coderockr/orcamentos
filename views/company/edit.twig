@@ -50,7 +50,7 @@
             </div>
         </div>
     </form>
-    <div class="margin30">
+    <div class="company margin30">
         <h4>Recursos</h4>
         <div class="row resources">
             {% if equipmentResources | length > 0 %}
@@ -61,7 +61,7 @@
                         <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de equipamento"></a>
                     </h5>
                     <div class="thumbnail">
-                        <form class="form" method="POST" action="/resource/create">
+                        <form class="form" id="companyEquipment">
                             <div class="caption">
                                 <div>
                                     <label for="name">Nome *</label>

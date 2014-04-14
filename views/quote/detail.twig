@@ -46,6 +46,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% set result = 0 %}
                             {% for resourceQuote in resourceCollection %}
                                 <tr>
                                     <th></th>
@@ -54,8 +55,17 @@
                                     <th class="text-center">{{ resourceQuote.amount }}</th>
                                     <th class="text-right">R$ {{ resourceQuote.resource.cost | number_format(2, '.', ',')  }}</th>
                                     <th class="text-right">R$ {{ (resourceQuote.resource.cost * resourceQuote.amount) | number_format(2, '.', ',') }}</th>
+                                    {% set result = result + (resourceQuote.resource.cost * resourceQuote.amount) %}
                                 </tr>
                             {% endfor %}
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th class="text-right">Total</th>
+                                <th class="text-right">{{ result | number_format(2, '.', ',') }}</th>
+                            </tr>
                         </tbody>
                     </table>
                 </div>  

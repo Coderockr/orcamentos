@@ -15,14 +15,20 @@ class ResourceController
 	{	
 		$data = $request->request->all();
 		
-		$data['companyId']= $app['session']->get('companyId');
+		$data['companyId'] = $app['session']->get('companyId');
 
     	$data = json_encode($data);
-
 		$resourceService = new ResourceService();
 		$resource = $resourceService->save($data, $app['orm.em']);
+		$result = array();
 
-		return $app->redirect('/company');
+		$result['name'] = $resource->getName();
+		$result['cost'] = $resource->getCost();
+		$typename=$resource->getType()->getName();
+		$result['equipmentType']['name'] = $typename;
+		$result['id'] = $resource->getId();
+
+		return json_encode($result);
 	}
 
 	public function delete(Request $request, Application $app, $resourceId)

@@ -6,7 +6,7 @@
         </div>
         <div class="col-md-3">
             {% if app.session.get('isAdmin') %}
-                <a href="/project/edit" class="btn btn-primary" title="Cadastre um novo cliente">Novo Projeto</a>
+                <a href="/project/edit" class="btn btn-primary" title="Cadastre um novo projeto">Novo Projeto</a>
             {% endif %}
         </div>
     </div>
@@ -32,10 +32,11 @@
             {% for project in client.projectCollection %}
             <div class="thumbnail">
                 <div class="caption">
+                    <a href="/quote/new/{{ project.id }}" class="btn btn-primary pull-right small" title="Cadastre um novo orçamento">Novo Orçamento</a>
                     <h4>
                         {{ project.name }}
                         {% if app.session.get('isAdmin') %}
-                            <a href="#" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                            <a href="/client/edit/{{ client.id }}" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
                         {% endif %}
                     </h4>
                     <p>
@@ -44,7 +45,7 @@
                         <div class="row">
                             {% for quote in project.quoteCollection %}
                                 <div class="col-md-4">
-                                    <a href="#" class="thumbnail" title="Visualizar projetos e orçamentos">
+                                    <a href="/quote/detail/{{ quote.id }}" class="thumbnail" title="Visualizar projetos e orçamentos">
                                         <span class="caption">
                                             <h5>{{ quote.version }}</h5>
                                             <p>

@@ -1,12 +1,16 @@
 {% extends "layout.twig" %}
 {% block content %}
-    <div class="row">
-        <div class="col-md-9">
-            <h3>Dados do Orçamento</h4>
-        </div>
-        <div class="col-md-3">
-        </div>
+<div class="row">
+    <div class="col-md-9">
+        <h3>Dados do Orçamento</h4>
     </div>
+    <div class="col-md-3">
+    </div>
+</div>
+<form class="form quote" action="/quote/create" method="POST">
+    <input type="hidden" name="id" value="{{ quote ? quote.id : "" }}" />
+    <input type="hidden" name="projectId" value="{{ project.id }}" />
+    <input type="hidden" name="version" value="{{ version }}" />
     <div class="form margin20">
         <div class="row">
             <div class="col-md-4">
@@ -28,7 +32,7 @@
                 </div>
             </div>
         </div>
-    </form>
+    </div>
     <div class="margin30">
         <h4>Recursos</h4>
         <div class="row resources">
@@ -39,27 +43,40 @@
                     <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de equipamento"></a>
                 </h5>
                 <div class="thumbnail">
-                    <form class="form" method="POST" action="/resource/create">
+                    <div class="form">
                         <div class="caption">
                             <div>
-                                <label for="amount">Quantidade</label>
-                                <input type="text" name="amount" id="amount" required class="form-control" />
+                                <label for="amount">Tempo *</label>
+                                <input type="text" name="amount" id="amount" class="form-control" />
                             </div>
-                            <div>
+                            <div class="margin10">
                                 <label for="resource">Recurso</label>
-                                <select name="resource">
-                                    
-                                    <option value="resourceid"></option>
-
+                                <select name="resource" id="resource">
+                                    {% for equipment in equipmentResources %}
+                                        <option value=" {{ equipment.id }}"> {{ equipment.name }}</option>
+                                    {% endfor %}
                                 </select>
                             </div> 
                             <div>
-                                <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                                <a href="#" class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</a>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-               
+                {% if quoteEquipmentResources | length > 0 %}
+                    {% for equipment in quoteEquipmentResources %}
+                        <span class="thumbnail">
+                            <input type="hidden" name="quoteResource[{{ equipment.resource.id }}]" value="{{ equipment.amount }}" />
+                            <div class="caption">
+                                <h4>{{ equipment.resource.name }}</h4>
+                                <p>
+                                    {{ equipment.amount }} h
+                                </p>
+                            </div>
+                            <a data-href="/resource/delete/{{ equipment.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar equipamento"></a>
+                        </span>
+                    {% endfor %}
+                {% endif %}
             </div>
             <div class="col-md-3">
                 <h5>
@@ -68,23 +85,40 @@
                     <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de matéria-prima"></a>
                 </h5>
                 <div class="thumbnail">
-                    <form class="form" method="POST" action="/resource/create">
+                    <div class="form" >
                         <div class="caption">
                             <div>
-                                <label for="name">Nome *</label>
-                                <input type="text" name="name" id="name" class="form-control" />
+                                <label for="amount">Tempo *</label>
+                                <input type="text" name="amount" id="amount" class="form-control" />
                             </div>
+                            <div class="margin10">
+                                <label for="resource">Recurso</label>
+                                <select name="resource" id="resource">
+                                    {% for service in serviceResources %}
+                                        <option value=" {{ service.id }}"> {{ service.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div> 
                             <div>
-                                <label for="cost">Custo *</label>
-                                <input type="text" name="cost" id="cost" class="form-control" />
-                            </div>
-                            <div>
-                                <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                                <a href="#" class="btn btn-success btn-block" title="Salvar cliente">Salvar</a>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-               
+                {% if quoteServiceResources | length > 0 %}
+                    {% for service in quoteServiceResources %}
+                        <span class="thumbnail">
+                            <input type="hidden" name="quoteResource[{{ service.resource.id }}]" value="{{ service.amount }}" />
+                            <div class="caption">
+                                <h4>{{ service.resource.name }}</h4>
+                                <p>
+                                    {{ service.amount }} h
+                                </p>
+                            </div>
+                            <a data-href="/resource/delete/{{ service.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar matéria-prima"></a>
+                        </span>
+                    {% endfor %}
+                {% endif %}
             </div>
             <div class="col-md-3">
                 <h5>
@@ -93,25 +127,48 @@
                     <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de pessoa"></a>
                 </h5>
                 <div class="thumbnail">
-                    <form class="form" method="POST" action="/resource/create">
+                    <div class="form" >
                         <div class="caption">
                             <div>
-                                <label for="name">Funçao *</label>
-                                <input type="text" name="name" id="name" class="form-control" />
+                                <label for="amount">Tempo *</label>
+                                <input type="text" name="amount" id="amount" class="form-control" />
+                            </div>
+                            <div class="margin10">
+                                <label for="resource">Recurso</label>
+                                <select name="resource" id="resource">
+                                    {% for human in humanResources %}
+                                        <option value=" {{ human.id }}"> {{ human.name }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                             <div>
-                                <label for="cost">Custo *</label>
-                                <input type="text" name="cost" id="cost" class="form-control" />
-                            </div>
-                            <div>
-                                <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                                <a href="#" class="btn btn-success btn-block" title="Salvar cliente">Salvar</a>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-             
+                {% if quoteHumanResources | length > 0 %}
+                    {% for human in quoteHumanResources %}
+                        <span class="thumbnail">
+                            <input type="hidden" name="quoteResource[{{ human.resource.id }}]" value="{{ human.amount }}" />
+                            <div class="caption">
+                                <h4>{{ human.resource.name }}</h4>
+                                <p>
+                                    {{ human.amount }} h
+                                </p>
+                            </div>
+                            <a class="glyphicon glyphicon-remove edit" title="Apagar pessoa"></a>
+                        </span>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>  
-    </div>  
+    </div>   
+    <div class="row submit">
+        <div class="col-md-12">
+            <button class="btn btn-success pull-right" type="submit" title="Salvar orçamento">Salvar</button>
+        </div>
+    </div>
+</form>
 {% endblock %}
     
