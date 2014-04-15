@@ -17,7 +17,6 @@ class QuoteController
 		if ( !isset($projectId) && !isset($quoteId) ) {
 			throw new Exception("Invalid Parameters", 1);
 		}
-
 		$quote = null;
 		$project = null;
 
@@ -118,11 +117,9 @@ class QuoteController
 		$data = $request->request->all();
 		$data['companyId'] = $app['session']->get('companyId');
     	$data = json_encode($data);
-
 		$quoteService = new QuoteService();
 		$quote = $quoteService->save($data, $app['orm.em']);
 
 		return $app->redirect('/quote/detail/' . $quote->getId());
-
 	}
 }

@@ -10,22 +10,28 @@
     </div>
     <div class="form margin20">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div>
                     <label for="name">Cliente</label>
                     <p>{{ quote.project.client.name }}</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div>
                     <label for="responsable">Projeto</label>
                     <p>{{ quote.project.name }}</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div>
                     <label for="logo-file">Versão</label>
                     <p>{{ quote.version }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <label for="privateNotes">Notas *</label>
+                    <p>{{ quote.privateNotes }}</p>
                 </div>
             </div>
         </div>
@@ -41,7 +47,7 @@
                               <th>#</th>
                               <th>Tipo</th>
                               <th>Recurso</th>
-                              <th>Quantidade</th>
+                              <th class="text-right">Quantidade</th>
                               <th class="text-right">Valor</th>
                               <th class="text-right">Resultado</th>
                             </tr>
@@ -53,7 +59,7 @@
                                     <th></th>
                                     <th>{{ resourceQuote.resource.type.name }}</th>
                                     <th>{{ resourceQuote.resource.name }}</th>
-                                    <th class="text-center">{{ resourceQuote.amount }}</th>
+                                    <th class="text-right">{{ resourceQuote.amount }}</th>
                                     <th class="text-right">R$ {{ resourceQuote.resource.cost | number_format(2, '.', ',')  }}</th>
                                     <th class="text-right">R$ {{ (resourceQuote.resource.cost * resourceQuote.amount) | number_format(2, '.', ',') }}</th>
                                     {% set result = result + (resourceQuote.resource.cost * resourceQuote.amount) %}

@@ -25,12 +25,12 @@
             </div> 
         </div>
     </div>
-    {% if project.quoteCollection | length > 0 %}
-        <div class="row cards margin20">
-            <div class="col-md-12">
-                <a href="/quote/new/{{ project.id }}" class="btn btn-primary pull-right " title="Cadastre um novo orçamento">Novo Orçamento</a>
-                <h4>Orcamentos</h4>
-            </div>
+    <div class="row cards margin20">
+        <div class="col-md-12">
+            <a href="/quote/new/{{ project.id }}" class="btn btn-primary pull-right " title="Cadastre um novo orçamento">Novo Orçamento</a>
+            <h4>Orcamentos</h4>
+        </div>
+        {% if project.quoteCollection | length > 0 %}
             {% for quote in project.quoteCollection %}
                <div class="col-md-4">
                     <a data-href="/quote/delete/{{ quote.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar orçamento"></a>
@@ -46,6 +46,6 @@
 
                 </div>
             {% endfor %}
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}

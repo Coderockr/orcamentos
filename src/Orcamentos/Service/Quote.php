@@ -43,10 +43,13 @@ class Quote
             $quote->setVersion($data->version);
         }
 
+        $quote->setStatus(1);
+        $quote->setPrivateNotes($data->privateNotes);
+
         //share_url
-        //status
 
         $em->persist($quote);
+
 
         $quoteResourceCollection = $quote->getResourceQuoteCollection();
 
@@ -57,6 +60,7 @@ class Quote
         $quoteResourceCollection->clear();
 
         foreach ($data->quoteResource as $id => $amount) {
+
             $resource = $em->getRepository("Orcamentos\Model\Resource")->find($id);
 
             $quoteResource = new ResourceQuoteModel();

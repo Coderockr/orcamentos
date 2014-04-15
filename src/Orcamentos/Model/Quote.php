@@ -36,7 +36,7 @@ class Quote
     private $version;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150,nullable=true)
      *
      * @var string
      */
@@ -50,7 +50,7 @@ class Quote
     private $status;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
      *
      * @var text
      */
