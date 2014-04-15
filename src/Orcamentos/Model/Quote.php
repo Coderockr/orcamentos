@@ -36,13 +36,6 @@ class Quote
     private $version;
 
     /**
-     * @ORM\Column(type="string", length=150,nullable=true)
-     *
-     * @var string
-     */
-    private $shareUrl;
-
-    /**
      * @ORM\Column(type="integer")
      *
      * @var integer
@@ -76,6 +69,13 @@ class Quote
      * @var Doctrine\Common\Collections\Collection
      */
     protected $resourceQuoteCollection;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Share", mappedBy="quote", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * 
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $shareCollection;
     
     public function __construct()
     {
@@ -101,16 +101,6 @@ class Quote
     {
         return $this->privateNotes = $privateNotes;
     } 
-
-    public function getShareUrl()
-    {
-        return $this->shareUrl;
-    }
-    
-    public function setShareUrl($shareUrl)
-    {
-        return $this->shareUrl = $shareUrl;
-    }
 
     public function getStatus()
     {

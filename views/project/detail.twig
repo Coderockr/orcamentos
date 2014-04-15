@@ -25,27 +25,27 @@
             </div> 
         </div>
     </div>
-    <div class="row cards margin20">
-        <div class="col-md-12">
-            <a href="/quote/new/{{ project.id }}" class="btn btn-primary pull-right " title="Cadastre um novo orçamento">Novo Orçamento</a>
-            <h4>Orcamentos</h4>
-        </div>
-        {% if project.quoteCollection | length > 0 %}
-            {% for quote in project.quoteCollection %}
-               <div class="col-md-4">
-                    <a data-href="/quote/delete/{{ quote.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar orçamento"></a>
-                    <a href="/quote/detail/{{quote.id}}" class="thumbnail" title="Visualizar projetos e orçamentos">
-                        <span class="caption">
-                            <h5>{{ quote.version }}</h5>
-                            <p>
-                                <time datetime="2013-11-09T13:40">{{ quote.created }}</time><br />
-                            </p>
-                        </span>
-                    </a>
-                    <a href="/quote/edit/{{ quote.id }}" title="Editar orçamento" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+        <div class="row cards margin20">
+            <div class="col-md-12">
+                <a href="/quote/new/{{ project.id }}" class="btn btn-primary pull-right " title="Cadastre um novo orçamento">Novo Orçamento</a>
+                <h4>Orcamentos</h4>
+            </div>
+            {% if project.quoteCollection | length > 0 %}
+                {% for quote in project.quoteCollection %}
+                   <div class="col-md-4">
+                        <a data-href="/quote/delete/{{ quote.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar orçamento"></a>
+                        <a href="/quote/detail/{{quote.id}}" class="thumbnail" title="Visualizar projetos e orçamentos">
+                            <span class="caption">
+                                <h5>{{ quote.version }}</h5>
+                                <p>
+                                    <time datetime="2013-11-09T13:40">{{ quote.created }}</time><br />
+                                </p>
+                            </span>
+                        </a>
+                        <a href="/quote/edit/{{ quote.id }}" title="Editar orçamento" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
 
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
 {% endblock %}

@@ -22,16 +22,22 @@
                     <p>{{ quote.project.name }}</p>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div>
                     <label for="logo-file">Versão</label>
                     <p>{{ quote.version }}</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div>
                     <label for="privateNotes">Notas *</label>
                     <p>{{ quote.privateNotes }}</p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div>
+                    <label for="status">Status</label>
+                    <p>{{ quote.status  == 1 ? "Esperando" : "Aprovado"}}</p>
                 </div>
             </div>
         </div>

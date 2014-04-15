@@ -119,7 +119,6 @@ class QuoteController
     	$data = json_encode($data);
 		$quoteService = new QuoteService();
 		$quote = $quoteService->save($data, $app['orm.em']);
-
 		return $app->redirect('/quote/detail/' . $quote->getId());
 	}
 }

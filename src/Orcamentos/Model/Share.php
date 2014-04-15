@@ -5,11 +5,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="ResourceQuote")
+ * @ORM\Table(name="Share")
  */
-class ResourceQuote
+class Share
 {
-
     /**
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue
@@ -30,41 +29,17 @@ class ResourceQuote
     protected $updated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Resource", inversedBy="resourceQuoteCollection",cascade={"persist", "merge", "refresh"})
-     * 
-     * @var Resource
-     */
-    protected $resource; 
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Quote", inversedBy="resourceQuoteCollection", cascade={"persist", "merge", "refresh"})
+     * @ORM\ManyToOne(targetEntity="Quote", inversedBy="shareCollection", cascade={"persist", "merge", "refresh"})
      * 
      * @var Quote
      */
     protected $quote;
-
-    /**
-     * @ORM\Column(type="float")
-     *
-     * @var float
-     */
-    private $amount;
 
     public function __construct()
     {
         $this->setCreated(date('Y-m-d H:i:s'));
     }
 
-    public function getResource()
-    {
-        return $this->resource;
-    }
-    
-    public function setResource($resource)
-    {
-        return $this->resource = $resource;
-    }
-    
     public function getQuote()
     {
         return $this->quote;
@@ -74,17 +49,7 @@ class ResourceQuote
     {
         return $this->quote = $quote;
     }
-
-    public function getAmount()
-    {
-        return $this->amount;
-    }
     
-    public function setAmount($amount)
-    {
-        return $this->amount = $amount;
-    }
-
     /**
      * @return integer
      */

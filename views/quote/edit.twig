@@ -6,7 +6,7 @@
     </div>
     <div class="col-md-3">
         {% if quote.id is defined %}
-            <a href="/quote/detail/{{ quote.id }}" class="btn btn-primary pull-right small" title="Detalhes do orçamento">Editar Orçamento</a>
+            <a href="/quote/detail/{{ quote.id }}" class="btn btn-primary pull-right small" title="Detalhes do orçamento">Detalhes do orçamento</a>
         {% endif %}
     </div>
 </div>
@@ -28,16 +28,25 @@
                     <p>{{ project.name }}</p>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div>
                     <label for="logo-file">Versão</label>
                     <p>{{ version }}</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div>
-                    <label for="privateNotes">Notas *</label>
+                    <label for="privateNotes">Notas</label>
                     <textarea type="text" name="privateNotes" id="privateNotes" class="form-control" rows="3"></textarea>
+                </div>
+            </div> 
+            <div class="col-md-2">
+                <div>
+                    <label for="status">Status *</label><br>
+                    <select name="status">
+                        <option value="1" {{ quote.status is defined and quote.status == 1 ? 'selected="selected"' ? "" }}>Esperando</option>
+                        <option value="2" {{ quote.status is defined and quote.status == 2 ? 'selected="selected"' ? "" }}>Aprovado</option>
+                    </select>
                 </div>
             </div>
         </div>

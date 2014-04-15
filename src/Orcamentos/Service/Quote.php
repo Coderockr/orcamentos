@@ -43,13 +43,10 @@ class Quote
             $quote->setVersion($data->version);
         }
 
-        $quote->setStatus(1);
+        $quote->setStatus($data->status);
         $quote->setPrivateNotes($data->privateNotes);
 
-        //share_url
-
         $em->persist($quote);
-
 
         $quoteResourceCollection = $quote->getResourceQuoteCollection();
 

@@ -53,42 +53,42 @@
     <div class="company margin30">
         <h4>Recursos</h4>
         <div class="row resources">
-            {% if equipmentResources | length > 0 %}
-                <div class="col-md-3">
-                    <h5>
-                        Equipamentos
-                        <a href="#" class="glyphicon glyphicon-plus" title="Adicionar equipamento"></a>
-                        <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de equipamento"></a>
-                    </h5>
-                    <div class="thumbnail">
-                        <form class="form" id="companyEquipment">
-                            <div class="caption">
-                                <div>
-                                    <label for="name">Nome *</label>
-                                    <input type="text" name="name" id="name" required class="form-control" />
-                                </div>
-                                <div>
-                                    <label for="cost">Custo *</label>
-                                    <input type="text" name="cost" id="cost" required class="form-control" />
-                                </div>  
-                                <div>
-                                    <label for="equipmentLife">Vida Útil ( Horas )</label>
-                                    <input type="text" name="equipmentLife" id="equipmentLife" class="form-control" />
-                                </div>
-                                <div>
-                                    <label for="type">Tipo</label><br/>
-                                    <select name="type" id="type">
-                                        {% for type in equipmentTypes %}
-                                            <option value="{{ type.id }}">{{ type.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div>
-                                    <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
-                                </div>
+            <div class="col-md-3">
+                <h5>
+                    Equipamentos
+                    <a href="#" class="glyphicon glyphicon-plus" title="Adicionar equipamento"></a>
+                    <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de equipamento"></a>
+                </h5>
+                <div class="thumbnail">
+                    <form class="form" id="companyEquipment">
+                        <div class="caption">
+                            <div>
+                                <label for="name">Nome *</label>
+                                <input type="text" name="name" id="name" required class="form-control" />
                             </div>
-                        </form>
-                    </div>
+                            <div>
+                                <label for="cost">Custo *</label>
+                                <input type="text" name="cost" id="cost" required class="form-control" />
+                            </div>  
+                            <div>
+                                <label for="equipmentLife">Vida Útil ( Horas )</label>
+                                <input type="text" name="equipmentLife" id="equipmentLife" class="form-control" />
+                            </div>
+                            <div>
+                                <label for="type">Tipo</label><br/>
+                                <select name="type" id="type">
+                                    {% for type in equipmentTypes %}
+                                        <option value="{{ type.id }}">{{ type.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                {% if equipmentResources | length > 0 %}
                     {% for equipment in equipmentResources %}
                         <span class="thumbnail">
                             <div class="caption">
@@ -101,40 +101,40 @@
                             <a data-href="/resource/delete/{{ equipment.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar equipamento"></a>
                         </span>
                     {% endfor %}
-                </div>
-            {% endif %}
-            {% if serviceResources | length > 0 %}
-                <div class="col-md-3">
-                    <h5>
-                        Serviço
-                        <a href="#" class="glyphicon glyphicon-plus" title="Adicionar matéria-prima"></a>
-                        <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de matéria-prima"></a>
-                    </h5>
-                    <div class="thumbnail">
-                        <form class="form" method="POST" action="/resource/create">
-                            <div class="caption">
-                                <div>
-                                    <label for="name">Nome *</label>
-                                    <input type="text" name="name" id="name" class="form-control" />
-                                </div>
-                                <div>
-                                    <label for="cost">Custo *</label>
-                                    <input type="text" name="cost" id="cost" class="form-control" />
-                                </div>
-                                <div>
-                                    <label for="type">Tipo</label><br/>
-                                    <select name="type" id="type">
-                                        {% for type in serviceTypes %}
-                                            <option value="{{ type.id }}">{{ type.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div>
-                                    <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
-                                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-3">
+                <h5>
+                    Serviço
+                    <a href="#" class="glyphicon glyphicon-plus" title="Adicionar matéria-prima"></a>
+                    <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de matéria-prima"></a>
+                </h5>
+                <div class="thumbnail">
+                    <form class="form" method="POST" action="/resource/create">
+                        <div class="caption">
+                            <div>
+                                <label for="name">Nome *</label>
+                                <input type="text" name="name" id="name" class="form-control" />
                             </div>
-                        </form>
-                    </div>
+                            <div>
+                                <label for="cost">Custo *</label>
+                                <input type="text" name="cost" id="cost" class="form-control" />
+                            </div>
+                            <div>
+                                <label for="type">Tipo</label><br/>
+                                <select name="type" id="type">
+                                    {% for type in serviceTypes %}
+                                        <option value="{{ type.id }}">{{ type.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                {% if serviceResources | length > 0 %}
                     {% for service in serviceResources %}
                         <span class="thumbnail">
                             <div class="caption">
@@ -147,40 +147,40 @@
                             <a data-href="/resource/delete/{{ service.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar matéria-prima"></a>
                         </span>
                     {% endfor %}
-                </div>
-            {% endif %}
-            {% if humanResources | length > 0 %}
-                <div class="col-md-3">
-                    <h5>
-                        RH
-                        <a href="#" class="glyphicon glyphicon-plus" title="Adicionar pessoa"></a>
-                        <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de pessoa"></a>
-                    </h5>
-                    <div class="thumbnail">
-                        <form class="form" method="POST" action="/resource/create">
-                            <div class="caption">
-                                <div>
-                                    <label for="name">Funçao *</label>
-                                    <input type="text" name="name" id="name" class="form-control" />
-                                </div>
-                                <div>
-                                    <label for="cost">Custo *</label>
-                                    <input type="text" name="cost" id="cost" class="form-control" />
-                                </div>
-                                <div>
-                                    <label for="type">Tipo</label><br/>
-                                    <select name="type"  id="type">
-                                        {% for type in humanTypes %}
-                                            <option value="{{ type.id }}">{{ type.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div>
-                                    <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
-                                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-3">
+                <h5>
+                    RH
+                    <a href="#" class="glyphicon glyphicon-plus" title="Adicionar pessoa"></a>
+                    <a href="#" class="glyphicon glyphicon-minus" title="Cancelar adição de pessoa"></a>
+                </h5>
+                <div class="thumbnail">
+                    <form class="form" method="POST" action="/resource/create">
+                        <div class="caption">
+                            <div>
+                                <label for="name">Funçao *</label>
+                                <input type="text" name="name" id="name" class="form-control" />
                             </div>
-                        </form>
-                    </div>
+                            <div>
+                                <label for="cost">Custo *</label>
+                                <input type="text" name="cost" id="cost" class="form-control" />
+                            </div>
+                            <div>
+                                <label for="type">Tipo</label><br/>
+                                <select name="type"  id="type">
+                                    {% for type in humanTypes %}
+                                        <option value="{{ type.id }}">{{ type.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <button class="btn btn-success btn-block" type="submit" title="Salvar cliente">Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                {% if humanResources | length > 0 %}
                     {% for human in humanResources %}
                         <span class="thumbnail">
                             <div class="caption">
@@ -193,8 +193,8 @@
                             <a data-href="/resource/delete/{{ human.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar pessoa"></a>
                         </span>
                     {% endfor %}
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
         </div>  
     </div>  
 {% endblock %}
