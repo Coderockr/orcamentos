@@ -5,7 +5,8 @@
             <h3>Dados do Orçamento</h4>
         </div>
         <div class="col-md-3">
-            <a href="/quote/edit/{{ quote.id }}" class="btn btn-primary pull-right small" title="Editar orçamento">Editar Orçamento</a>
+            <div><a href="/quote/edit/{{ quote.id }}" class="btn btn-primary small" title="Editar orçamento">Editar Orçamento</a></div>
+            <div class="margin10"><a class="btn btn-primary small" data-toggle="modal" data-target="#share">Compartilhar</a></div>
         </div>
     </div>
     <div class="form margin20">
@@ -30,14 +31,14 @@
             </div>
             <div class="col-md-3">
                 <div>
-                    <label for="privateNotes">Notas *</label>
+                    <label for="privateNotes">Notas</label>
                     <p>{{ quote.privateNotes }}</p>
                 </div>
             </div>
             <div class="col-md-2">
                 <div>
                     <label for="status">Status</label>
-                    <p>{{ quote.status  == 1 ? "Esperando" : "Aprovado"}}</p>
+                    <p>{{ quote.status  == 1 ? "Esperando" : "Aprovado" }}</p>
                 </div>
             </div>
         </div>
@@ -85,5 +86,44 @@
             </div>  
         </div>  
     {% endif %}
+    <div class="modal fade" id="share" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="/share/create">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Compartilhar</h4>
+                    </div>
+                    <div class="modal-body">
+                            <input type="hidden" name="quoteId" value="{{ quote.id }}" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="email">Email</label>
+                                    <div class="input-group">
+                                        <input type="text" name="email" id="email" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-plus "></i></a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if shareCollection is defined and shareCollection | length > 0 %}
+                                <ul class="list-group margin20">
+                                    {% for share in shareCollection %}
+                                        <li class="list-group-item">
+                                            {{ share.email }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
     

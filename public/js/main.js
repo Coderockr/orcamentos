@@ -51,7 +51,6 @@ $(document).ready(function(){
 		return false;
 	});	
 
-
 	$(document).on( 'click', ".quote .resources .btn-success", function(){
 		var container = $(this).parent().parent().parent().parent().parent();
 		var amount = container.find('#amount');
@@ -84,5 +83,43 @@ $(document).ready(function(){
 	$(document).on( 'click', ".quote .resources .glyphicon-remove", function(){
 		$(this).parent().remove();
 	});
+
+	$(document).on( 'click', "#share .input-group-btn .btn", function(){
+		var email = $("#share #email").val();
+		var list = $("#share .list-group");
+		if ( email.length > 0 ) {
+			list.append(
+				$('<li class="list-group-item">').append(
+					$('<input type="hidden" name="email[]" value="'+ email +'"/>'),
+					$('<a href="#" class="glyphicon glyphicon-remove pull-right" title="Apagar email"></a>'),
+					email
+				)
+			);
+			$("#share #email").val("");
+		}
+		return false;
+	});	
+
+	$(document).on( 'submit', "#share form", function(){
+		var dados = $( this ).serialize();
+		var form = this;
+		$.ajax({
+			type: "POST",
+			url: "/share/create",
+			data: dados,
+			dataType: "json",
+			success: function( data )
+			{
+				$("#share input[type=hidden]").remove();
+				$("#share .glyphicon-remove").remove();
+				$('#share').modal('hide');
+			},
+			error: function( data )
+			{
+				console.log(data);
+			}
+		});
+		return false;
+	});	
 
 });

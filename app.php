@@ -67,6 +67,10 @@ $app->get('/quote/edit/{quoteId}', 'Orcamentos\Controller\QuoteController::edit'
 $app->get('/quote/detail/{quoteId}', 'Orcamentos\Controller\QuoteController::detail');
 $app->post('/quote/create', 'Orcamentos\Controller\QuoteController::create');
 
+// Share Controller
+$app->get('/share/{shareId}', 'Orcamentos\Controller\ShareController::detail');
+$app->post('/share/create', 'Orcamentos\Controller\ShareController::create');
+
 //Resource Controller
 $app->post('/resource/create', 'Orcamentos\Controller\ResourceController::create');
 $app->get('/resource/delete/{resourceId}', 'Orcamentos\Controller\ResourceController::delete');

@@ -142,6 +142,16 @@ class Quote
         return $this->resourceQuoteCollection = $resourceQuoteCollection;
     }
 
+    public function getShareCollection()
+    {
+        return $this->shareCollection;
+    }
+    
+    public function setShareCollection($shareCollection)
+    {
+        return $this->shareCollection = $shareCollection;
+    }
+
     /**
      * @return integer
      */

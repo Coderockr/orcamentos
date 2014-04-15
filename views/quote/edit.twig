@@ -8,6 +8,7 @@
         {% if quote.id is defined %}
             <a href="/quote/detail/{{ quote.id }}" class="btn btn-primary pull-right small" title="Detalhes do orçamento">Detalhes do orçamento</a>
         {% endif %}
+
     </div>
 </div>
 <form class="form quote" action="/quote/create" method="POST">
@@ -51,6 +52,8 @@
             </div>
         </div>
     </div>
+
+
     <div class="margin30">
         <h4>Recursos</h4>
         <div class="row resources">
@@ -188,5 +191,6 @@
         </div>
     </div>
 </form>
+
 {% endblock %}
     

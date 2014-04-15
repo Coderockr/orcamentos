@@ -24,6 +24,8 @@ class QuoteController
 		$quoteServiceResources = array();
 		$quoteHumanResources = array();
 
+		$shareCollection = array();
+
 		if ( isset($projectId) ) {
 			$project = $app['orm.em']->getRepository('Orcamentos\Model\Project')->find($projectId);
 			$version = count($project->getQuoteCollection()) + 1;
@@ -33,24 +35,27 @@ class QuoteController
 			$version = $quote->getVersion();
 
 			$quoteResources = $quote->getResourceQuoteCollection();
-			foreach ($quoteResources as $quoteResource) {
-				$resource = $quoteResource->getResource();
-				$type = $resource->getType();
-				switch (get_class($type)) {
+			if ( count($quoteResources) > 0) {
+				foreach ($quoteResources as $quoteResource) {
+					$resource = $quoteResource->getResource();
+					$type = $resource->getType();
+					switch (get_class($type)) {
 
-				 	case 'Orcamentos\Model\EquipmentType':
-				 		$quoteEquipmentResources[] = $quoteResource;
-				 		break;
+					 	case 'Orcamentos\Model\EquipmentType':
+					 		$quoteEquipmentResources[] = $quoteResource;
+					 		break;
 
-				 	case 'Orcamentos\Model\ServiceType':
-				 		$quoteServiceResources[] = $quoteResource;
-				 		break;
+					 	case 'Orcamentos\Model\ServiceType':
+					 		$quoteServiceResources[] = $quoteResource;
+					 		break;
 
-				 	case 'Orcamentos\Model\HumanType':
-				 		$quoteHumanResources[] = $quoteResource;
-				 		break;
-				};
+					 	case 'Orcamentos\Model\HumanType':
+					 		$quoteHumanResources[] = $quoteResource;
+					 		break;
+					};
+				}
 			}
+
 		}
 
 		$equipmentResources = array();
@@ -94,19 +99,21 @@ class QuoteController
 
 	public function detail(Request $request, Application $app, $quoteId)
 	{	
-		$quote = null;
 		$resourceCollection = null;
-		if ( isset($quoteId) ) {
-			$quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
+		if ( !isset($quoteId) ) {
+			throw new Exception("Parâmetros inválidos", 1);
 		}
+		
+		$quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
 
-		if ( isset($quote)){
-			$resourceCollection = $quote->getResourceQuoteCollection();
-		}
+		$resourceCollection = $quote->getResourceQuoteCollection();
+		
+		$shareCollection = $quote->getShareCollection();
 
 		return $app['twig']->render('quote/detail.twig',
 			array(
 				'quote' => $quote,
+				'shareCollection' => $shareCollection,
 				'resourceCollection' => $resourceCollection
 			)
 		);

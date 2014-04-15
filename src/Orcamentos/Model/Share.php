@@ -35,6 +35,27 @@ class Share
      */
     protected $quote;
 
+    /**
+     * @ORM\Column(type="string", length=150)
+     *
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var boolean
+     */
+    private $sent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="View", mappedBy="share", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * 
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $viewCollection;
+
     public function __construct()
     {
         $this->setCreated(date('Y-m-d H:i:s'));
@@ -48,6 +69,36 @@ class Share
     public function setQuote($quote)
     {
         return $this->quote = $quote;
+    }
+    
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    
+    public function setEmail($email)
+    {
+        return $this->email = $email;
+    }    
+
+    public function getSent()
+    {
+        return $this->sent;
+    }
+    
+    public function setSent($sent)
+    {
+        return $this->sent = $sent;
+    }
+        
+    public function getViewCollection()
+    {
+        return $this->viewCollection;
+    }
+    
+    public function setViewCollection($viewCollection)
+    {
+        return $this->viewCollection = $viewCollection;
     }
     
     /**
