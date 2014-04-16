@@ -56,6 +56,13 @@ class Share
      */
     protected $viewCollection;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ShareNote", mappedBy="share", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * @ORM\OrderBy({"created" = "DESC"})
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $shareNotesCollection;
+
     public function __construct()
     {
         $this->setCreated(date('Y-m-d H:i:s'));
@@ -99,6 +106,16 @@ class Share
     public function setViewCollection($viewCollection)
     {
         return $this->viewCollection = $viewCollection;
+    }
+
+    public function getShareNotesCollection()
+    {
+        return $this->shareNotesCollection;
+    }
+    
+    public function setShareNotesCollection($shareNotesCollection)
+    {
+        return $this->shareNotesCollection = $shareNotesCollection;
     }
     
     /**

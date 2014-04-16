@@ -20,7 +20,7 @@ $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 // where does the user want to go?
 $app->before(function (Request $request) use ($app) {
     $requestUri = $request->getRequestUri();
-    if ( $requestUri !== '/'  && $requestUri !== '/logout' && $requestUri !== '/login' && $app['session']->get('email') == null ) {
+    if ( $requestUri !== '/'  && $requestUri !== '/logout' && $requestUri !== '/login' && stripos($requestUri,'/share') == true && $app['session']->get('email') == null ) {
         return $app->redirect('/');
     }
     if( ( stripos($requestUri, 'client') == true
@@ -70,6 +70,7 @@ $app->post('/quote/create', 'Orcamentos\Controller\QuoteController::create');
 // Share Controller
 $app->get('/share/{shareId}', 'Orcamentos\Controller\ShareController::detail');
 $app->post('/share/create', 'Orcamentos\Controller\ShareController::create');
+$app->post('/share/comment', 'Orcamentos\Controller\ShareController::comment');
 
 //Resource Controller
 $app->post('/resource/create', 'Orcamentos\Controller\ResourceController::create');

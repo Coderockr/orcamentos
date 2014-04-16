@@ -5,21 +5,22 @@
             <div class="col-md-3">
                 <div>
                     <label for="name">Cliente</label>
-                    <p>{{ quote.project.client.name }}</p>
+                    <p>{{ share.quote.project.client.name }}</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div>
                     <label for="responsable">Projeto</label>
-                    <p>{{ quote.project.name }}</p>
+                    <p>{{ share.quote.project.name }}</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-1">
                 <div>
                     <label for="version">Versão</label>
-                    <p>{{ quote.version }}</p>
+                    <p>{{ share.quote.version }}</p>
                 </div>
             </div>
+           
         </div>
     </div>
     {% if resourceCollection is defined and resourceCollection | length > 0 %}
@@ -65,5 +66,29 @@
             </div>  
         </div>  
     {% endif %}
+    <div class="row">
+        <form action="/share/comment" method="POST" id="shareNote">
+            <input type="hidden" name="shareId" value="{{ share.id }}"/>
+            <div class="col-md-12">
+                <label for="note">Comentários</label>
+                <textarea type="text" name="note" id="note" class="form-control" rows="3"></textarea>
+            </div> 
+            <div class="col-md-12 margin20">
+                <button class="btn btn-primary pull-right" type="submit" title="Salvar comentário">Salvar</button>
+            </div>
+        </form>
+    </div> 
+    <div class="margin30 comments">
+        {% if shareNotesCollection is defined and shareNotesCollection | length > 0 %}
+            {% for note in shareNotesCollection %}
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading"> {{ note.share.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y") }} </small> </h4>
+                        {{ note.note }}
+                    </div>
+                </div>  
+            {% endfor %}
+        {% endif %}
+    </div>  
 {% endblock %}
     

@@ -30,12 +30,21 @@ class ShareController
 		$resourceCollection = $quote->getResourceQuoteCollection();
 		
 		$shareCollection = $quote->getShareCollection();
+		
+		$shareNotesCollection = array();
+
+		foreach ($shareCollection as $sc) {
+			$notes = $sc->getShareNotesCollection();
+			foreach ($notes as $note) {
+				$shareNotesCollection[] = $note;
+			}
+		}
 
 		return $app['twig']->render('share/detail.twig',
 			array(
-				'quote' => $quote,
-				'shareCollection' => $shareCollection,
-				'resourceCollection' => $resourceCollection
+				'share' => $share,
+				'resourceCollection' => $resourceCollection,
+				'shareNotesCollection' => $shareNotesCollection
 			)
 		);
 	}
@@ -52,5 +61,16 @@ class ShareController
 		}    	
 
 		return json_encode($emails);
+	}
+
+	public function comment(Request $request, Application $app)
+	{
+		$data = $request->request->all();
+
+    	$data = json_encode($data);
+		$shareService = new ShareService();
+		$note = $shareService->comment($data, $app['orm.em']);
+		$result = array( 'email' => $note->getShare()->getEmail(), 'comment' => $note->getNote());
+		return json_encode($result);
 	}
 }

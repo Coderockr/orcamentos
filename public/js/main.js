@@ -128,4 +128,35 @@ $(document).ready(function(){
 		$(this).parent().remove();
 	});
 
+	$(document).on( 'submit', "#shareNote", function(){
+		var dados = $( this ).serialize();
+		var form = this;
+		$.ajax({
+			type: "POST",
+			url: "/share/comment",
+			data: dados,
+			dataType: "json",
+			success: function( data )
+			{
+				var comments = $('.comments');
+				var d = new Date();
+				var comment = $('<div class="media">');
+				comment.append(
+					$('<div class="media-body">').append(
+						$('<h4 class="media-heading">').append(
+							data.email + " -  <small class='text-info'> criado em "+ d.getDate() +"/" + (d.getMonth()+1) + '/' + d.getFullYear()  +"</small>"
+						),
+						data.comment
+					)
+				)
+				comments.prepend(comment);
+				$("#note").val('');
+			},
+			error: function( data )
+			{
+				console.log(data);
+			}
+		});
+		return false;
+	});	
 });

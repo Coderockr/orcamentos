@@ -306,3 +306,6 @@ a *{
 a.small { color: #fff; font-size: 10px }
 
 .input-group-btn a.btn { color: #3bafda;}
+
+
+.comments .media-body { border-top: 1px dotted #3bafda; padding: 10px 0px 0px 0px}
