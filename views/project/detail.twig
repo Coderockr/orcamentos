@@ -48,4 +48,28 @@
                 {% endfor %}
             {% endif %}
         </div>
+        <div class="row">
+            <form action="/project/comment" method="POST" id="projectNote">
+                <input type="hidden" name="projectId" value="{{ project.id }}"/>
+                <div class="col-md-12">
+                    <label for="note">Comentários</label>
+                    <textarea type="text" name="note" id="note" class="form-control" rows="3"></textarea>
+                </div> 
+                <div class="col-md-12 margin20">
+                    <button class="btn btn-primary pull-right" type="submit" title="Salvar comentário">Salvar</button>
+                </div>
+            </form>
+        </div> 
+        <div class="margin30 comments">
+            {% if projectNotesCollection is defined and projectNotesCollection | length > 0 %}
+                {% for note in projectNotesCollection %}
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="media-heading"> {{ project.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
+                            {{ note.note }}
+                        </div>
+                    </div>  
+                {% endfor %}
+            {% endif %}
+        </div>  
 {% endblock %}

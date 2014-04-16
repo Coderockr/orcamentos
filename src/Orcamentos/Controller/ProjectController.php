@@ -85,4 +85,15 @@ class ProjectController
 
 		return $app->redirect('/project');
 	}
+
+	public function comment(Request $request, Application $app)
+	{
+		$data = $request->request->all();
+
+    	$data = json_encode($data);
+		$projectService = new ProjectService();
+		$note = $projectService->comment($data, $app['orm.em']);
+
+		return json_encode($note);
+	}
 }

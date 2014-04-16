@@ -59,6 +59,7 @@ $app->get('/project/detail/{projectId}', 'Orcamentos\Controller\ProjectControlle
 $app->post('/project/create', 'Orcamentos\Controller\ProjectController::create');
 $app->get('/project/delete/{projectId}', 'Orcamentos\Controller\ProjectController::delete');
 $app->get('/project/{page}', 'Orcamentos\Controller\ProjectController::index')->value('page', 1);
+$app->post('/project/comment', 'Orcamentos\Controller\ProjectController::comment');
 
 //Company Controller
 $app->get('/company', 'Orcamentos\Controller\CompanyController::edit');
