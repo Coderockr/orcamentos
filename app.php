@@ -20,7 +20,11 @@ $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 // where does the user want to go?
 $app->before(function (Request $request) use ($app) {
     $requestUri = $request->getRequestUri();
-    if ( $requestUri !== '/'  && $requestUri !== '/logout' && $requestUri !== '/login' && stripos($requestUri,'/share') == true && $app['session']->get('email') == null ) {
+    if ( $requestUri !== '/'  
+        && $requestUri !== '/logout' 
+        && $requestUri !== '/login' 
+        && stripos($requestUri, 'share') == false 
+        && $app['session']->get('email') == null ) {
         return $app->redirect('/');
     }
     if( ( stripos($requestUri, 'client') == true
