@@ -22,8 +22,8 @@ class ShareController
 		$view = new ViewModel();
 		$view->setShare($share);
 
-		$em->persist($view);
-		$em->flush();
+		$app['orm.em']->persist($view);
+		$app['orm.em']->flush();
 
 		$quote = $share->getQuote();
 

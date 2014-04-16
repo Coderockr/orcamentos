@@ -113,6 +113,8 @@ $(document).ready(function(){
 				$("#share input[type=hidden]").remove();
 				$("#share .glyphicon-remove").remove();
 				$('#share').modal('hide');
+				$('body').removeClass('modal-open');
+				$('.modal-backdrop').remove();
 			},
 			error: function( data )
 			{
@@ -121,5 +123,9 @@ $(document).ready(function(){
 		});
 		return false;
 	});	
+
+	$(document).on( 'click', "#share .glyphicon-remove", function(){
+		$(this).parent().remove();
+	});
 
 });

@@ -107,15 +107,15 @@
                                     </div>
                                 </div>
                             </div>
-                            {% if shareCollection is defined and shareCollection | length > 0 %}
-                                <ul class="list-group margin20">
+                            <ul class="list-group margin20">
+                                {% if shareCollection is defined and shareCollection | length > 0 %}
                                     {% for share in shareCollection %}
                                         <li class="list-group-item">
                                             {{ share.email }}
                                         </li>
                                     {% endfor %}
-                                </ul>
-                            {% endif %}
+                                {% endif %}
+                            </ul>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
