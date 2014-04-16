@@ -11,6 +11,8 @@ use Orcamentos\Model\View as ViewModel;
 
 class ShareController
 {
+
+
 	public function detail(Request $request, Application $app, $shareId)
 	{	
 		if ( !isset($shareId) ) {
@@ -40,6 +42,14 @@ class ShareController
 			}
 		}
 
+		usort($shareNotesCollection, function ($a, $b)
+		{
+		    if ($a->getCreated() == $b->getCreated()) {
+		        return 0;
+		    }
+		    return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
+		});
+
 		return $app['twig']->render('share/detail.twig',
 			array(
 				'share' => $share,
@@ -48,6 +58,7 @@ class ShareController
 			)
 		);
 	}
+
 
 	public function create(Request $request, Application $app)
 	{
