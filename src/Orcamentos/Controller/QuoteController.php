@@ -109,10 +109,26 @@ class QuoteController
 		$resourceCollection = $quote->getResourceQuoteCollection();
 		
 		$shareCollection = $quote->getShareCollection();
+		
+		foreach ($shareCollection as $sc) {
+			$notes = $sc->getShareNotesCollection();
+			foreach ($notes as $note) {
+				$shareNotesCollection[] = $note;
+			}
+		}
 
+		usort($shareNotesCollection, function ($a, $b)
+		{
+		    if ($a->getCreated() == $b->getCreated()) {
+		        return 0;
+		    }
+		    return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
+		});
+		
 		return $app['twig']->render('quote/detail.twig',
 			array(
 				'quote' => $quote,
+				'shareNotesCollection' => $shareNotesCollection,
 				'shareCollection' => $shareCollection,
 				'resourceCollection' => $resourceCollection
 			)

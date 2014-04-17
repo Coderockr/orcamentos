@@ -125,5 +125,17 @@
             </div>
         </div>
     </div>
+     <div class="margin30 comments">
+        {% if shareNotesCollection is defined and shareNotesCollection | length > 0 %}
+            {% for note in shareNotesCollection %}
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading"> {{ note.share.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
+                        {{ note.note }}
+                    </div>
+                </div>  
+            {% endfor %}
+        {% endif %}
+    </div>  
 {% endblock %}
     
