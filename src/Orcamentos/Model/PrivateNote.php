@@ -76,6 +76,16 @@ class PrivateNote
         return $this->user = $user;
     }
 
+    public function getNote()
+    {
+        return $this->note;
+    }
+    
+    public function setNote($note)
+    {
+        return $this->note = $note;
+    }
+
     /**
      * @return integer
      */

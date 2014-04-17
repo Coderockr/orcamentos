@@ -51,6 +51,7 @@
         <div class="row">
             <form action="/project/comment" method="POST" id="privateNote">
                 <input type="hidden" name="projectId" value="{{ project.id }}"/>
+                <input type="hidden" name="userId" value="{{ userId }}"/>
                 <div class="col-md-12">
                     <label for="note">Comentários</label>
                     <textarea type="text" name="note" id="note" class="form-control" rows="3"></textarea>
@@ -65,7 +66,7 @@
                 {% for note in projectNotesCollection %}
                     <div class="media">
                         <div class="media-body">
-                            <h4 class="media-heading"> {{ project.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
+                            <h4 class="media-heading">{{ note.user.name }} - {{ note.user.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
                             {{ note.note }}
                         </div>
                     </div>  

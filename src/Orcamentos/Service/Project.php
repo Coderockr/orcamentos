@@ -4,7 +4,8 @@ namespace Orcamentos\Service;
 
 use Orcamentos\Model\Project as ProjectModel;
 use Orcamentos\Model\PrivateNote as PrivateNoteModel;
-  
+use Exception;
+
 /**
  * Project Entity
  *
@@ -71,8 +72,7 @@ class Project
     public static function comment($data, $em)
     {
         $data = json_decode($data);
-
-        if (!isset($data->note) || !isset($data->projectId || !isset($data->userId)) {
+        if (!isset($data->note) || !isset($data->projectId) || !isset($data->userId)) {
             throw new Exception("Invalid Parameters", 1);
         }
 

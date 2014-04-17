@@ -70,8 +70,14 @@ class ProjectController
 	public function detail(Request $request, Application $app, $projectId )
 	{
 		$project = $app['orm.em']->getRepository('Orcamentos\Model\Project')->find($projectId);
+		$user = $app['orm.em']->getRepository('Orcamentos\Model\User')->findOneBy(array('email' => $app['session']->get('email')));
+
+		$projectNotesCollection = $project->getPrivateNotesCollection();
+		
 		return $app['twig']->render('project/detail.twig', array( 
 			'project' => $project,
+			'userId' => $user->getId(),
+			'projectNotesCollection' => $projectNotesCollection,
 			'active_page' => 'project'
 		));
 	}
@@ -89,11 +95,14 @@ class ProjectController
 	public function comment(Request $request, Application $app)
 	{
 		$data = $request->request->all();
-
     	$data = json_encode($data);
 		$projectService = new ProjectService();
 		$note = $projectService->comment($data, $app['orm.em']);
-
-		return json_encode($note);
+		$result = array(
+			'email'=> $note->getUser()->getEmail(),
+			'name' => $note->getUser()->getName(),
+			'note' => $note->getNote()
+		);
+		return json_encode($result);
 	}
 }

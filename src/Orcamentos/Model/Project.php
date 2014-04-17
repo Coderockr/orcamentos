@@ -71,6 +71,13 @@ class Project
      */
     protected $quoteCollection;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PrivateNote", mappedBy="project", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     * @ORM\OrderBy({"created" = "DESC"})
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $privateNotesCollection;
+
     public function __construct()
     {
         $this->setCreated(date('Y-m-d H:i:s'));
@@ -86,14 +93,14 @@ class Project
         return $this->name = filter_var($name, FILTER_SANITIZE_STRING);
     }
     
-    public function getPrivateNotes()
+    public function getPrivateNotesCollection()
     {
-        return $this->privateNotes;
+        return $this->privateNotesCollection;
     }
     
-    public function setPrivateNotes($privateNotes)
+    public function setPrivateNotesCollection($privateNotesCollection)
     {
-        return $this->privateNotes = $privateNotes;
+        return $this->privateNotesCollection = $privateNotesCollection;
     }
     
     public function getDescription()

@@ -180,4 +180,57 @@ $(document).ready(function(){
 		});
 		return false;
 	});	
+	
+	$(document).on( 'submit', "#privateNote", function(){
+		var dados = $( this ).serialize();
+		var form = this;
+		$.ajax({
+			type: "POST",
+			url: "/project/comment",
+			data: dados,
+			dataType: "json",
+			success: function( data )
+			{
+				var comments = $('.comments');
+				var d = new Date();
+				var day = d.getDate();
+				if ( day < 10 ) {
+					day = "0"+day;
+				} 
+				var month = (d.getMonth()+1);
+				if ( month < 10 ){
+					month = "0" + month;
+				}
+				var year = d.getFullYear();
+				var hour = d.getHours();
+				if ( hour < 10 ){
+					hour = "0" + hour;
+				}
+				var minute = d.getMinutes();
+				if ( minute < 10 ){
+					minute = "0" + minute;
+				}
+				var second = d.getSeconds();
+				if ( second < 10 ){
+					second = "0" + second;
+				}
+				var comment = $('<div class="media">');
+				comment.append(
+					$('<div class="media-body">').append(
+						$('<h4 class="media-heading">').append(
+							data.name + ' - ' + data.email + " -  <small class='text-info'> criado em "+ day +"/" + month + '/' + year + " "+ hour + ":" + minute +":" + second + "</small>"
+						),
+						data.note
+					)
+				)
+				comments.prepend(comment);
+				$("#note").val('');
+			},
+			error: function( data )
+			{
+				console.log(data);
+			}
+		});
+		return false;
+	});	
 });
