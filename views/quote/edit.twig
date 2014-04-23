@@ -20,13 +20,13 @@
             <div class="col-md-3">
                 <div>
                     <label for="name">Cliente</label>
-                    <p>{{ project.client.name }}</p>
+                    <p><a href="/user/detail/{{ project.client.id }}">{{ project.client.name }}</a></p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div>
                     <label for="project">Projeto</label>
-                    <p>{{ project.name }}</p>
+                    <p><a href="/project/detail/{{ project.id }}">{{ project.name }}</a></p>
                 </div>
             </div>
             <div class="col-md-1">

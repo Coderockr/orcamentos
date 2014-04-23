@@ -26,8 +26,8 @@ class Share
         $data = json_decode($data);
 
         if (!isset($data->email) || !isset($data->quoteId)) {
-            throw new Exception("Invalid Parameters", 1);
-        }
+           return false;
+       }
 
         $quote = $em->getRepository("Orcamentos\Model\Quote")->find($data->quoteId);
 
