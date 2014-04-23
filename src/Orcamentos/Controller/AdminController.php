@@ -35,6 +35,8 @@ class AdminController
 		$app['session']->set('email', $data['email']);
 		$app['session']->set('isAdmin', $user->getAdmin());
 		$app['session']->set('companyId', $user->getCompany()->getId());
+		$app['session']->set('companyLogotype', $user->getCompany()->getLogotype());
+		$app['session']->set('companyName', $user->getCompany()->getName());
 		
 		return $app->redirect('/');		
 	}	
@@ -44,6 +46,8 @@ class AdminController
 		$app['session']->set('email', null);
 		$app['session']->set('isAdmin', null);
 		$app['session']->set('companyId', null);
+		$app['session']->set('companyLogotype', null);
+		$app['session']->set('companyName', null);
 		
 		return $app->redirect('/');		
 	}

@@ -63,7 +63,8 @@ class CompanyController
     	$data = json_encode($data);
 		$companyService = new CompanyService();
 		$company = $companyService->save($data, $logotype, $app['orm.em']);
-
+		$app['session']->set('companyLogotype', $company->getLogotype());
+		$app['session']->set('companyName', $company->getName());
 		return $app->redirect('/company');
 	}
 }
