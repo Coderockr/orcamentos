@@ -21,11 +21,16 @@
                 </div>
                 <div>
                     <label for="client">Cliente *</label><br>
-                    <select id="client" name="client">
-                        {% for client in clients %}
-                            <option value="{{ client.id }}" {{ project and client.id == project.client.id ? 'selected="selected"' : "" }}>{{ client.name }}</option>
-                        {% endfor %}
-                    </select>
+                    {% if project and project.client.name %}
+                        <input type="hidden" name="client" value="{{ project.client.id }}" />
+                        <p>{{ project.client.name }}</p>
+                    {% else %}
+                        <select id="client" name="client">
+                            {% for client in clients %}
+                                <option value="{{ client.id }}" {{ project and client.id == project.client.id ? 'selected="selected"' : "" }}>{{ client.name }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
                 </div>
                 <div>
                     <label for="tags">Tags *</label>
