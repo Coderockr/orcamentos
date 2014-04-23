@@ -67,9 +67,9 @@
                                     <th>{{ resourceQuote.resource.type.name }}</th>
                                     <th>{{ resourceQuote.resource.name }}</th>
                                     <th class="text-right">{{ resourceQuote.amount }}</th>
-                                    <th class="text-right">R$ {{ resourceQuote.resource.cost | number_format(2, '.', ',')  }}</th>
-                                    <th class="text-right">R$ {{ (resourceQuote.resource.cost * resourceQuote.amount) | number_format(2, '.', ',') }}</th>
-                                    {% set result = result + (resourceQuote.resource.cost * resourceQuote.amount) %}
+                                    <th class="text-right">R$ {{ resourceQuote.value | number_format(2, '.', ',')  }}</th>
+                                    <th class="text-right">R$ {{ (resourceQuote.value * resourceQuote.amount) | number_format(2, '.', ',') }}</th>
+                                    {% set result = result + (resourceQuote.value * resourceQuote.amount) %}
                                 </tr>
                             {% endfor %}
                             <tr>

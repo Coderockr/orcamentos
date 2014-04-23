@@ -64,6 +64,7 @@ class Quote
             $quoteResource->setResource($resource);
             $quoteResource->setQuote($quote);
             $quoteResource->setAmount($amount);
+            $quoteResource->setValue($resource->getCost());
 
             $em->persist($quoteResource);
 

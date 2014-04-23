@@ -50,6 +50,13 @@ class ResourceQuote
      */
     private $amount;
 
+    /**
+     * @ORM\Column(type="float")
+     *
+     * @var float
+     */
+    private $value;
+
     public function __construct()
     {
         $this->setCreated(date('Y-m-d H:i:s'));
@@ -83,6 +90,16 @@ class ResourceQuote
     public function setAmount($amount)
     {
         return $this->amount = $amount;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+    
+    public function setValue($value)
+    {
+        return $this->value = $value;
     }
 
     /**
