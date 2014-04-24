@@ -50,10 +50,10 @@
             </div>
         </div>
     </form>
-    <div class="company margin30">
+    <div class="company margin30 ">
         <h4>Recursos</h4>
         <div class="row resources">
-            <div class="col-md-3">
+            <div class="col-md-4"  id="equipmentResources">
                 <h5>
                     Equipamentos
                     <a href="#" class="glyphicon glyphicon-plus" title="Adicionar equipamento"></a>
@@ -61,7 +61,8 @@
                 </h5>
                 <div class="thumbnail">
                     <form class="form" id="companyEquipment">
-                        <div class="caption">
+                        <input type="hidden" id="id" name="id" value="">
+                        <div class="caption"> 
                             <div>
                                 <label for="name">Nome *</label>
                                 <input type="text" name="name" id="name" required class="form-control" />
@@ -88,7 +89,7 @@
                         </div>
                     </form>
                 </div>
-                {% if equipmentResources | length > 0 %}
+                {#  if equipmentResources | length > 0 %}
                     {% for equipment in equipmentResources %}
                         <span class="thumbnail">
                             <div class="caption">
@@ -101,9 +102,9 @@
                             <a data-href="/resource/delete/{{ equipment.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar equipamento"></a>
                         </span>
                     {% endfor %}
-                {% endif %}
+                {% endif #}
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4" id="serviceResources">
                 <h5>
                     Serviço
                     <a href="#" class="glyphicon glyphicon-plus" title="Adicionar matéria-prima"></a>
@@ -111,6 +112,7 @@
                 </h5>
                 <div class="thumbnail">
                     <form class="form" method="POST" action="/resource/create">
+                        <input type="hidden" id="id" name="id" value="">
                         <div class="caption">
                             <div>
                                 <label for="name">Nome *</label>
@@ -134,7 +136,7 @@
                         </div>
                     </form>
                 </div>
-                {% if serviceResources | length > 0 %}
+                {# if serviceResources | length > 0 %}
                     {% for service in serviceResources %}
                         <span class="thumbnail">
                             <div class="caption">
@@ -146,10 +148,10 @@
                             </div>
                             <a data-href="/resource/delete/{{ service.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar matéria-prima"></a>
                         </span>
-                    {% endfor %}
-                {% endif %}
+                    {% endfor }
+                {% endif #}
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4" id="humanResources">
                 <h5>
                     RH
                     <a href="#" class="glyphicon glyphicon-plus" title="Adicionar pessoa"></a>
@@ -157,6 +159,7 @@
                 </h5>
                 <div class="thumbnail">
                     <form class="form" method="POST" action="/resource/create">
+                        <input type="hidden" id="id" name="id" value="">
                         <div class="caption">
                             <div>
                                 <label for="name">Funçao *</label>
@@ -180,7 +183,7 @@
                         </div>
                     </form>
                 </div>
-                {% if humanResources | length > 0 %}
+                {# if humanResources | length > 0 %}
                     {% for human in humanResources %}
                         <span class="thumbnail">
                             <div class="caption">
@@ -193,9 +196,10 @@
                             <a data-href="/resource/delete/{{ human.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar pessoa"></a>
                         </span>
                     {% endfor %}
-                {% endif %}
+                {% endif #}
             </div>
         </div>  
     </div>  
+    <script src="/public/js/resources.js"></script>
 {% endblock %}
     

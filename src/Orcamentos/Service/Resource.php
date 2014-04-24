@@ -29,7 +29,11 @@ class Resource
 
         $type = $em->getRepository("Orcamentos\Model\Type")->find($data->type);
         
-        $resource = new ResourceModel();
+        if ( $data->id ){
+            $resource = $em->getRepository("Orcamentos\Model\Resource")->find($data->id);
+        } else {
+            $resource = new ResourceModel();
+        }
 
         $resource->setName($data->name);
         $resource->setCost($data->cost);
@@ -49,5 +53,61 @@ class Resource
         $em->flush();
 
         return $resource;
+    }
+
+    /**
+     * Function thatloads a company resources
+     *
+     * @return                Function used to load the Resources
+     */
+    public  function load($data, $em)
+    {
+        $data = json_decode($data);
+
+        if (!isset($data->companyId)) {
+            throw new Exception("Invalid Parameters", 1);
+        }
+
+        $company = $em->getRepository("Orcamentos\Model\Company")->find($data->companyId);
+
+        $resources = $company->getResourceCollection();
+
+        $equipmentResources = array();
+        $serviceResources = array();
+        $humanResources = array();
+
+        foreach ($resources as $resource) {
+            $type = $resource->getType();
+            $typename = $type->getName();
+            $array = array(
+                'name' => $resource->getName(),
+                'cost' => $resource->getCost(),
+                'equipmentLife' => $resource->getEquipmentLife(),
+                'type' => array(
+                    'name' => $typename
+                ),
+                'id' => $resource->getId()
+            );
+
+            switch (get_class($type)) {
+                case 'Orcamentos\Model\EquipmentType':
+                    $equipmentResources[] = $array;
+                    break;
+
+                case 'Orcamentos\Model\ServiceType':
+                    $serviceResources[] = $array;
+                    break;
+
+                case 'Orcamentos\Model\HumanType':
+                    $humanResources[] = $array;
+                    break;
+             };
+        }
+
+        return array(
+            'equipmentResources' => $equipmentResources,
+            'serviceResources' => $serviceResources,
+            'humanResources' => $humanResources,
+        );
     }
 }

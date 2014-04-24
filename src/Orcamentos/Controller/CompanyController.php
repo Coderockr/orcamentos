@@ -17,36 +17,10 @@ class CompanyController
 		$equipmentTypes = $app['orm.em']->getRepository('Orcamentos\Model\EquipmentType')->findAll();
 		$serviceTypes = $app['orm.em']->getRepository('Orcamentos\Model\ServiceType')->findAll();
 		$humanTypes = $app['orm.em']->getRepository('Orcamentos\Model\HumanType')->findAll();
-		
-		$resources = $company->getResourceCollection();
-		$equipmentResources = array();
-		$serviceResources = array();
-		$humanResources = array();
-
-		foreach ($resources as $resource) {
-			$type = $resource->getType();
-			switch (get_class($type)) {
-
-			 	case 'Orcamentos\Model\EquipmentType':
-			 		$equipmentResources[] = $resource;
-			 		break;
-
-			 	case 'Orcamentos\Model\ServiceType':
-			 		$serviceResources[] = $resource;
-			 		break;
-
-			 	case 'Orcamentos\Model\HumanType':
-			 		$humanResources[] = $resource;
-			 		break;
-			 };
-		}
 
 		return $app['twig']->render('company/edit.twig', 
 			array(
 				'company' => $company,
-				'equipmentResources' => $equipmentResources,
-				'serviceResources' => $serviceResources,
-				'humanResources' => $humanResources,
 				'serviceTypes' => $serviceTypes,
 				'humanTypes' => $humanTypes,
 				'equipmentTypes' => $equipmentTypes

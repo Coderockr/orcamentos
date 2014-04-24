@@ -309,3 +309,18 @@ a.small { color: #fff; font-size: 10px }
 
 
 .comments .media-body { border-top: 1px dotted #3bafda; padding: 10px 0px 0px 0px}
+
+.company .col-md-4 .edit {
+	bottom: 25px;
+	right: 34px;
+	font-size: 0.85em;
+	opacity: 0;
+	position: absolute;
+}
+
+.company .col-md-4:hover .edit {
+	opacity: 1;
+}
+.company .col-md-4 .edit i {
+	margin-right: 0px;
+}

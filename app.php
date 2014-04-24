@@ -80,6 +80,7 @@ $app->post('/share/comment', 'Orcamentos\Controller\ShareController::comment');
 //Resource Controller
 $app->post('/resource/create', 'Orcamentos\Controller\ResourceController::create');
 $app->get('/resource/delete/{resourceId}', 'Orcamentos\Controller\ResourceController::delete');
+$app->get('/resource/load', 'Orcamentos\Controller\ResourceController::load');
 
 //Admin Controller
 $app->post('/login', 'Orcamentos\Controller\AdminController::login');
