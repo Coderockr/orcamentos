@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+	$('form').h5Validate();
+
 	$(".resources h5 .glyphicon-plus").click(function(){
 		$(this).parent().parent().find("div.thumbnail").slideDown();
 		$(this).parent().addClass("add");
