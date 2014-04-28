@@ -44,6 +44,12 @@ class ResourceController
 	{	
 		$em = $app['orm.em'];
 		$resource = $em->getRepository('Orcamentos\Model\Resource')->find($resourceId);
+		
+		if (count($resource->getResourceQuoteCollection()) > 0) {
+			$app['session']->getFlashBag()->add('message', 'Recurso já está ligado a algum orçamento');
+			return $app->redirect('/company');	
+		}
+
 		$em->remove($resource);
 		$em->flush();
 		return $app->redirect('/company');

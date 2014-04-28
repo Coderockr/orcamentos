@@ -165,6 +165,16 @@ class Resource
         return $this->type = $type;
     }
 
+    public function getResourceQuoteCollection()
+    {
+        return $this->resourceQuoteCollection;
+    }
+    
+    public function setResourceQuoteCollection($resourceQuoteCollection)
+    {
+        return $this->resourceQuoteCollection = $resourceQuoteCollection;
+    }
+    
     /**
      * @return integer
      */
