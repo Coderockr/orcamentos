@@ -98,6 +98,7 @@ $(document).ready(function(){
 	$(document).on( 'click', "#share .glyphicon-remove", function(){
 		if ($(this).parent().find('input[type=hidden]').length == 0) {
 			var shareId = $(this).attr('rel');
+			$(this).hide();
 			$.ajax({
 				type: "GET",
 				url: "/share/delete/" + shareId,
