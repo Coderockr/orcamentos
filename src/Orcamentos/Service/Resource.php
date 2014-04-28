@@ -36,6 +36,7 @@ class Resource
         }
 
         $resource->setName($data->name);
+        $data->cost = str_replace(',', '.', $data->cost);
         $resource->setCost($data->cost);
         $resource->setType($type);
 

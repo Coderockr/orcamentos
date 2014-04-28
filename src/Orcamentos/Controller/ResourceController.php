@@ -18,8 +18,10 @@ class ResourceController
 		$data = $request->request->all();
 		$data['companyId'] = $app['session']->get('companyId');
     	$data = json_encode($data);
+
 		$resourceService = new ResourceService();
 		$resource = $resourceService->save($data, $app['orm.em']);
+
 		$result = array();
 		$result['name'] = $resource->getName();
 		$result['cost'] = $resource->getCost();
@@ -45,7 +47,7 @@ class ResourceController
 		$em = $app['orm.em'];
 		$resource = $em->getRepository('Orcamentos\Model\Resource')->find($resourceId);
 		
-		if (count($resource->getResourceQuoteCollection()) > 0)) {
+		if (count($resource->getResourceQuoteCollection()) > 0) {
 			$app['session']->getFlashBag()->add('message', 'Recurso já está ligado a algum orçamento');
 			return $app->redirect('/company');	
 		}

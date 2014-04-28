@@ -48,11 +48,13 @@ $(document).ready(function(){
 						); 
 						return false; 
 					});
+					var cost = data.cost.toString();
+					cost = cost.replace(".", ",");
 
 					template = thumbnail.append(
 						caption.append(
 							$('<h4>').append(data.name),
-							$('<p>').append("R$ "+ data.cost +"<br>" + data.type.name)
+							$('<p>').append("R$ "+ cost +"<br>" + data.type.name)
 						),
 						edit,
 						anchor
@@ -92,7 +94,7 @@ $(document).ready(function(){
 					var thumbnail = $('<span class="thumbnail" rel="'+ data.id + '">');
 					var caption = $('<div class="caption">');
 					var anchor = $('<a data-href="/resource/delete/'+ data.id +'" data-toggle="confirmation" class="glyphicon glyphicon-remove edit" title="Apagar recurso">');
-					// anchor.on('click', anchor.confirmation());
+					anchor.on('click', anchor.confirmation());
 					var edit = $('<a href="#" title="Editar projeto" class="edit" attr-col="'+n+'" attr-row="'+row+'"><i class="glyphicon glyphicon-pencil"></i>editar</a>');
 					
 					resources[n].push(data);
@@ -105,10 +107,12 @@ $(document).ready(function(){
 						return false; 
 					});
 
+					var cost = data.cost.toString();
+					cost = cost.replace(".", ",");
 					template = thumbnail.append(
 						caption.append(
 							$('<h4>').append(data.name),
-							$('<p>').append("R$ "+ data.cost +"<br>" + data.type.name)
+							$('<p>').append("R$ "+ cost +"<br>" + data.type.name)
 						),
 						edit,
 						anchor
