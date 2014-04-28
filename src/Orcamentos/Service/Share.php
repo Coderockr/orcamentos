@@ -24,12 +24,13 @@ class Share
     public static function save($data, $em)
     {
         $data = json_decode($data);
-
         if (!isset($data->email) || !isset($data->quoteId)) {
            return false;
        }
 
         $quote = $em->getRepository("Orcamentos\Model\Quote")->find($data->quoteId);
+        
+        $shares = array();
 
         foreach ($data->email as $email) {
             $share = $em->getRepository('Orcamentos\Model\Share')->findOneBy(array('quote'=> $quote, 'email' => $email));
@@ -41,12 +42,19 @@ class Share
                 $share->setSent(false);
                 
                 $em->persist($share);
+                $shares[] = $share;
             } 
         }
 
         $em->flush();
 
-        return $data->email;
+        $result = array();
+        foreach ($shares as $key => $share) {
+            $result[$key]['id'] = $share->getId();
+            $result[$key]['email'] = $share->getEmail();
+        }
+
+        return $result;
     }
 
 

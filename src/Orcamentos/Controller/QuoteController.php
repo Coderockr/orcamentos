@@ -110,6 +110,8 @@ class QuoteController
 		
 		$shareCollection = $quote->getShareCollection();
 		
+		$shareNotesCollection = array();
+
 		foreach ($shareCollection as $sc) {
 			$notes = $sc->getShareNotesCollection();
 			foreach ($notes as $note) {
@@ -117,13 +119,15 @@ class QuoteController
 			}
 		}
 
-		usort($shareNotesCollection, function ($a, $b)
-		{
-		    if ($a->getCreated() == $b->getCreated()) {
-		        return 0;
-		    }
-		    return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
-		});
+		if( count($shareNotesCollection) > 0 ) {
+			usort($shareNotesCollection, function ($a, $b)
+			{
+			    if ($a->getCreated() == $b->getCreated()) {
+			        return 0;
+			    }
+			    return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
+			});
+		}
 		
 		return $app['twig']->render('quote/detail.twig',
 			array(

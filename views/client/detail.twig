@@ -34,10 +34,9 @@
                 <div class="caption">
                     <a href="/quote/new/{{ project.id }}" class="btn btn-primary pull-right small" title="Cadastre um novo orçamento">Novo Orçamento</a>
                     <h4>
-                        {{ project.name }}
-                        {% if app.session.get('isAdmin') %}
-                            <a href="/client/edit/{{ client.id }}" title="Editar cliente" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-                        {% endif %}
+                        <a href="/project/detail/{{ project.id }}" title="Cadastre um novo orçamento">
+                            {{ project.name }}
+                        </a>
                     </h4>
                     <p>
                         {{ project.tags }}

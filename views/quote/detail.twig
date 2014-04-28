@@ -111,6 +111,7 @@
                             {% if shareCollection is defined and shareCollection | length > 0 %}
                                 {% for share in shareCollection %}
                                     <li class="list-group-item">
+                                        <a href="#" class="glyphicon glyphicon-remove pull-right" rel="{{ share.id }}" title="Apagar email"></a>
                                         {{ share.email }}
                                     </li>
                                 {% endfor %}

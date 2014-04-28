@@ -84,4 +84,13 @@ class ShareController
 		$result = array( 'email' => $note->getShare()->getEmail(), 'comment' => $note->getNote());
 		return json_encode($result);
 	}
+
+	public function delete(Request $request, Application $app, $shareId)
+	{	
+		$em = $app['orm.em'];
+		$share = $em->getRepository('Orcamentos\Model\Share')->find($shareId);
+		$em->remove($share);
+		$em->flush();
+		return true;
+	}
 }

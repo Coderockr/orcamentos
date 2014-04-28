@@ -324,3 +324,5 @@ a.small { color: #fff; font-size: 10px }
 .company .col-md-4 .edit i {
 	margin-right: 0px;
 }
+
+.loading { background: url('../img/loading_small.gif'); }

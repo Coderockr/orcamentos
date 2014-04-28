@@ -79,8 +79,10 @@ $(document).ready(function(){
 			dataType: "json",
 			success: function( data )
 			{
+				for ( i in data ) {
+					$('.list-group-item:contains("'+ data[i]['email']+'") a').attr('rel', data[i]['id']);
+				}
 				$("#share input[type=hidden]").remove();
-				$("#share .glyphicon-remove").remove();
 				$('#share').modal('hide');
 				$('body').removeClass('modal-open');
 				$('.modal-backdrop').remove();
@@ -94,7 +96,24 @@ $(document).ready(function(){
 	});	
 
 	$(document).on( 'click', "#share .glyphicon-remove", function(){
-		$(this).parent().remove();
+		if ($(this).parent().find('input[type=hidden]').length == 0) {
+			var shareId = $(this).attr('rel');
+			$.ajax({
+				type: "GET",
+				url: "/share/delete/" + shareId,
+				dataType: "json",
+				success: function( data )
+				{	
+					$('[rel='+shareId+']').parent().remove();
+				},
+				error: function( data )
+				{
+					console.log(data.responseText);
+				}
+			});
+		} else {
+			$(this).parent().remove();
+		}
 	});
 
 	$(document).on( 'submit', "#shareNote", function(){
