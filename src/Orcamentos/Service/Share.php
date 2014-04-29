@@ -34,7 +34,6 @@ class Share
 
         foreach ($data->email as $email) {
             $share = $em->getRepository('Orcamentos\Model\Share')->findOneBy(array('quote'=> $quote, 'email' => $email));
-
             if( !$share) {
                 $share = new ShareModel();
                 $share->setQuote($quote);
@@ -82,5 +81,26 @@ class Share
         $em->flush();
 
         return $note;
+    }
+
+    /**
+     * Function that sets the share to be resend
+     *
+     * @return                Function used to set sent to false in a share
+     */
+    public static function resend($data, $em)
+    {
+        $data = json_decode($data);
+
+        if (!isset($data->shareId) ) {
+            throw new Exception("Invalid Parameters", 1);
+        }
+
+        $share = $em->getRepository("Orcamentos\Model\Share")->find($data->shareId);
+        $share->setSent(0);
+        $em->persist($share);
+        $em->flush();
+
+        return $share->getEmail();
     }
 }

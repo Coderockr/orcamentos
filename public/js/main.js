@@ -81,8 +81,10 @@ $(document).ready(function(){
 			{
 				for ( i in data ) {
 					$('.list-group-item:contains("'+ data[i]['email']+'") a').attr('rel', data[i]['id']);
+					$('.list-group-item:contains("'+ data[i]['email']+'")').append("<span class='pull-right share-status'>Aguardando envio</span>");
+					$('.list-group-item:contains("'+ data[i]['email']+'") input[type=hidden]').remove();
 				}
-				$("#share input[type=hidden]").remove();
+				$("#share .list-group-item input[type=hidden]").parent().remove();
 				$('#share').modal('hide');
 				$('body').removeClass('modal-open');
 				$('.modal-backdrop').remove();
@@ -93,6 +95,25 @@ $(document).ready(function(){
 			}
 		});
 		return false;
+	});	
+	
+	$(document).on( 'click', "#share a.share-status", function(){
+		var id = $(this).parent().find('a.glyphicon-remove').attr('rel');
+		$(this).parent().find('a.share-status').remove();
+		$.ajax({
+			type: "POST",
+			url: "/share/resend",
+			data: { shareId : id },
+			dataType: "json",
+			success: function( email )
+			{
+				$('.list-group-item:contains("'+ email+'")').append("<span class='pull-right share-status'>Aguardando envio</span>");
+			},
+			error: function( email )
+			{
+				console.log(email.responseText);
+			}
+		});
 	});	
 
 	$(document).on( 'click', "#share .glyphicon-remove", function(){

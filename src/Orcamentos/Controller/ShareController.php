@@ -6,7 +6,6 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Orcamentos\Service\Share as ShareService;
-
 use Orcamentos\Model\View as ViewModel;
 
 class ShareController
@@ -92,5 +91,15 @@ class ShareController
 		$em->remove($share);
 		$em->flush();
 		return true;
+	}
+
+	public function resend(Request $request, Application $app)
+	{	
+		$data = $request->request->all();
+    	$data = json_encode($data);
+		$shareService = new ShareService();
+		$email = $shareService->resend($data, $app['orm.em']);
+		
+		return json_encode($email);
 	}
 }

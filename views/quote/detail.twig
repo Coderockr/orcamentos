@@ -112,6 +112,7 @@
                                 {% for share in shareCollection %}
                                     <li class="list-group-item">
                                         <a href="#" class="glyphicon glyphicon-remove pull-right" rel="{{ share.id }}" title="Apagar email"></a>
+                                        {{ share.sent | length > 0 ? "<a href='#' class='pull-right share-status btn btn-primary small'>Reenviar</a>" : "<span class='pull-right share-status'>Aguardando envio</span>" }}</span>
                                         {{ share.email }}
                                     </li>
                                 {% endfor %}

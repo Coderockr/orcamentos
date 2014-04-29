@@ -326,3 +326,5 @@ a.small { color: #fff; font-size: 10px }
 }
 
 .loading { background: url('../img/loading_small.gif'); }
+
+.share-status { margin : -2px 5px 0px 0px; padding: 3px 12px; color:#3bafda; text-align: left; }
