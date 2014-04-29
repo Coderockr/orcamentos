@@ -8,11 +8,9 @@ $(document).ready(function(){
 		return false;
 	});
 	
-	$(".resources h5 .glyphicon-minus").click(function(){
+	$(document).on('click',".resources h5 .glyphicon-minus",function(){
 		$(this).parent().parent().find("div.thumbnail").slideUp();
 		$(this).parent().removeClass("add");
-		$(this).parent().parent().find('form')[0].reset();
-		$(this).parent().parent().find('#id')[0].value ="";
 		return false;
 	});
 
@@ -43,8 +41,8 @@ $(document).ready(function(){
 			);
 			container.append(template);
 		}
-		$('input[type=text]').val("");
-		$(".resources h5 .glyphicon-minus").click();
+		container.find('.glyphicon-minus').click();
+		container.find('input[type=text]').val("");
 		
 		return false;
 	});	
