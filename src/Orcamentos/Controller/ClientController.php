@@ -68,7 +68,6 @@ class ClientController
 		$logotype = $request->files->get('logotype');
 
 		$data['companyId']= $app['session']->get('companyId');
-
     	$data = json_encode($data);
 		$clientService = new ClientService();
 		$client = $clientService->save($data, $logotype, $app['orm.em']);
