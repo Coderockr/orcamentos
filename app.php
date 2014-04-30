@@ -8,6 +8,8 @@ use Silex\Application,
 
 $app = new Application();
 
+$app['debug'] = true;
+
 //configuration
 $app->register(new Silex\Provider\SessionServiceProvider());
 
@@ -115,3 +117,4 @@ $app->register(new DoctrineOrmServiceProvider(), array(
     'orm.proxies_namespace' => 'EntityProxy',
     'orm.auto_generate_proxies' => true
 ));
+
