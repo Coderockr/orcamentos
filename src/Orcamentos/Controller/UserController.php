@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Orcamentos\Service\User as UserService;
 
 use Pagerfanta\Pagerfanta;
-use Pagerfanta\View\TwitterBootstrapView;
+use Pagerfanta\View\TwitterBootstrap3View;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 
 class UserController
@@ -21,7 +21,7 @@ class UserController
 		$adapter = new DoctrineCollectionAdapter($users);
 		$pagerfanta = new Pagerfanta($adapter);
 		$pagerfanta->setCurrentPage($page);
-		$view = new TwitterBootstrapView();
+		$view = new TwitterBootstrap3View();
 		$routeGenerator = function($page) use ($app) {
 	        return '/user/'.$page;
 	    };

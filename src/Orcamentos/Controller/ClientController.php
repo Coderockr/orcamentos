@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Orcamentos\Service\Client as ClientService;
 
 use Pagerfanta\Pagerfanta;
-use Pagerfanta\View\TwitterBootstrapView;
+use Pagerfanta\View\TwitterBootstrap3View;
 use Pagerfanta\Adapter\ArrayAdapter;
 
 class ClientController
@@ -33,7 +33,7 @@ class ClientController
 		$adapter = new ArrayAdapter($clients);
 		$pagerfanta = new Pagerfanta($adapter);
 		$pagerfanta->setCurrentPage($page);
-		$view = new TwitterBootstrapView();
+		$view = new TwitterBootstrap3View();
 		$routeGenerator = function($page) use ($app) {
 	        return '/user/'.$page;
 	    };

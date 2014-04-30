@@ -289,6 +289,7 @@ a *{
     transition: all ease 0.3s;
 }
 
+
 #new_project select { margin: 10px 0px 5px 0px;}
 
 .margin10 { margin-top: 10px;}
@@ -328,3 +329,5 @@ a.small { color: #fff; font-size: 10px }
 .loading { background: url('../img/loading_small.gif'); }
 
 .share-status { margin : -2px 5px 0px 0px; padding: 3px 12px; color:#3bafda; text-align: left; }
+
+
