@@ -6,6 +6,8 @@ use Silex\Application,
     Symfony\Component\HttpFoundation\Request,
     Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 
+use Symfony\Component\HttpFoundation\Response;
+
 $app = new Application();
 
 //configuration
@@ -33,6 +35,15 @@ $app->before(function (Request $request) use ($app) {
         || stripos($requestUri, 'lead') == true ) && $app['session']->get('isAdmin') == false ) {
         return $app->redirect('/');
     }
+});
+
+$app->error(function (\Exception $e, $code) use($app) {
+    switch ($code) {
+        default:
+            $message = $e->getMessage() . ' no arquivo ' . $e->getFile() . ', na linha: '. $e->getLine();
+            break;
+    }
+    return new Response($message, $code);
 });
     
 // Index Controller / Dashboard
