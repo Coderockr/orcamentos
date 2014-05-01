@@ -5,6 +5,7 @@ namespace Orcamentos\Service;
 use Orcamentos\Model\Share as ShareModel;
 use Orcamentos\Model\ShareNote as ShareNoteModel;
 use Intervention\Image\Image;
+use Swift_Message;
 use Exception;
   
 /**
@@ -102,5 +103,52 @@ class Share
         $em->flush();
 
         return $share->getEmail();
+    }
+
+
+    /**
+     * Function that sends the emails that weren't sent
+     *
+     * @return                
+     */
+    public static function sendEmails($limit, $app)
+    {
+        if (!isset($limit) ) {
+            throw new Exception("Invalid Parameters", 1);
+        }
+
+        $em = $app['orm.em'];
+
+        $shares = $em->getRepository("Orcamentos\Model\Share")->findBy( array( 'sent' => 0 ), array( 'id' => 'ASC' ), $limit );
+        
+        foreach ($shares as $i => $share) {
+            $quote = $share->getQuote();
+            $quoteVersion = $quote->getVersion();
+            $project = $quote->getProject();
+            $projectName = $project->getName();
+            $companyName = $project->getCompany()->getName();
+
+            $subject = " A empresa " . $companyName . " compartilhou o orçamento " . $quoteVersion . " do projeto " . $projectName;
+            $link = 'orcamentos.dev:8080';
+            $body = 'Veja o orçamento no link http://' . $link . '/share/' . $share->getId();
+            
+            $message = Swift_Message::newInstance()
+                ->setFrom(array('mateus@coderockr.com'))
+                ->setTo(array('mateus@coderockr.com'))
+                ->setReplyTo('mateus@coderockr.com')
+                ->setSubject($subject)
+                ->setBody($body);
+
+            $app['mailer']->send($message);
+
+            $share->setSent(1);
+
+            $em->persist($share);
+
+        }
+
+        $em->flush();
+        
+        return true;
     }
 }

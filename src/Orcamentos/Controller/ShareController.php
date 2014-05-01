@@ -11,7 +11,6 @@ use Orcamentos\Model\View as ViewModel;
 class ShareController
 {
 
-
 	public function detail(Request $request, Application $app, $shareId)
 	{	
 		if ( !isset($shareId) ) {
@@ -101,5 +100,13 @@ class ShareController
 		$email = $shareService->resend($data, $app['orm.em']);
 		
 		return json_encode($email);
+	}
+
+	public function sendEmails(Request $request, Application $app, $limit)
+	{	
+		$shareService = new ShareService();
+		$result = $shareService->sendEmails($limit, $app);
+		
+		return json_encode($result);
 	}
 }

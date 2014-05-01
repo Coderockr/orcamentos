@@ -21,6 +21,16 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 
+$app['swiftmailer.options'] = array(
+    'host' => 'smtp.gmail.com',
+    'port' => '465',
+    'username' => 'mateus@coderockr.com',
+    'password' => '66839680',
+    'encryption' => 'ssl',
+    'auth_mode' => 'login'
+);
+
+
 // where does the user want to go?
 $app->before(function (Request $request) use ($app) {
     $requestUri = $request->getRequestUri();
@@ -90,6 +100,7 @@ $app->get('/share/delete/{shareId}', 'Orcamentos\Controller\ShareController::del
 $app->post('/share/create', 'Orcamentos\Controller\ShareController::create');
 $app->post('/share/comment', 'Orcamentos\Controller\ShareController::comment');
 $app->post('/share/resend', 'Orcamentos\Controller\ShareController::resend');
+$app->get('/share/sendEmails/{limit}', 'Orcamentos\Controller\ShareController::sendEmails')->value('limit', 10);
 $app->get('/share/{shareId}', 'Orcamentos\Controller\ShareController::detail');
 
 //Resource Controller
