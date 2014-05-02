@@ -29,16 +29,16 @@
                     <p><a href="/project/detail/{{ project.id }}">{{ project.name }}</a></p>
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div>
                     <label for="logo-file">Versão</label>
                     <p>{{ version }}</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div>
                     <label for="profit">Margem de Lucro</label>
-                    <input type="text" id="profit" name="profit" value=" {{ quote.profit is defined and quote.profit ? quote.profit ? "" }}">
+                    <input type="text" id="profit" name="profit" value=" {{ quote.profit is defined and quote.profit ? quote.profit : "" }}">
                     
                 </div>
             </div> 
@@ -52,27 +52,20 @@
                 </div>
             </div>
         </div>
-        <div class="row margin20">
+        <div class="row margin30">
             <div class="col-md-1">
                 <div>
-                    <label for="dueDate">Validade</label>
-                    <input type="text" id="dueDate" name="dueDate">
+                    <label for="dueDate">Validade</label><br>
+                    <input type="text" id="dueDate" name="dueDate" value="{{ quote.dueDate is not null ? quote.dueDate | date("d/m/Y") : "" }}">
                 </div>
             </div>
-            <div class="col-md-2">
-                <div>
-                    <label for="privateNotes">Obs</label>
-                    <textarea name="privateNotes" id="privateNotes" class="form-control" rows="3">{{ quote.privateNotes ? quote.privateNotes : "" }}</textarea>
-                </div>
-            </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div>
                     <label for="paymentType">Formas de pagamento</label>
                     <textarea name="paymentType" id="paymentType" class="form-control" rows="3">{{ quote.paymentType is defined and quote.paymentType ? quote.paymentType : "" }}</textarea>
                 </div>
             </div>
-            
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div>
                     <label for="priceDescription">Investimentos</label>
                     <textarea name="priceDescription" id="priceDescription" class="form-control" rows="3">{{ quote.priceDescription is defined and quote.priceDescription ? quote.priceDescription : "" }}</textarea>
@@ -85,7 +78,14 @@
                     <textarea name="deadline" id="deadline" class="form-control" rows="3">{{ quote.deadline is defined and quote.deadline ? quote.deadline : "" }}</textarea>
                 </div>
             </div> 
-            
+        </div>
+        <div class="row margin20">
+            <div class="col-md-12">
+                <div>
+                    <label for="privateNotes">Obs</label>
+                    <textarea name="privateNotes" id="privateNotes" class="form-control"  rows="6">{{ quote.privateNotes ? quote.privateNotes : "" }}</textarea>
+                </div>
+            </div>
         </div>
     </div>
     <div class="margin30">

@@ -220,12 +220,16 @@ class Quote
 
     public function getDueDate()
     {
+        if ( !$this->dueDate ){
+            return null;
+        }
+
         return $this->dueDate->format('Y-m-d H:i:s');
     }
     
     public function setDueDate($dueDate)
     {
-        $this->dueDate = \DateTime::createFromFormat('Y-m-d H:i:s', $dueDate);    
+        $this->dueDate = \DateTime::createFromFormat('d/m/Y', $dueDate);    
     }
 
     public function getCreated()

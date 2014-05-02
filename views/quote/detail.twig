@@ -14,16 +14,16 @@
             <div class="col-md-3">
                 <div>
                     <label for="name">Cliente</label>
-                    <p>{{ quote.project.client.name }}</p>
+                    <p><a href="/client/detail/{{ quote.project.client.id }}">{{ quote.project.client.name }}</a></p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div>
                     <label for="responsable">Projeto</label>
-                    <p>{{ quote.project.name }}</p>
+                    <p><a href="/project/detail/{{ quote.project.id }}">{{ quote.project.name }}</a></p>
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div>
                     <label for="logo-file">Versão</label>
                     <p>{{ quote.version }}</p>
@@ -31,14 +31,50 @@
             </div>
             <div class="col-md-3">
                 <div>
-                    <label for="privateNotes">Notas</label>
-                    <p>{{ quote.privateNotes }}</p>
+                    <label for="profit">Margem de lucro</label>
+                    <p>{{ quote.profit }} %</p>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div>
                     <label for="status">Status</label>
                     <p>{{ quote.status  == 1 ? "Esperando" : "Aprovado" }}</p>
+                </div>
+            </div>
+        </div> 
+        <div class="row margin20">
+            <div class="col-md-6">
+                <div>
+                    <label for="dueDate">Validade do Orçamento</label>
+                    <p>{{ quote.dueDate is not null ? quote.dueDate | date('d/m/Y') : "" }}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div> 
+                    <label for="deadline">Prazo de entrega</label>
+                    <p>{{ quote.deadline is not null ? quote.deadline : "" }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row margin20">
+            <div class="col-md-6">
+                <div>
+                    <label for="paymentType">Formas de pagamento</label>
+                    <p>{{ quote.paymentType is not null ? quote.paymentType : "" }}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <label for="priceDescription">Investimentos</label>
+                    <p>{{ quote.priceDescription is not null ? quote.priceDescription : "" }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row margin20">
+          <div class="col-md-12">
+                <div>
+                    <label for="privateNotes">Obs</label>
+                    <p>{{ quote.privateNotes is not null ? quote.privateNotes : "" }}</p>
                 </div>
             </div>
         </div>

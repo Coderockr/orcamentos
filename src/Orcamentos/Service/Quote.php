@@ -50,7 +50,11 @@ class Quote
         if(isset($data->profit)){
             $quote->setProfit($data->profit);
         }
-        
+
+        if(isset($data->dueDate)){
+            $quote->setDueDate($data->dueDate);
+        }
+
         $quote->setDeadline($data->deadline);
         $quote->setPriceDescription($data->priceDescription);
         $quote->setPaymentType($data->paymentType);
