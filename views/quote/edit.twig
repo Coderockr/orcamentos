@@ -11,11 +11,11 @@
 
     </div>
 </div>
-<form class="form quote" action="/quote/create" method="POST">
+<form class="quote" action="/quote/create" method="POST">
     <input type="hidden" name="id" value="{{ quote ? quote.id : "" }}" />
     <input type="hidden" name="projectId" value="{{ project.id }}" />
     <input type="hidden" name="version" value="{{ version }}" />
-    <div class="form margin20">
+    <div class="margin20">
         <div class="row">
             <div class="col-md-3">
                 <div>
@@ -29,7 +29,7 @@
                     <p><a href="/project/detail/{{ project.id }}">{{ project.name }}</a></p>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div>
                     <label for="logo-file">Versão</label>
                     <p>{{ version }}</p>
@@ -37,12 +37,14 @@
             </div>
             <div class="col-md-2">
                 <div>
-                    <label for="profit">Margem de Lucro</label>
-                    <input type="text" id="profit" name="profit" value=" {{ quote.profit is defined and quote.profit ? quote.profit : "" }}">
-                    
+                    <label for="profit">Margem de lucro</label>
+                    <div class="input-group ">
+                        <input type="text" name="profit" id="profit" class="form-control" required value="{{ quote and quote.profit ? quote.profit : "" }}"/>
+                        <span class="input-group-addon ">%</span>
+                    </div>
                 </div>
-            </div> 
-            <div class="col-md-2">
+            </div>
+            <div class="col-md-2 col-md-offset-1">
                 <div>
                     <label for="status">Status *</label><br>
                     <select name="status">
@@ -59,13 +61,16 @@
                     <input type="text" id="dueDate" name="dueDate" value="{{ quote.dueDate is not null ? quote.dueDate | date("d/m/Y") : "" }}">
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div>
-                    <label for="taxes">Nota fiscal *</label>
-                    <input type="text" name="taxes" id="taxes" class="form-control" required value="{{ quote and quote.taxes ? quote.taxes : quote.project.company.taxes }}"/>
+                    <label for="taxes">Nota fiscal  * </label>
+                    <div class="input-group ">
+                        <input type="text" name="taxes" id="taxes" class="form-control" required value="{{ quote and quote.taxes ? quote.taxes : project.company.taxes }}"/>
+                        <span class="input-group-addon ">%</span>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-md-offset-1">
                 <div>
                     <label for="priceDescription">Investimentos</label>
                     <textarea name="priceDescription" id="priceDescription" class="form-control" rows="3">{{ quote.priceDescription is defined and quote.priceDescription ? quote.priceDescription : "" }}</textarea>

@@ -20,8 +20,13 @@
                     <input type="text" name="responsable" id="responsable" class="form-control" required value="{{ company and company.responsable ? company.responsable : "" }}"/>
                 </div>
                 <div>
-                    <label for="taxes">Nota fiscal *</label>
-                    <input type="text" name="taxes" id="taxes" class="form-control" required value="{{ company and company.taxes ? company.taxes : "6" }}"/>
+                    <div>
+                        <label for="taxes">Nota fiscal  * </label>
+                        <div class="input-group ">
+                            <input type="text" name="taxes" id="taxes" class="form-control" required value="{{ company and company.taxes ? company.taxes : "6" }}"/>
+                            <span class="input-group-addon ">%</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-2">
                     <label for="logo-file" class="photo-upload">
