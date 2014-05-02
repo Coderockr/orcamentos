@@ -3,17 +3,17 @@
     <div class="form margin20">
         <ul class="quote_header clearfix">
             <li>
-                <strong> Cliente: </strong> {{ share.quote.project.client.name }} 
+                <strong> Cliente: </strong> {{ quote.project.client.name }} 
             </li>
             <li>
-                <strong> Projeto: </strong> {{ share.quote.project.name }}
+                <strong> Projeto: </strong> {{ quote.project.name }}
             </li>
             <li>
-               <strong> Versão: </strong> {{ share.quote.version }}
+               <strong> Versão: </strong> {{ quote.version }}
             </li>
         </ul>  
     </div>
-    {% if share.quote.privateNotes is not null %}
+    {% if quote.privateNotes is not null %}
         <div class="row margin20">
             <div class="col-md-12">
                 <h4>Descrição dos serviços</h4>
@@ -21,12 +21,12 @@
         </div>    
         <div class="row">
             <div class="col-md-12">
-                {{ share.quote.privateNotes }}
+                {{ quote.privateNotes }}
             </div>
         </div>    
     {% endif %}
 
-    {% if share.quote.deadline is not null %}
+    {% if quote.deadline is not null %}
         <div class="row margin20">
             <div class="col-md-12">
                 <h4>Prazos de Entrega</h4>
@@ -34,12 +34,12 @@
         </div>    
         <div class="row">
             <div class="col-md-12">
-                {{ share.quote.deadline }}
+                {{ quote.deadline }}
             </div>
         </div>  
     {% endif %}
 
-    {% if share.quote.priceDescription is not null %}
+    {% if quote.priceDescription is not null %}
         <div class="row margin20">
             <div class="col-md-12">
                 <h4>Investimentos</h4>
@@ -47,12 +47,12 @@
         </div>    
         <div class="row">
             <div class="col-md-12">
-                {{ share.quote.priceDescription }}
+                {{ quote.priceDescription }}
             </div>
         </div> 
     {% endif %}
 
-    {% if share.quote.paymentType is not null %}
+    {% if quote.paymentType is not null %}
         <div class="row margin20">
             <div class="col-md-12">
                 <h4>Formas de pagamento</h4>
@@ -60,12 +60,12 @@
         </div>    
         <div class="row">
             <div class="col-md-12">
-                {{ share.quote.paymentType }}
+                {{ quote.paymentType }}
             </div>
         </div>   
     {% endif %}
 
-    {% if share.quote.privateNotes is not null %}
+    {% if quote.privateNotes is not null %}
         <div class="row margin20">
             <div class="col-md-12">
                 <h4>Observaçoes gerais</h4>
@@ -73,15 +73,15 @@
         </div>    
         <div class="row">
             <div class="col-md-12">
-                {{ share.quote.privateNotes }}
+                {{ quote.privateNotes }}
             </div>
         </div>
     {% endif %}
 
-    {% if share.quote.dueDate is not null %}
+    {% if quote.dueDate is not null %}
         <div class="row margin20">
             <div class="col-md-12">
-                Este orçamento é válido até {{ share.quote.dueDate | date('d/m/Y') }}
+                Este orçamento é válido até {{ quote.dueDate | date('d/m/Y') }}
             </div>
         </div> 
     {% endif %}
@@ -134,29 +134,31 @@
             </div>  
         </div>  
     {% endif #}
-    <div class="row margin30 printHide">
-        <form action="/share/comment" method="POST" id="shareNote">
-            <input type="hidden" name="shareId" value="{{ share.id }}"/>
-            <div class="col-md-12">
-                <label for="note">Comentários</label>
-                <textarea type="text" name="note" id="note" class="form-control" rows="3"></textarea>
-            </div> 
-            <div class="col-md-12 margin20">
-                <button class="btn btn-primary pull-right" type="submit" title="Salvar comentário">Salvar</button>
-            </div>
-        </form>
-    </div> 
-    <div class="margin30 comments printHide">
-        {% if shareNotesCollection is defined and shareNotesCollection | length > 0 %}
-            {% for note in shareNotesCollection %}
-                <div class="media">
-                    <div class="media-body">
-                        <h4 class="media-heading"> {{ note.share.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
-                        {{ note.note }}
-                    </div>
-                </div>  
-            {% endfor %}
-        {% endif %}
-    </div>  
+    {% if shareNotesCollection is defined %}
+        <div class="row margin30 printHide">
+            <form action="/share/comment" method="POST" id="shareNote">
+                <input type="hidden" name="shareId" value="{{ share.id }}"/>
+                <div class="col-md-12">
+                    <label for="note">Comentários</label>
+                    <textarea type="text" name="note" id="note" class="form-control" rows="3"></textarea>
+                </div> 
+                <div class="col-md-12 margin20">
+                    <button class="btn btn-primary pull-right" type="submit" title="Salvar comentário">Salvar</button>
+                </div>
+            </form>
+        </div> 
+        <div class="margin30 comments printHide">
+            {% if shareNotesCollection | length > 0 %}
+                {% for note in shareNotesCollection %}
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="media-heading"> {{ note.share.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
+                            {{ note.note }}
+                        </div>
+                    </div>  
+                {% endfor %}
+            {% endif %}
+        </div>  
+    {% endif %}
 {% endblock %}
     

@@ -148,4 +148,78 @@ class QuoteController
 		$quote = $quoteService->save($data, $app['orm.em']);
 		return $app->redirect('/quote/detail/' . $quote->getId());
 	}
+
+	public function preview(Request $request, Application $app, $quoteId)
+	{	
+		if ( !isset($quoteId) ) {
+			throw new Exception("Parâmetros inválidos", 1);
+		}
+		
+		$quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
+		
+		$day = date('d');
+		$month = date('m');
+		$year = date('Y');
+		
+		$monthName = null;
+
+		switch ($month) {
+			case '01':
+				$monthName = 'Janeiro';
+				break;
+
+			case '02':
+				$monthName = 'Fevereiro';
+				break;
+
+			case '03':
+				$monthName = 'Março';
+				break;
+
+			case '04':
+				$monthName = 'Abril';
+				break;
+
+			case '05':
+				$monthName = 'Maio';
+				break;
+
+			case '06':
+				$monthName = 'Junho';
+				break;
+
+			case '07':
+				$monthName = 'Julho';
+				break;
+
+			case '08':
+				$monthName = 'Agosto';
+				break;
+
+			case '09':
+				$monthName = 'Setembro';
+				break;
+
+			case '10':
+				$monthName = 'Outubro';
+				break;
+
+			case '11':
+				$monthName = 'Novembro';
+				break;
+
+			case '12':
+				$monthName = 'Dezembro';
+				break;
+		}
+
+		$createdSignature = 'Joinville, ' . $day . ' de ' . $monthName . ' de ' . $year . '.';
+
+		return $app['twig']->render('share/detail.twig',
+			array(
+				'quote' => $quote,
+				'createdSignature' => $createdSignature
+			)
+		);
+	}
 }

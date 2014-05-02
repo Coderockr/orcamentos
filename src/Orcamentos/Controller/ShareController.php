@@ -106,7 +106,7 @@ class ShareController
 		$createdSignature = 'Joinville, ' . $day . ' de ' . $monthName . ' de ' . $year . '.';
 		return $app['twig']->render('share/detail.twig',
 			array(
-				'share' => $share,
+				'quote' => $quote,
 				'resourceCollection' => $resourceCollection,
 				'createdSignature' => $createdSignature,
 				'shareNotesCollection' => $shareNotesCollection
