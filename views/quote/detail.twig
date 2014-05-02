@@ -121,7 +121,15 @@
                                 <th></th>
                                 <th></th>
                                 <th class="text-right">Total</th>
-                                <th class="text-right">{{ result | number_format(2, '.', ',') }}</th>
+                                <th class="text-right">
+                                    {{ result | number_format(2, '.', ',') }}<br> 
+                                    <small>Nota fiscal + {{ quote.taxes ? quote.taxes : quote.project.company.taxes }} % </small> <br>
+                                    {% set result = result + (result / (quote.taxes ? quote.taxes : quote.project.company.taxes))   %}
+                                    {{ result | number_format(2, '.', ',') }}<br> 
+                                    <small>Margem de lucro + {{ quote.profit }} % </small>  <br>
+                                    {% set result = result + (result / quote.profit)   %}
+                                    {{ result | number_format(2, '.', ',') }}<br> 
+                                </th>
                             </tr>
                         </tbody>
                     </table>
