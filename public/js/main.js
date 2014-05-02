@@ -17,6 +17,17 @@ $(document).ready(function(){
 	$('[data-toggle="confirmation"]').confirmation();
 
 	$('#telephone').mask("(99) 9999-99999");
+	
+	$("#dueDate").datepicker({
+	    dateFormat: 'dd/mm/yy',
+	    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+	    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+	    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+	    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+	    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+	    nextText: 'Próximo',
+	    prevText: 'Anterior'
+	});
 
 	$(document).on( 'click', ".quote .resources .btn-success", function(){
 		var container = $(this).parent().parent().parent().parent().parent();

@@ -46,6 +46,10 @@ class Company
         
         if (isset($data->telephone)) {
             $company->setTelephone($data->telephone);
+        } 
+
+        if (isset($data->email)) {
+            $company->setEmail($data->email);
         }
 
         if (isset($logotype)) {

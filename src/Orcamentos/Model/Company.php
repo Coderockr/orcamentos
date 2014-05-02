@@ -37,6 +37,13 @@ class Company
     private $name;
 
     /**
+     * @ORM\Column(type="string", nullable=false)
+     *
+     * @var string
+     */
+    private $email;
+
+    /**
      * @ORM\Column(type="string")
      *
      * @var string
@@ -115,6 +122,16 @@ class Company
     public function setTelephone($telephone)
     {
         return $this->telephone = $telephone;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    
+    public function setEmail($email)
+    {
+        return $this->email = $email;
     }
     
     public function getSite()

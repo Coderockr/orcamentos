@@ -44,7 +44,16 @@ class Quote
         }
 
         $quote->setStatus($data->status);
+
         $quote->setPrivateNotes($data->privateNotes);
+        
+        if(isset($data->profit)){
+            $quote->setProfit($data->profit);
+        }
+        
+        $quote->setDeadline($data->deadline);
+        $quote->setPriceDescription($data->priceDescription);
+        $quote->setPaymentType($data->paymentType);
 
         $em->persist($quote);
 

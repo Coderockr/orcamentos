@@ -1,4 +1,5 @@
 <?php
+
 namespace Orcamentos\Model;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -29,6 +30,12 @@ class Quote
     protected $updated;
 
     /**
+     * @ORM\Column(type="datetime",nullable=true)
+     * @var datetime
+     */
+    protected $dueDate;
+
+    /**
      * @ORM\Column(type="string", length=150)
      *
      * @var string
@@ -43,11 +50,39 @@ class Quote
     private $status;
 
     /**
+     * @ORM\Column(type="float")
+     *
+     * @var float
+     */
+    private $profit;
+
+    /**
      * @ORM\Column(type="text",nullable=true)
      *
      * @var text
      */
     private $privateNotes;
+
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     *
+     * @var text
+     */
+    private $deadline;
+
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     *
+     * @var text
+     */
+    private $priceDescription;
+
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     *
+     * @var text
+     */
+    private $paymentType;
 
     /**
      * @ORM\ManyToOne(targetEntity="Project", inversedBy="quoteCollection", cascade={"persist", "merge", "refresh"})
@@ -115,6 +150,46 @@ class Quote
         return $this->project = $project;
     }    
 
+    public function getProfit()
+    {
+        return $this->profit;
+    }
+    
+    public function setProfit($profit)
+    {
+        return $this->profit = $profit;
+    }   
+
+    public function getDeadline()
+    {
+        return $this->deadline;
+    }
+    
+    public function setDeadline($deadline)
+    {
+        return $this->deadline = $deadline;
+    }   
+
+    public function getPriceDescription()
+    {
+        return $this->priceDescription;
+    }
+    
+    public function setPriceDescription($priceDescription)
+    {
+        return $this->priceDescription = $priceDescription;
+    }    
+
+    public function getPaymentType()
+    {
+        return $this->paymentType;
+    }
+    
+    public function setPaymentType($paymentType)
+    {
+        return $this->paymentType = $paymentType;
+    }    
+
     public function getResourceQuoteCollection()
     {
         return $this->resourceQuoteCollection;
@@ -141,6 +216,16 @@ class Quote
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getDueDate()
+    {
+        return $this->dueDate->format('Y-m-d H:i:s');
+    }
+    
+    public function setDueDate($dueDate)
+    {
+        $this->dueDate = \DateTime::createFromFormat('Y-m-d H:i:s', $dueDate);    
     }
 
     public function getCreated()
