@@ -26,7 +26,7 @@ class Quote
     {
         $data = json_decode($data);
 
-        if (!isset($data->projectId) || !isset($data->version)) {
+        if (!isset($data->projectId) || !isset($data->version) || !isset($data->taxes) || !isset($data->privateNotes)) {
             throw new Exception("Invalid Parameters", 1);
         }
 
@@ -53,6 +53,10 @@ class Quote
 
         if(isset($data->dueDate)){
             $quote->setDueDate($data->dueDate);
+        }
+        
+        if(isset($data->taxes)){
+            $quote->setTaxes($data->taxes);
         }
 
         $quote->setDeadline($data->deadline);
