@@ -37,6 +37,13 @@ class Company
     private $name;
 
     /**
+     * @ORM\Column(type="float", nullable=false )
+     *
+     * @var float
+     */
+    private $taxes;
+
+    /**
      * @ORM\Column(type="string", nullable=false)
      *
      * @var string
@@ -112,6 +119,16 @@ class Company
     public function setName($name)
     {
         return $this->name = filter_var($name, FILTER_SANITIZE_STRING);
+    }
+
+    public function getTaxes()
+    {
+        return $this->taxes;
+    }
+    
+    public function setTaxes($taxes)
+    {
+        return $this->taxes = $taxes;
     }
 
     public function getTelephone()

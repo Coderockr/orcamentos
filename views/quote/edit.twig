@@ -53,26 +53,33 @@
             </div>
         </div>
         <div class="row margin30">
-            <div class="col-md-1">
+            <div class="col-md-3">
                 <div>
                     <label for="dueDate">Validade</label><br>
                     <input type="text" id="dueDate" name="dueDate" value="{{ quote.dueDate is not null ? quote.dueDate | date("d/m/Y") : "" }}">
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div>
-                    <label for="paymentType">Formas de pagamento</label>
-                    <textarea name="paymentType" id="paymentType" class="form-control" rows="3">{{ quote.paymentType is defined and quote.paymentType ? quote.paymentType : "" }}</textarea>
+                    <label for="taxes">Nota fiscal *</label>
+                    <input type="text" name="taxes" id="taxes" class="form-control" required value="{{ quote and quote.taxes ? quote.taxes : quote.project.company.taxes }}"/>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div>
                     <label for="priceDescription">Investimentos</label>
                     <textarea name="priceDescription" id="priceDescription" class="form-control" rows="3">{{ quote.priceDescription is defined and quote.priceDescription ? quote.priceDescription : "" }}</textarea>
                 </div>
             </div>
-
-            <div class="col-md-3">
+        </div>
+        <div class="row margin30">
+            <div class="col-md-6">
+                 <div>
+                    <label for="paymentType">Formas de pagamento</label>
+                    <textarea name="paymentType" id="paymentType" class="form-control" rows="3">{{ quote.paymentType is defined and quote.paymentType ? quote.paymentType : "" }}</textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div>
                     <label for="deadline">Prazo de entrega</label>
                     <textarea name="deadline" id="deadline" class="form-control" rows="3">{{ quote.deadline is defined and quote.deadline ? quote.deadline : "" }}</textarea>

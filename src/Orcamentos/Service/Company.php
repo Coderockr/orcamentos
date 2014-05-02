@@ -24,7 +24,7 @@ class Company
     {
         $data = json_decode($data);
 
-        if (!isset($data->name) || !isset($data->responsable) || !isset($data->telephone) || !isset($data->companyId)) {
+        if (!isset($data->name) || !isset($data->responsable) || !isset($data->telephone) || !isset($data->taxes) || !isset($data->companyId)) {
             throw new Exception("Invalid Parameters", 1);
         }
 
@@ -39,6 +39,7 @@ class Company
 
         $company->setName($data->name);
         $company->setResponsable($data->responsable);
+        $company->setTaxes($data->taxes);
 
         if (isset($data->site)) {
             $company->setSite($data->site);

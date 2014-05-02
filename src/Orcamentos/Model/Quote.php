@@ -36,6 +36,13 @@ class Quote
     protected $dueDate;
 
     /**
+     * @ORM\Column(type="float", nullable=false )
+     *
+     * @var float
+     */
+    private $taxes;
+
+    /**
      * @ORM\Column(type="string", length=150)
      *
      * @var string
@@ -140,6 +147,15 @@ class Quote
         return $this->status = $status;
     }    
 
+    public function getTaxes()
+    {
+        return $this->taxes;
+    }
+    
+    public function setTaxes($taxes)
+    {
+        return $this->taxes = $taxes;
+    }
     public function getProject()
     {
         return $this->project;

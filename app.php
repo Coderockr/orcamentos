@@ -93,6 +93,7 @@ $app->post('/company/create', 'Orcamentos\Controller\CompanyController::create')
 $app->get('/quote/new/{projectId}', 'Orcamentos\Controller\QuoteController::edit');
 $app->get('/quote/edit/{quoteId}', 'Orcamentos\Controller\QuoteController::edit');
 $app->get('/quote/detail/{quoteId}', 'Orcamentos\Controller\QuoteController::detail');
+$app->get('/quote/preview/{quoteId}', 'Orcamentos\Controller\QuoteController::preview');
 $app->post('/quote/create', 'Orcamentos\Controller\QuoteController::create');
 
 // Share Controller

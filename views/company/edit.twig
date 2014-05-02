@@ -19,12 +19,16 @@
                     <label for="responsable">Responsável *</label>
                     <input type="text" name="responsable" id="responsable" class="form-control" required value="{{ company and company.responsable ? company.responsable : "" }}"/>
                 </div>
+                <div>
+                    <label for="taxes">Nota fiscal *</label>
+                    <input type="text" name="taxes" id="taxes" class="form-control" required value="{{ company and company.taxes ? company.taxes : "6" }}"/>
+                </div>
                 <div class="col-md-2">
                     <label for="logo-file" class="photo-upload">
                         <img src="{{ company and company.logotype ? '/public/img/logotypes/' ~ company.logotype : "/public/img/photo_g.png" }}" width="61" height="66">
                     </label>
                 </div>
-                <div class="col-md-10">
+                <div class="clearfix">
                     <label for="logo-file">Logotipo</label>
                     <div class="input-group form-search">
                         <input type="text" name="logoname" id="logoname" tabindex="-1" value="{{ company and company.logotype ? company.logotype : "" }}" class="form-control" />
@@ -34,6 +38,7 @@
                         </span>
                     </div>
                 </div>
+               
             </div>
             <div class="col-md-6">
                 <div>

@@ -5,9 +5,9 @@
             <h3>Dados do Orçamento</h4>
         </div>
         <div class="col-md-3">
-            <div><a href="/quote/preview/{{ quote.id }}" target="_blank" class="btn btn-primary small" title="Ver orçamento">Visualizar prévia</a></div>
+            <div ><a class="btn btn-primary small" data-toggle="modal" data-target="#share">Compartilhar</a></div>
+            <div class="margin10"><a href="/quote/preview/{{ quote.id }}" target="_blank" class="btn btn-primary small" title="Ver orçamento">Visualizar prévia</a></div>
             <div class="margin10"><a href="/quote/edit/{{ quote.id }}" class="btn btn-primary small" title="Editar orçamento">Editar Orçamento</a></div>
-            <div class="margin10"><a class="btn btn-primary small" data-toggle="modal" data-target="#share">Compartilhar</a></div>
         </div>
     </div>
     <div class="form margin20">
@@ -43,21 +43,27 @@
                 </div>
             </div>
         </div> 
-        <div class="row margin20">
-            <div class="col-md-6">
+        <div class="row margin30">
+            <div class="col-md-5">
                 <div>
                     <label for="dueDate">Validade do Orçamento</label>
                     <p>{{ quote.dueDate is not null ? quote.dueDate | date('d/m/Y') : "" }}</p>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div> 
                     <label for="deadline">Prazo de entrega</label>
                     <p>{{ quote.deadline is not null ? quote.deadline : "" }}</p>
                 </div>
             </div>
+            <div class="col-md-2">
+                <div> 
+                    <label for="taxes">Nota fiscal</label>
+                    <p>{{ quote.taxes is not null ? quote.taxes : quote.project.company.taxes }}</p>
+                </div>
+            </div>
         </div>
-        <div class="row margin20">
+        <div class="row margin30">
             <div class="col-md-6">
                 <div>
                     <label for="paymentType">Formas de pagamento</label>
