@@ -332,3 +332,52 @@ a.small { color: #fff; font-size: 10px }
 
 #dueDate { width: 80px }
 #profit { width: 120px }
+
+
+.share  .navbar-header {
+	margin-top: 30px;
+	width: auto;
+}
+
+.share .navbar-header h1 {
+	font-size: 2em;
+	margin: 0px 0px;
+	color:#000;
+}
+
+.share .navbar-header span {
+	padding-top: 16px;
+}
+
+.share .navbar-header span img {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	display: block;
+	float: left;
+	margin-right: 20px;
+	margin-top: -16px;
+}
+
+.share .navbar-header span h1 {
+	display: block;
+	float: left;
+	width: -webkit-calc(100% - 120px);
+	width: -moz-calc(100% - 120px);
+	width: calc(100% - 120px);
+}
+
+.share .quote_header {
+	list-style: none;
+	margin-left: 0px;
+	padding-left: 0px;
+}
+
+.share .quote_header li {
+	float: left;
+	width: auto;
+	margin-right: 50px; 
+	font-size: 20px;
+}
+
+.share .comments { margin-bottom: 30px;}

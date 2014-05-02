@@ -48,10 +48,67 @@ class ShareController
 		    return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
 		});
 
+		$day = date('d');
+		$month = date('m');
+		$year = date('Y');
+		
+		$monthName = null;
+
+		switch ($month) {
+			case '01':
+				$monthName = 'Janeiro';
+				break;
+
+			case '02':
+				$monthName = 'Fevereiro';
+				break;
+
+			case '03':
+				$monthName = 'Março';
+				break;
+
+			case '04':
+				$monthName = 'Abril';
+				break;
+
+			case '05':
+				$monthName = 'Maio';
+				break;
+
+			case '06':
+				$monthName = 'Junho';
+				break;
+
+			case '07':
+				$monthName = 'Julho';
+				break;
+
+			case '08':
+				$monthName = 'Agosto';
+				break;
+
+			case '09':
+				$monthName = 'Setembro';
+				break;
+
+			case '10':
+				$monthName = 'Outubro';
+				break;
+
+			case '11':
+				$monthName = 'Novembro';
+				break;
+
+			case '12':
+				$monthName = 'Dezembro';
+				break;
+		}
+		$createdSignature = 'Joinville, ' . $day . ' de ' . $monthName . ' de ' . $year . '.';
 		return $app['twig']->render('share/detail.twig',
 			array(
 				'share' => $share,
 				'resourceCollection' => $resourceCollection,
+				'createdSignature' => $createdSignature,
 				'shareNotesCollection' => $shareNotesCollection
 			)
 		);

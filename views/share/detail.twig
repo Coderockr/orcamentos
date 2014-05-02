@@ -1,29 +1,97 @@
-{% extends "layout_not_logged.twig" %}
+{% extends "layout_share.twig" %}
 {% block content %}
     <div class="form margin20">
+        <ul class="quote_header clearfix">
+            <li>
+                <strong> Cliente: </strong> {{ share.quote.project.client.name }} 
+            </li>
+            <li>
+                <strong> Projeto: </strong> {{ share.quote.project.name }}
+            </li>
+            <li>
+               <strong> Versão: </strong> {{ share.quote.version }}
+            </li>
+        </ul>  
+    </div>
+    {% if share.quote.privateNotes is not null %}
+        <div class="row margin20">
+            <div class="col-md-12">
+                <h4>Descrição dos serviços</h4>
+            </div>
+        </div>    
         <div class="row">
-            <div class="col-md-3">
-                <div>
-                    <label for="name">Cliente</label>
-                    <p>{{ share.quote.project.client.name }}</p>
-                </div>
+            <div class="col-md-12">
+                {{ share.quote.privateNotes }}
             </div>
-            <div class="col-md-3">
-                <div>
-                    <label for="responsable">Projeto</label>
-                    <p>{{ share.quote.project.name }}</p>
-                </div>
+        </div>    
+    {% endif %}
+
+    {% if share.quote.deadline is not null %}
+        <div class="row margin20">
+            <div class="col-md-12">
+                <h4>Prazos de Entrega</h4>
             </div>
-            <div class="col-md-1">
-                <div>
-                    <label for="version">Versão</label>
-                    <p>{{ share.quote.version }}</p>
-                </div>
+        </div>    
+        <div class="row">
+            <div class="col-md-12">
+                {{ share.quote.deadline }}
             </div>
-           
+        </div>  
+    {% endif %}
+
+    {% if share.quote.priceDescription is not null %}
+        <div class="row margin20">
+            <div class="col-md-12">
+                <h4>Investimentos</h4>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-md-12">
+                {{ share.quote.priceDescription }}
+            </div>
+        </div> 
+    {% endif %}
+
+    {% if share.quote.paymentType is not null %}
+        <div class="row margin20">
+            <div class="col-md-12">
+                <h4>Formas de pagamento</h4>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-md-12">
+                {{ share.quote.paymentType }}
+            </div>
+        </div>   
+    {% endif %}
+
+    {% if share.quote.privateNotes is not null %}
+        <div class="row margin20">
+            <div class="col-md-12">
+                <h4>Observaçoes gerais</h4>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-md-12">
+                {{ share.quote.privateNotes }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if share.quote.dueDate is not null %}
+        <div class="row margin20">
+            <div class="col-md-12">
+                Este orçamento é válido até {{ share.quote.dueDate | date('d/m/Y') }}
+            </div>
+        </div> 
+    {% endif %}
+
+    <div class="row margin20">
+        <div class="col-md-12">
+           <strong>{{ createdSignature }}</strong>
         </div>
     </div>
-    {% if resourceCollection is defined and resourceCollection | length > 0 %}
+    {# if resourceCollection is defined and resourceCollection | length > 0 %}
         <div class="margin30">
             <h4>Recursos</h4>
             <div class="row resources">
@@ -65,8 +133,8 @@
                 </div>  
             </div>  
         </div>  
-    {% endif %}
-    <div class="row">
+    {% endif #}
+    <div class="row margin30 printHide">
         <form action="/share/comment" method="POST" id="shareNote">
             <input type="hidden" name="shareId" value="{{ share.id }}"/>
             <div class="col-md-12">
@@ -78,7 +146,7 @@
             </div>
         </form>
     </div> 
-    <div class="margin30 comments">
+    <div class="margin30 comments printHide">
         {% if shareNotesCollection is defined and shareNotesCollection | length > 0 %}
             {% for note in shareNotesCollection %}
                 <div class="media">
