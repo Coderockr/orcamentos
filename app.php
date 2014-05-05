@@ -25,7 +25,7 @@ $app['swiftmailer.options'] = array(
     'host' => 'smtp.gmail.com',
     'port' => '465',
     'username' => 'comercial@coderockr.com',
-    'password' => '*B2qjZQq',
+    'password' => 'H&m6&mUE',
     'encryption' => 'ssl',
     'auth_mode' => 'login'
 );
