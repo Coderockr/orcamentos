@@ -21,7 +21,7 @@
         <div class="col-md-6">
             <div>
                 <label for="description">Descrição</label>
-                <p>{{ project and project.description ? project.description : "" }}</p>
+                <p>{{ project and project.description ? project.description | nl2br : "" }}</p>
             </div> 
         </div>
     </div>

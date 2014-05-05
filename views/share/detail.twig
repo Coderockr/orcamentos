@@ -21,7 +21,7 @@
         </div>    
         <div class="row">
             <div class="col-md-12">
-                {{ quote.privateNotes }}
+                {{ quote.project.description | nl2br  }}
             </div>
         </div>    
     {% endif %}
@@ -34,7 +34,7 @@
         </div>    
         <div class="row">
             <div class="col-md-12">
-                {{ quote.deadline }}
+                {{ quote.deadline  | nl2br }}
             </div>
         </div>  
     {% endif %}
@@ -47,7 +47,7 @@
         </div>    
         <div class="row">
             <div class="col-md-12">
-                {{ quote.priceDescription }}
+                {{ quote.priceDescription | nl2br  }}
             </div>
         </div> 
     {% endif %}
@@ -60,7 +60,7 @@
         </div>    
         <div class="row">
             <div class="col-md-12">
-                {{ quote.paymentType }}
+                {{ quote.paymentType | nl2br  }}
             </div>
         </div>   
     {% endif %}
@@ -73,7 +73,7 @@
         </div>    
         <div class="row">
             <div class="col-md-12">
-                {{ quote.privateNotes }}
+                {{ quote.privateNotes | nl2br  }}
             </div>
         </div>
     {% endif %}
@@ -153,7 +153,7 @@
                     <div class="media">
                         <div class="media-body">
                             <h4 class="media-heading"> {{ note.share.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
-                            {{ note.note }}
+                            {{ note.note | nl2br }}
                         </div>
                     </div>  
                 {% endfor %}
