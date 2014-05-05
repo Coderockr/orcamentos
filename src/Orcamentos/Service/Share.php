@@ -133,9 +133,9 @@ class Share
             $body = 'Veja o orçamento no link http://' . $link . '/share/' . $share->getId();
             
             $message = Swift_Message::newInstance()
-                ->setFrom(array('comercial@coderockr.com'))
+                ->setFrom(array('contato@coderockr.com'))
                 ->setTo(array($share->getEmail()))
-                ->setReplyTo('comercial@coderockr.com')
+                ->setReplyTo('contato@coderockr.com')
                 ->setSubject($subject)
                 ->setBody($body);
 
