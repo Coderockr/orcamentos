@@ -59,7 +59,7 @@ class Project
         $em->persist($project);
         $em->flush();
 
-        return $client;
+        return $project;
     }
 
 

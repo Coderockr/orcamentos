@@ -63,8 +63,7 @@ class ProjectController
 
 		$projectService = new ProjectService();
 		$project = $projectService->save($data, $app['orm.em']);
-
-		return $app->redirect('/project');
+		return $app->redirect('/project/detail/' . $project->getId() );
 	}
 
 	public function detail(Request $request, Application $app, $projectId )

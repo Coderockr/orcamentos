@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+	nicEditors.allTextAreas();
+
 	$('form').h5Validate();
 
 	$(".resources h5 .glyphicon-plus").click(function(){
