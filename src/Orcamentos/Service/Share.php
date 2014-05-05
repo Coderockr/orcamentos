@@ -129,13 +129,13 @@ class Share
             $companyName = $project->getCompany()->getName();
 
             $subject = " A empresa " . $companyName . " compartilhou o orçamento " . $quoteVersion . " do projeto " . $projectName;
-            $link = 'orcamentos.dev:8080';
+            $link = 'orcamentos.coderockr.com';
             $body = 'Veja o orçamento no link http://' . $link . '/share/' . $share->getId();
             
             $message = Swift_Message::newInstance()
-                ->setFrom(array('mateus@coderockr.com'))
-                ->setTo(array('mateus@coderockr.com'))
-                ->setReplyTo('mateus@coderockr.com')
+                ->setFrom(array('comercial@coderockr.com'))
+                ->setTo(array($share->getEmail()))
+                ->setReplyTo('comercial@coderockr.com')
                 ->setSubject($subject)
                 ->setBody($body);
 
