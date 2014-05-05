@@ -23,7 +23,7 @@ $(document).ready(function(){
 			var column = 0;
 			for ( type in dados ) {
 				columns.push(type);
-				for ( var row=0; row < dados[type].length; row ++ ) {
+				for ( var row = 0 ; row < dados[type].length; row ++ ) {
 					if (window.resources[column] === undefined) {
 						window.resources[column] = [];
 					}
@@ -83,8 +83,12 @@ $(document).ready(function(){
 			{
 
 				column = $(form).parent().parent().attr('id');
-				var n = parseInt(columns.indexOf(column));
-				var row = (resources[n].length);
+				n = parseInt(columns.indexOf(column));
+				var row = 0;
+
+				if ( window.resources[n]) {
+					row = window.resources[n].length;
+				}
 
 				if ( $('.thumbnail[rel='+data.id+']').length > 0 ) {
 					$('.thumbnail[rel='+data.id+'] h4').html(data.name);
@@ -97,7 +101,11 @@ $(document).ready(function(){
 					anchor.on('click', anchor.confirmation());
 					var edit = $('<a href="#" title="Editar projeto" class="edit" attr-col="'+n+'" attr-row="'+row+'"><i class="glyphicon glyphicon-pencil"></i>editar</a>');
 					
-					resources[n].push(data);
+					if (!window.resources[n]){
+						window.resources[n] = [];
+					}
+				
+					window.resources[n].push(data);
 					
 					$(edit).on('click', function(){ 
 						populate(
