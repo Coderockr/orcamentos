@@ -38,7 +38,7 @@ class Client
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=14, unique=true)
+     * @ORM\Column(type="string", length=14)
      *
      * @var string
      */
