@@ -134,10 +134,10 @@
             </div>  
         </div>  
     {% endif #}
-    {% if shareNotesCollection is defined %}
+    {% if shareId is defined %}
         <div class="row margin30 printHide">
             <form action="/share/comment" method="POST" id="shareNote">
-                <input type="hidden" name="shareId" value="{{ share.id }}"/>
+                <input type="hidden" name="shareId" value="{{ shareId }}"/>
                 <div class="col-md-12">
                     <label for="note">Comentários</label>
                     <textarea type="text" name="note" id="note" class="form-control" rows="3"></textarea>
@@ -148,7 +148,7 @@
             </form>
         </div> 
         <div class="margin30 comments printHide">
-            {% if shareNotesCollection | length > 0 %}
+            {% if shareNotesCollection is defined and shareNotesCollection | length > 0 %}
                 {% for note in shareNotesCollection %}
                     <div class="media">
                         <div class="media-body">

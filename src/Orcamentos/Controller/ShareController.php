@@ -109,7 +109,8 @@ class ShareController
 				'quote' => $quote,
 				'resourceCollection' => $resourceCollection,
 				'createdSignature' => $createdSignature,
-				'shareNotesCollection' => $shareNotesCollection
+				'shareNotesCollection' => $shareNotesCollection,
+				'shareId' => $shareId
 			)
 		);
 	}
