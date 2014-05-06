@@ -245,7 +245,11 @@ class Quote
     
     public function setDueDate($dueDate)
     {
-        $this->dueDate = \DateTime::createFromFormat('d/m/Y', $dueDate);    
+        $this->dueDate = null;
+        
+        if ($dueDate != null){
+            $this->dueDate = \DateTime::createFromFormat('d/m/Y', $dueDate);    
+        }
     }
 
     public function getCreated()
