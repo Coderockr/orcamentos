@@ -57,7 +57,8 @@ class Client
             $components = explode('.', $originalName);
             $fileName = md5(time()) . '.' . end($components);
             
-            $file = Image::make($logotype->getPathName())->resize(null, 80, true, false);
+            $file = Image::make($logotype->getPathName())->grab(80);
+
             $file->save("public/img/logotypes/" . $fileName );
             $client->setLogotype($fileName);
         }
