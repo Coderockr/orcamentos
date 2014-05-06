@@ -55,13 +55,17 @@
             </div>
         </div>
         <div class="row margin30">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div>
                     <label for="dueDate">Validade</label><br>
-                    <input type="text" id="dueDate" name="dueDate" value="{{ quote.dueDate is not null ? quote.dueDate | date("d/m/Y") : "" }}">
+                    <div class="input-group ">
+                        <input type="text" id="dueDate" name="dueDate"  class="form-control" value="{{ quote.dueDate is not null ? quote.dueDate | date("d/m/Y") : "" }}">
+                        <span class="input-group-addon "><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                    
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 col-md-offset-1">
                 <div>
                     <label for="taxes">Nota fiscal  * </label>
                     <div class="input-group ">
