@@ -123,11 +123,11 @@
                                 <th class="text-right">Total</th>
                                 <th class="text-right">
                                     {{ result | number_format(2, '.', ',') }}<br> 
-                                    <small>Nota fiscal + {{ quote.taxes ? quote.taxes : quote.project.company.taxes }} % </small> <br>
-                                    {% set result = result + (result * (quote.taxes ? quote.taxes / 100 : quote.project.company.taxes / 100))   %}
-                                    {{ result | number_format(2, '.', ',') }}<br> 
                                     <small>Margem de lucro + {{ quote.profit }} % </small>  <br>
                                     {% set result = result + (result * ( quote.profit / 100 ))   %}
+                                    {{ result | number_format(2, '.', ',') }}<br> 
+                                    <small>Nota fiscal + {{ quote.taxes ? quote.taxes : quote.project.company.taxes }} % </small> <br>
+                                    {% set result = result + (result * (quote.taxes ? quote.taxes / 100 : quote.project.company.taxes / 100))   %}
                                     {{ result | number_format(2, '.', ',') }}<br> 
                                 </th>
                             </tr>
