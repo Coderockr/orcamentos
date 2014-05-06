@@ -39,7 +39,8 @@
                         <a data-href="/quote/delete/{{ quote.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar orçamento"></a>
                         <a href="/quote/detail/{{quote.id}}" class="thumbnail" title="Visualizar projetos e orçamentos">
                             <span class="caption">
-                                <h5>{{ quote.version }}</h5>
+                                <h5>Orçamento versão {{ quote.version }}</h5>
+                                <p>{{ quote.status == 1 ? 'Esperando' : 'Aprovado' }}</p>
                                 <p>
                                     <time datetime="2013-11-09T13:40">{{ quote.created }}</time><br />
                                 </p>
