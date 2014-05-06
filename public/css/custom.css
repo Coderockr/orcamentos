@@ -86,9 +86,6 @@ h3 {
 #main {
 	margin-top: 50px;
 }
-#main > .row:first-child > div:last-child {
-	text-align:right;
-}
 
 /*cards list*/
 .jumbotron h4 {
@@ -260,11 +257,11 @@ h3 {
 	padding: 0;
 }
 footer .container > div {
-	background: #B5B9BB;
+	background: #fff;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	color: #FFF;
+	color: #000;
 	font-size: 0.8em;
 	padding: 12px 0;
 }
@@ -272,7 +269,8 @@ footer .col-md-6 + .col-md-6 {
 	text-align: right;
 }
 footer .col-md-6 a {
-	color: #FFF;
+	color: #000;
+	font-weight: bold;
 	margin-right: 20px;
 }
 footer .col-md-6 span {
@@ -383,3 +381,34 @@ a.small { color: #fff; font-size: 10px }
 }
 
 .share .comments { margin-bottom: 30px;}
+
+.updates .media { 
+	color: #999;
+	border-top: 1px solid #ddd;
+	padding: 7px 0px ;
+	margin: 0px;
+	font-size: 13px;
+}
+
+.updates .media a { 
+	color: #50c1e9;
+}
+
+.updates .media:first-child {
+	border: none;	
+} 
+
+.updates .media-meta {
+	font-size: 11px;
+	color: #999;
+	margin-top: 3px;
+}
+.updates .media h4 {
+	margin: 0;
+	font-size: 14px;
+	line-height: normal;
+}
+
+.updates .email-summary {
+	margin: 2px 0 0 0;
+}
