@@ -3,8 +3,13 @@ $(document).ready(function(){
 	nicEditors.allTextAreas();
 
 	$('form').h5Validate();
-	$(".nicEdit-main").text('');
 	
+	var nicedit = $(".nicEdit-main");
+	
+	if( nicedit.length == 0 || nicedit.html().length == 0 ){
+		$(".nicEdit-main").text('');
+	} 
+
 	$(".resources h5 .glyphicon-plus").click(function(){
 		$(this).parent().parent().find("div.thumbnail").slideDown();
 		$(this).parent().addClass("add");
