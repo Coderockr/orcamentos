@@ -18,7 +18,7 @@
                     <p><a href="/client/detail/{{ quote.project.client.id }}">{{ quote.project.client.name }}</a></p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div>
                     <label for="responsable">Projeto</label>
                     <p><a href="/project/detail/{{ quote.project.id }}">{{ quote.project.name }}</a></p>
@@ -30,12 +30,20 @@
                     <p>{{ quote.version }}</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div>
-                    <label for="profit">Margem de lucro</label>
-                    <p>{{ quote.profit }} %</p>
+                    <label for="commission">Comissão</label>
+                    <p>{{ quote.commission ? quote.commission ~ ' %' : "" }}</p>
                 </div>
             </div>
+
+            <div class="col-md-2">
+                <div>
+                    <label for="profit">Margem de lucro</label>
+                    <p>{{ quote.profit ? quote.profit ~ ' %' : ""  }}</p>
+                </div>
+            </div>
+
             <div class="col-md-1">
                 <div>
                     <label for="status">Status</label>

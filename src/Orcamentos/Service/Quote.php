@@ -49,6 +49,10 @@ class Quote
         
         if(isset($data->profit)){
             $quote->setProfit($data->profit);
+        }  
+
+        if(isset($data->commission)){
+            $quote->setCommission($data->commission);
         }
 
         if(isset($data->dueDate)){

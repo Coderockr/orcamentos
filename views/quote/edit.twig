@@ -23,7 +23,7 @@
                     <p><a href="/user/detail/{{ project.client.id }}">{{ project.client.name }}</a></p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div>
                     <label for="project">Projeto</label>
                     <p><a href="/project/detail/{{ project.id }}">{{ project.name }}</a></p>
@@ -35,6 +35,15 @@
                     <p>{{ version }}</p>
                 </div>
             </div>
+             <div class="col-md-2">
+                <div>
+                    <label for="commission">Comissão</label>
+                    <div class="input-group ">
+                        <input type="text" name="commission" id="commission" class="form-control"  value="{{ quote and quote.commission ? quote.commission : "" }}"/>
+                        <span class="input-group-addon ">%</span>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-2">
                 <div>
                     <label for="profit">Margem de lucro</label>
@@ -44,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 col-md-offset-1">
+            <div class="col-md-2">
                 <div>
                     <label for="status">Status *</label><br>
                     <select name="status">

@@ -28,53 +28,52 @@
             </div> 
         </div>
     </div>
+    {% if project.quoteCollection | length > 0 %}
         <div class="row cards margin20">
             <div class="col-md-12">
                 <a href="/quote/new/{{ project.id }}" class="btn btn-primary pull-right " title="Cadastre um novo orçamento">Novo Orçamento</a>
                 <h4>Orcamentos</h4>
             </div>
-            {% if project.quoteCollection | length > 0 %}
-                {% for quote in project.quoteCollection %}
-                   <div class="col-md-4">
-                        <a data-href="/quote/delete/{{ quote.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar orçamento"></a>
-                        <a href="/quote/detail/{{quote.id}}" class="thumbnail" title="Visualizar projetos e orçamentos">
-                            <span class="caption">
-                                <h5>Orçamento versão {{ quote.version }}</h5>
-                                <p>{{ quote.status == 1 ? 'Esperando' : 'Aprovado' }}</p>
-                                <p>
-                                    <time datetime="2013-11-09T13:40">{{ quote.created }}</time><br />
-                                </p>
-                            </span>
-                        </a>
-                        <a href="/quote/edit/{{ quote.id }}" title="Editar orçamento" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-        <div class="row">
-            <form action="/project/comment" method="POST" id="privateNote">
-                <input type="hidden" name="projectId" value="{{ project.id }}"/>
-                <input type="hidden" name="userId" value="{{ userId }}"/>
-                <div class="col-md-12">
-                    <label for="note">Comentários</label>
-                    <textarea type="text" name="note" id="note" class="form-control" rows="3"></textarea>
-                </div> 
-                <div class="col-md-12 margin20">
-                    <button class="btn btn-primary pull-right" type="submit" title="Salvar comentário">Salvar</button>
+            {% for quote in project.quoteCollection %}
+               <div class="col-md-4">
+                    <a data-href="/quote/delete/{{ quote.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar orçamento"></a>
+                    <a href="/quote/detail/{{quote.id}}" class="thumbnail" title="Visualizar projetos e orçamentos">
+                        <span class="caption">
+                            <h5>Orçamento versão {{ quote.version }}</h5>
+                            <p>{{ quote.status == 1 ? 'Esperando' : 'Aprovado' }}</p>
+                            <p>
+                                <time datetime="2013-11-09T13:40">{{ quote.created }}</time><br />
+                            </p>
+                        </span>
+                    </a>
+                    <a href="/quote/edit/{{ quote.id }}" title="Editar orçamento" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
                 </div>
-            </form>
-        </div> 
-        <div class="margin30 comments">
-            {% if projectNotesCollection is defined and projectNotesCollection | length > 0 %}
-                {% for note in projectNotesCollection %}
-                    <div class="media">
-                        <div class="media-body">
-                            <h4 class="media-heading">{{ note.user.name }} - {{ note.user.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
-                            {{ note.note | raw |  nl2br  }}
-                        </div>
-                    </div>  
-                {% endfor %}
-            {% endif %}
-        </div>  
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="row">
+        <form action="/project/comment" method="POST" id="privateNote">
+            <input type="hidden" name="projectId" value="{{ project.id }}"/>
+            <input type="hidden" name="userId" value="{{ userId }}"/>
+            <div class="col-md-12">
+                <label for="note">Comentários</label>
+                <textarea type="text" name="note" id="note" class="form-control" rows="3"></textarea>
+            </div> 
+            <div class="col-md-12 margin20">
+                <button class="btn btn-primary pull-right" type="submit" title="Salvar comentário">Salvar</button>
+            </div>
+        </form>
+    </div> 
+    <div class="margin30 comments">
+        {% if projectNotesCollection is defined and projectNotesCollection | length > 0 %}
+            {% for note in projectNotesCollection %}
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ note.user.name }} - {{ note.user.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
+                        {{ note.note | raw |  nl2br  }}
+                    </div>
+                </div>  
+            {% endfor %}
+        {% endif %}
+    </div>  
 {% endblock %}

@@ -64,6 +64,13 @@ class Quote
     private $profit;
 
     /**
+     * @ORM\Column(type="float")
+     *
+     * @var float
+     */
+    private $commission;
+
+    /**
      * @ORM\Column(type="text",nullable=true)
      *
      * @var text
@@ -174,6 +181,16 @@ class Quote
     public function setProfit($profit)
     {
         return $this->profit = $profit;
+    }   
+
+    public function getCommission()
+    {
+        return $this->commission;
+    }
+    
+    public function setCommission($commission)
+    {
+        return $this->commission = $commission;
     }   
 
     public function getDeadline()
