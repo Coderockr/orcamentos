@@ -71,7 +71,7 @@
                     <div class="media">
                         <div class="media-body">
                             <h4 class="media-heading">{{ note.user.name }} - {{ note.user.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
-                            {{ note.note }}
+                            {{ note.note | raw |  nl2br  }}
                         </div>
                     </div>  
                 {% endfor %}
