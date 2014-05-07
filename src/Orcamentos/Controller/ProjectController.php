@@ -35,17 +35,36 @@ class ProjectController
 		));
 	}
 
-	public function edit(Request $request, Application $app, $projectId)
+	public function edit(Request $request, Application $app)
 	{
 		$em = $app['orm.em'];
+		$projectId = $request->get('projectId');
+		$clientId = $request->get('clientId');
+
+		$client = null;
+		$clients = null;
 		$project = null;
-		if ( isset($projectId) ) {
-			$project = $app['orm.em']->getRepository('Orcamentos\Model\Project')->find($projectId);
+
+		$companyId = $app['session']->get('companyId');
+		$company = $app['orm.em']->getRepository('Orcamentos\Model\Company')->find($companyId);
+
+		if ( isset($clientId) ) {
+			$client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
+		} 
+
+		if ( isset($projectId) ){
+			$project = $em->getRepository('Orcamentos\Model\Project')->find($projectId);
+			$client = $project->getClient();
 		}
-		$clients = $em->getRepository('Orcamentos\Model\Client')->findAll();
+
+		if(!$client){
+			$clients = $app['orm.em']->getRepository('Orcamentos\Model\Client')->findBy(array('company' => $company));
+		}
+
 		return $app['twig']->render('project/edit.twig', 
 			array(
 				'clients' => $clients,
+				'client' => $client,
 				'project' => $project,
 				'active_page' => 'project'
 			)

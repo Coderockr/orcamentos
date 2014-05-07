@@ -5,9 +5,7 @@
             <h3>Clientes</h4>
         </div>
         <div class="col-md-3">
-            {% if app.session.get('isAdmin') %}
-                <a href="/project/edit" class="btn btn-primary" title="Cadastre um novo projeto">Novo Projeto</a>
-            {% endif %}
+            <a href="/project/new/{{ client.id }}" class="btn btn-primary" title="Cadastre um novo projeto">Novo Projeto</a>
         </div>
     </div>
 

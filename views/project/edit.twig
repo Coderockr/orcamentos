@@ -20,11 +20,12 @@
                     <input type="text" name="name" id="name" value="{{ project and project.name ? project.name : "" }}" required class="form-control" />
                 </div>
                 <div>
-                    <label for="client">Cliente *</label><br>
-                    {% if project and project.client.name %}
-                        <input type="hidden" name="client" value="{{ project.client.id }}" />
-                        <p>{{ project.client.name }}</p>
+                    {% if client is not null and client.name %}
+                        <label for="client">Cliente</label><br>
+                        <input type="hidden" name="client" value="{{ client.id }}" />
+                        <p><a href="/client/detail/{{ client.id }}">{{ client.name }}</a></p>
                     {% else %}
+                        <label for="client">Cliente *</label><br>
                         <select id="client" name="client">
                             {% for client in clients %}
                                 <option value="{{ client.id }}" {{ project and client.id == project.client.id ? 'selected="selected"' : "" }}>{{ client.name }}</option>
