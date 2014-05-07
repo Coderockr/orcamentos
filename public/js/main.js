@@ -245,7 +245,7 @@ $(document).ready(function(){
 					)
 				)
 				comments.prepend(comment);
-				$("#note").val('');
+				$(".nicEdit-main").text('');
 			},
 			error: function( data )
 			{
