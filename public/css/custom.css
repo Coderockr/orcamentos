@@ -256,7 +256,9 @@ h3 {
 .form .submit > div {
 	padding: 0;
 }
+
 footer .container > div {
+	border-top: 1px solid #aab2bd;
 	background: #fff;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;

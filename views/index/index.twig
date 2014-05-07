@@ -2,35 +2,39 @@
 {% block content %}
     <div class="row updates">
         <div class="col-md-12">
-            <h4>Últimos acontecimentos</h4>
-            <div>
-                {% for update in result %}
-                    <div class="media">
-                        <div class="media-body">
-                            <span class="media-meta pull-right">{{ update.created | date("H:i:s d/m/Y") }}</span>
-                            {% if update.note is defined %}
-                                {% if update.share is defined %}
-                                    <p class="email-summary">
-                                        <strong>{{ update.share.email }}</strong> comentou no 
-                                        <a href='/quote/detail/{{ update.share.quote.id }}'>orçamento {{ update.share.quote.version }}</a> do projeto 
-                                        <a href='/project/detail/{{ update.share.quote.project.id }}'>{{ update.share.quote.project.name }}</a> 
-                                    </p>
-                                {% elseif update.user is defined %}
-                                    <p class="email-summary">
-                                        <strong>{{ update.user.name }}</strong> comentou no projeto 
-                                        <a href='/project/detail/{{ update.project.id }}'>{{ update.project.name }}</a> 
-                                    </p>
-                                {% endif %}
-                            {% else %}
-                                <p class="email-summary">
-                                    <strong>{{ update.share.email }}</strong> vizualizou o 
-                                    <a href='/quote/detail/{{ update.share.quote.id }}'>orçamento {{ update.share.quote.version }}</a> do projeto 
-                                    <a href='/project/detail/{{ update.share.quote.project.id }}'>{{ update.share.quote.project.name }}</a> 
-                                </p>
-                            {% endif %}
-                        </div>
+            <div class="jumbotron">
+                <div class="jumbotron-contents">
+                    <h4>Últimos acontecimentos</h4>
+                    <div>
+                        {% for update in result %}
+                            <div class="media">
+                                <div class="media-body">
+                                    <span class="media-meta pull-right">{{ update.created | date("H:i:s d/m/Y") }}</span>
+                                    {% if update.note is defined %}
+                                        {% if update.share is defined %}
+                                            <p class="email-summary">
+                                                <strong>{{ update.share.email }}</strong> comentou no 
+                                                <a href='/quote/detail/{{ update.share.quote.id }}'>orçamento {{ update.share.quote.version }}</a> do projeto 
+                                                <a href='/project/detail/{{ update.share.quote.project.id }}'>{{ update.share.quote.project.name }}</a> 
+                                            </p>
+                                        {% elseif update.user is defined %}
+                                            <p class="email-summary">
+                                                <strong>{{ update.user.name }}</strong> comentou no projeto 
+                                                <a href='/project/detail/{{ update.project.id }}'>{{ update.project.name }}</a> 
+                                            </p>
+                                        {% endif %}
+                                    {% else %}
+                                        <p class="email-summary">
+                                            <strong>{{ update.share.email }}</strong> vizualizou o 
+                                            <a href='/quote/detail/{{ update.share.quote.id }}'>orçamento {{ update.share.quote.version }}</a> do projeto 
+                                            <a href='/project/detail/{{ update.share.quote.project.id }}'>{{ update.share.quote.project.name }}</a> 
+                                        </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                </div>
             </div>
         </div>   
     </div>
