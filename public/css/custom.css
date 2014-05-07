@@ -260,9 +260,6 @@ h3 {
 footer .container > div {
 	border-top: 1px solid #aab2bd;
 	background: #fff;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
 	color: #000;
 	font-size: 0.8em;
 	padding: 12px 0;
