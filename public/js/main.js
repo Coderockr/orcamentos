@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	
-	nicEditors.allTextAreas();
+	nicEditors.allTextAreas().setContent('');
 
 	$('form').h5Validate();
 

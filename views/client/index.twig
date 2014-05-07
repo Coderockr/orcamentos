@@ -21,7 +21,7 @@
                             <img src="/public/img/photo_g.png" alt="" width="80" height="80" />
                         {% endif %}
                     </span>
-                    <h4>{{ client.name }}</h4>
+                    <h4>{{ client.name | length > 25 ? client.name[:21]~' ...' : client.name }}</h4>
                     <p>
                         {{ client.numProjects }} Projetos<br>
                         {{ client.numQuotes | default("0") }} Orçamentos

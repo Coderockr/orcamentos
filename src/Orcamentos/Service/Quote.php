@@ -73,19 +73,21 @@ class Quote
 
         $quoteResourceCollection->clear();
 
-        foreach ($data->quoteResource as $id => $amount) {
+        if(isset($data->quoteResource)){
+            foreach ($data->quoteResource as $id => $amount) {
 
-            $resource = $em->getRepository("Orcamentos\Model\Resource")->find($id);
+                $resource = $em->getRepository("Orcamentos\Model\Resource")->find($id);
 
-            $quoteResource = new ResourceQuoteModel();
-            $quoteResource->setResource($resource);
-            $quoteResource->setQuote($quote);
-            $quoteResource->setAmount($amount);
-            $quoteResource->setValue($resource->getCost());
+                $quoteResource = new ResourceQuoteModel();
+                $quoteResource->setResource($resource);
+                $quoteResource->setQuote($quote);
+                $quoteResource->setAmount($amount);
+                $quoteResource->setValue($resource->getCost());
 
-            $em->persist($quoteResource);
+                $em->persist($quoteResource);
 
-            $quoteResourceCollection->add($quoteResource);
+                $quoteResourceCollection->add($quoteResource);
+            }
         }
 
         $em->flush();

@@ -13,7 +13,7 @@
             </li>
         </ul>  
     </div>
-    {% if quote.project.description is not null %}
+    {% if quote.project.description is not null  and quote.project.description | length > 0 %}
         <div class="row margin20">
             <div class="col-md-12">
                 <h4>Descrição dos serviços</h4>
@@ -26,7 +26,7 @@
         </div>    
     {% endif %}
 
-    {% if quote.deadline is not null  %}
+    {% if quote.deadline is not null and quote.deadline | length > 0 %}
         <div class="row margin20">
             <div class="col-md-12">
                 <h4>Prazos de Entrega</h4>
@@ -39,7 +39,7 @@
         </div>  
     {% endif %}
 
-    {% if quote.priceDescription is not null %}
+    {% if quote.priceDescription is not null and quote.priceDescription | length > 0 %}
         <div class="row margin20">
             <div class="col-md-12">
                 <h4>Investimentos</h4>
@@ -52,7 +52,7 @@
         </div> 
     {% endif %}
 
-    {% if quote.paymentType is not null %}
+    {% if quote.paymentType is not null and quote.paymentType | length > 0 %}
         <div class="row margin20">
             <div class="col-md-12">
                 <h4>Formas de pagamento</h4>
@@ -65,7 +65,7 @@
         </div>   
     {% endif %}
 
-    {% if quote.privateNotes is not null %}
+    {% if quote.privateNotes is not null and quote.privateNotes | length > 0 %}
         <div class="row margin20">
             <div class="col-md-12">
                 <h4>Observações gerais</h4>
