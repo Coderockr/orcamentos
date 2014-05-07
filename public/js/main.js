@@ -3,7 +3,8 @@ $(document).ready(function(){
 	nicEditors.allTextAreas();
 
 	$('form').h5Validate();
-
+	$(".nicEdit-main").text('');
+	
 	$(".resources h5 .glyphicon-plus").click(function(){
 		$(this).parent().parent().find("div.thumbnail").slideDown();
 		$(this).parent().addClass("add");
@@ -78,6 +79,14 @@ $(document).ready(function(){
 			$("#share #email").val("");
 		}
 		return false;
+	});	
+
+	$(document).on( 'submit', "#new_project", function(){
+		var notes = $(" #new_project .nicEdit-main ").html();
+		if ( notes.length == 0 ){
+			$(" #new_project .nicEdit-main ").parent().addClass('ui-state-error');
+			return false;
+		}
 	});	
 
 	$(document).on( 'submit', "#share form", function(){

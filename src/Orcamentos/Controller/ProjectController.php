@@ -75,7 +75,6 @@ class ProjectController
 	public function create(Request $request, Application $app)
 	{	
 		$data = $request->request->all();
-		
 		$data['companyId']= $app['session']->get('companyId');
 
     	$data = json_encode($data);
