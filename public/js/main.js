@@ -199,6 +199,7 @@ $(document).ready(function(){
 				var comment = $('<div class="media">');
 				comment.append(
 					$('<div class="media-body">').append(
+						$('<a href="/share/removeComment/'+ data.id + '"  class="glyphicon glyphicon-remove pull-right" title="Apagar nota"></a>'),
 						$('<h4 class="media-heading">').append(
 							data.email + " -  <small class='text-info'> criado em "+ day +"/" + month + '/' + year + " "+ hour + ":" + minute +":" + second + "</small>"
 						),
@@ -252,6 +253,7 @@ $(document).ready(function(){
 				var comment = $('<div class="media">');
 				comment.append(
 					$('<div class="media-body">').append(
+						$('<a href="/project/removeComment/'+ data.id + '"  class="glyphicon glyphicon-remove pull-right" title="Apagar nota"></a>'),
 						$('<h4 class="media-heading">').append(
 							data.name + ' - ' + data.email + " -  <small class='text-info'> criado em "+ day +"/" + month + '/' + year + " "+ hour + ":" + minute +":" + second + "</small>"
 						),

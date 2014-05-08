@@ -69,7 +69,10 @@
             {% for note in projectNotesCollection %}
                 <div class="media">
                     <div class="media-body">
-                        <h4 class="media-heading">{{ note.user.name }} - {{ note.user.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
+                        {% if note.user.email == app.session.get('email') or  app.session.get('isAdmin') %}
+                            <a href="/project/removeComment/{{ note.id }}" class="glyphicon glyphicon-remove pull-right" title="Apagar nota"></a> 
+                        {% endif %}
+                       <h4 class="media-heading">{{ note.user.name }} - {{ note.user.email }}<small class="text-info"> - criado em {{ note.created | date("d/m/Y H:i:s") }} </small> </h4>
                         {{ note.note | raw |  nl2br  }}
                     </div>
                 </div>  

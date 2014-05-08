@@ -118,8 +118,17 @@ class ProjectController
 		$result = array(
 			'email'=> $note->getUser()->getEmail(),
 			'name' => $note->getUser()->getName(),
-			'note' => $note->getNote()
+			'note' => $note->getNote(),
+			'id' => $note->getId()
 		);
 		return json_encode($result);
+	}
+
+	public function removeComment(Request $request, Application $app, $noteId )
+	{
+    	$data = json_encode(array('noteId' => $noteId));
+		$projectService = new ProjectService();
+		$note = $projectService->removeComment($data, $app['orm.em']);
+		return $app->redirect('/project/detail/' . $note->getProject()->getId());
 	}
 }

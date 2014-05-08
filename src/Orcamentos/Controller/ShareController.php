@@ -137,7 +137,7 @@ class ShareController
     	$data = json_encode($data);
 		$shareService = new ShareService();
 		$note = $shareService->comment($data, $app['orm.em']);
-		$result = array( 'email' => $note->getShare()->getEmail(), 'comment' => $note->getNote());
+		$result = array( 'email' => $note->getShare()->getEmail(), 'comment' => $note->getNote(), 'id' => $note->getId());
 		return json_encode($result);
 	}
 
@@ -166,5 +166,33 @@ class ShareController
 		$result = $shareService->sendEmails($limit, $app);
 		
 		return json_encode($result);
+	}
+
+	public function removeComment(Request $request, Application $app)
+	{
+		$em = $app['orm.em'];
+		$shareNoteId = $request->get('shareNoteId');
+		$quoteNoteId = $request->get('quoteNoteId');
+
+		if(!isset($shareNoteId) && !isset($quoteNoteId)){
+			throw new Exception("Invalid parameters", 1);
+		}
+
+		$noteId = $shareNoteId;
+
+		if (isset($quoteNoteId)){
+			$noteId = $quoteNoteId;
+		} 
+    	$data = json_encode(array('noteId' => $noteId));
+		$shareService = new ShareService();
+		$note = $shareService->removeComment($data, $app['orm.em']);
+
+		$redirect = '/share/' . $note->getShare()->getId();
+
+		if (isset($quoteNoteId)){
+			$redirect = '/quote/detail/' . $note->getShare()->getQuote()->getId();
+		} 
+
+		return $app->redirect($redirect);
 	}
 }

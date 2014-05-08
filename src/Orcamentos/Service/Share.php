@@ -151,4 +151,27 @@ class Share
         
         return true;
     }
+
+
+    /**
+     * Function that deletes a Private message 
+     *
+     * @return                Function used to delete a Private message
+     */
+    public static function removeComment($data, $em)
+    {
+        $data = json_decode($data);
+
+        if ( !isset($data->noteId)) {
+            throw new Exception("Invalid Parameters", 1);
+        }
+
+        $note = $em->getRepository("Orcamentos\Model\ShareNote")->find($data->noteId);
+
+        $em->remove($note);
+
+        $em->flush();
+
+        return $note;
+    }
 }

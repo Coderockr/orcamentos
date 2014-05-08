@@ -79,11 +79,12 @@ $app->get('/user/{page}', 'Orcamentos\Controller\UserController::index')->value(
 // Project Controller
 $app->get('/project/edit/{projectId}', 'Orcamentos\Controller\ProjectController::edit')->value( "projectId", null );
 $app->get('/project/detail/{projectId}', 'Orcamentos\Controller\ProjectController::detail');
-$app->post('/project/create', 'Orcamentos\Controller\ProjectController::create');
 $app->get('/project/delete/{projectId}', 'Orcamentos\Controller\ProjectController::delete');
 $app->get('/project/new/{clientId}', 'Orcamentos\Controller\ProjectController::edit');
-$app->get('/project/{page}', 'Orcamentos\Controller\ProjectController::index')->value('page', 1);
+$app->get('/project/removeComment/{noteId}', 'Orcamentos\Controller\ProjectController::removeComment');
+$app->post('/project/create', 'Orcamentos\Controller\ProjectController::create');
 $app->post('/project/comment', 'Orcamentos\Controller\ProjectController::comment');
+$app->get('/project/{page}', 'Orcamentos\Controller\ProjectController::index')->value('page', 1);
 
 //Company Controller
 $app->get('/company', 'Orcamentos\Controller\CompanyController::edit');
@@ -101,6 +102,8 @@ $app->post('/quote/create', 'Orcamentos\Controller\QuoteController::create');
 $app->get('/share/delete/{shareId}', 'Orcamentos\Controller\ShareController::delete');
 $app->post('/share/create', 'Orcamentos\Controller\ShareController::create');
 $app->post('/share/comment', 'Orcamentos\Controller\ShareController::comment');
+$app->get('/share/removeQuoteComment/{quoteNoteId}', 'Orcamentos\Controller\ShareController::removeComment');
+$app->get('/share/removeComment/{shareNoteId}', 'Orcamentos\Controller\ShareController::removeComment');
 $app->post('/share/resend', 'Orcamentos\Controller\ShareController::resend');
 $app->get('/share/sendEmails/{limit}', 'Orcamentos\Controller\ShareController::sendEmails')->value('limit', 10);
 $app->get('/share/{shareId}', 'Orcamentos\Controller\ShareController::detail');
