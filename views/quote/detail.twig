@@ -175,16 +175,19 @@
                                 {% for share in shareCollection %}
                                     <li class="list-group-item">
                                         <a href="#" class="glyphicon glyphicon-remove pull-right" rel="{{ share.id }}" title="Apagar email"></a>
-                                        {{ share.sent | length > 0 ? "<a href='#' class='pull-right share-status btn btn-primary small'>Reenviar</a>" : "<span class='pull-right share-status'>Aguardando envio</span>" }}</span>
                                         {{ share.email }}
+                                        <div class="margin5">
+                                             {{ share.sent | length > 0 ? "<a href='#' class='pull-right btn btn-primary share-status small'><i class='marginr glyphicon glyphicon-envelope'></i>Enviar via email</a>" : "<span class='pull-right share-status'>Aguardando envio</span>" }}</span>
+                                            <span class='share-status'>{{ share.shortUrl }}</span>
+                                        </div>
                                     </li>
                                 {% endfor %}
                             {% endif %}
                         </ul>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary" data-loading-text="Carregando">Salvar</button>
                     </div>
                 </form>
             </div>

@@ -97,6 +97,7 @@ $(document).ready(function(){
 	$(document).on( 'submit', "#share form", function(){
 		var dados = $( this ).serialize();
 		var form = this;
+		$('#share button[type=submit]').button('loading');
 		$.ajax({
 			type: "POST",
 			url: "/share/create",
@@ -104,15 +105,20 @@ $(document).ready(function(){
 			dataType: "json",
 			success: function( data )
 			{
+				$('#share button[type=submit]').button('reset');
 				for ( i in data ) {
 					$('.list-group-item:contains("'+ data[i]['email']+'") a').attr('rel', data[i]['id']);
-					$('.list-group-item:contains("'+ data[i]['email']+'")').append("<span class='pull-right share-status'>Aguardando envio</span>");
+					$('.list-group-item:contains("'+ data[i]['email']+'") ').append($("<div class='hidden-info margin5'>").append(
+						"<a href='#' class='pull-right btn btn-primary share-status small'><i class='marginr glyphicon glyphicon-envelope'></i>Enviar via email</a>",
+						"<span class='share-status'>" + data[i]['shortUrl'] + "</span>"
+					));
 					$('.list-group-item:contains("'+ data[i]['email']+'") input[type=hidden]').remove();
 				}
 				$("#share .list-group-item input[type=hidden]").parent().remove();
-				$('#share').modal('hide');
-				$('body').removeClass('modal-open');
-				$('.modal-backdrop').remove();
+				// $('#share').modal('hide');
+				// $('body').removeClass('modal-open');
+				// $('.modal-backdrop').remove();
+				$('.hidden-info').slideDown();
 			},
 			error: function( data )
 			{
@@ -123,7 +129,7 @@ $(document).ready(function(){
 	});	
 	
 	$(document).on( 'click', "#share a.share-status", function(){
-		var id = $(this).parent().find('a.glyphicon-remove').attr('rel');
+		var id = $(this).parent().parent().find('a.glyphicon-remove').attr('rel');
 		$(this).parent().find('a.share-status').remove();
 		$.ajax({
 			type: "POST",
@@ -132,7 +138,7 @@ $(document).ready(function(){
 			dataType: "json",
 			success: function( email )
 			{
-				$('.list-group-item:contains("'+ email+'")').append("<span class='pull-right share-status'>Aguardando envio</span>");
+				$('.list-group-item:contains("'+ email+'") div').append("<span class='pull-right share-status'>Aguardando envio</span>");
 			},
 			error: function( email )
 			{

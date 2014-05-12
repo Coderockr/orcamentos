@@ -39,8 +39,8 @@ class Share
                 $share = new ShareModel();
                 $share->setQuote($quote);
                 $share->setEmail($email);
-                $share->setSent(false);
-                $hash = hash('sha256', $email + $share->getQuote()->getProject()->getName() + $share->getQuote()->getVersion());
+                $share->setSent(true);
+                $hash = hash('sha256', $email . $share->getQuote()->getProject()->getName() . $share->getQuote()->getVersion());
                 $share->setHash($hash);
 
                 // Prod
@@ -50,7 +50,6 @@ class Share
                 // Desenvolvimento
                 $url = 'http://orcamentos.dev:8080/share/' . $hash;
                 $token = 'eb9b61dd4df8daa4d8e679a4bb8e187034dfcd7a';
-
                 $bitlyJson = fopen("https://api-ssl.bitly.com/v3/shorten?access_token=" . $token . "&longUrl=" . $url, 'rb');
                 $bitly =  json_decode(stream_get_contents($bitlyJson), true);
                 $share->setShortUrl($bitly['data']['url']);
@@ -65,6 +64,7 @@ class Share
         foreach ($shares as $key => $share) {
             $result[$key]['id'] = $share->getId();
             $result[$key]['email'] = $share->getEmail();
+            $result[$key]['shortUrl'] = $share->getShortUrl();
         }
 
         return $result;
@@ -143,7 +143,7 @@ class Share
 
             $subject = " A empresa " . $companyName . " compartilhou o orçamento " . $quoteVersion . " do projeto " . $projectName;
             $link = 'orcamentos.coderockr.com';
-            $body = 'Veja o orçamento no link http://' . $link . '/share/' . $share->getId();
+            $body = 'Veja o orçamento no link http://' . $link . '/share/' . $share->getHash();
             
             $message = Swift_Message::newInstance()
                 ->setFrom(array('contato@coderockr.com'))
