@@ -32,7 +32,6 @@
     {% if project.quoteCollection | length > 0 %}
         <div class="row cards margin20">
             <div class="col-md-12">
-                <a href="/quote/new/{{ project.id }}" class="btn btn-primary pull-right " title="Cadastre um novo orçamento">Novo Orçamento</a>
                 <h4>Orcamentos</h4>
             </div>
             {% for quote in project.quoteCollection %}
