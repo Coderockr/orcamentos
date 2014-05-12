@@ -128,20 +128,19 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th class="text-right">Total</th>
+                                <th class="text-right"></th>
                                 <th class="text-right">
-                                    {{ result | number_format(2, '.', ',') }}<br> 
-                                    {{ "Final = " ~ final }}<br> 
+                                    {{ "Custo = " ~ result | number_format(2, '.', ',') }}<br> 
                                     {% if commission > 0 %}
-                                        {{ "Comissão = " ~ final * commission }}<br> 
+                                        {{ "Comissão = " ~ ( final * commission ) | number_format(2, '.', ',') }}<br> 
                                     {% endif %}
                                     {% if profit > 0 %}
-                                        {{ "Lucro = " ~ final * profit }}<br> 
+                                        {{ "Lucro = " ~ ( final * profit ) | number_format(2, '.', ',') }}<br> 
                                     {% endif %}
                                     {% if taxes > 0 %}
-                                        {{ "NF = " ~ final * taxes }}
+                                        {{ "NF = " ~ ( final * taxes ) | number_format(2, '.', ',') }}<br>
                                     {% endif %}
-
+                                    {{ "Valor cobrado = " ~ final | number_format(2, '.', ',') }}
                                 </th>
                             </tr>
                         </tbody>
