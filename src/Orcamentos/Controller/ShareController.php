@@ -11,13 +11,13 @@ use Orcamentos\Model\View as ViewModel;
 class ShareController
 {
 
-	public function detail(Request $request, Application $app, $shareId)
+	public function detail(Request $request, Application $app, $hash)
 	{	
-		if ( !isset($shareId) ) {
+		if ( !isset($hash) ) {
 			throw new Exception("Parâmetros inválidos", 1);
 		}
 		
-		$share = $app['orm.em']->getRepository('Orcamentos\Model\Share')->find($shareId);
+		$share = $app['orm.em']->getRepository('Orcamentos\Model\Share')->findOneBy(array('hash'=> $hash));
 		
 		$view = new ViewModel();
 		$view->setShare($share);

@@ -106,7 +106,7 @@ $app->get('/share/removeQuoteComment/{quoteNoteId}', 'Orcamentos\Controller\Shar
 $app->get('/share/removeComment/{shareNoteId}', 'Orcamentos\Controller\ShareController::removeComment');
 $app->post('/share/resend', 'Orcamentos\Controller\ShareController::resend');
 $app->get('/share/sendEmails/{limit}', 'Orcamentos\Controller\ShareController::sendEmails')->value('limit', 10);
-$app->get('/share/{shareId}', 'Orcamentos\Controller\ShareController::detail');
+$app->get('/share/{hash}', 'Orcamentos\Controller\ShareController::detail');
 
 //Resource Controller
 $app->post('/resource/create', 'Orcamentos\Controller\ResourceController::create');

@@ -40,7 +40,20 @@ class Share
                 $share->setQuote($quote);
                 $share->setEmail($email);
                 $share->setSent(false);
-                
+                $hash = hash('sha256', $email + $share->getQuote()->getProject()->getName() + $share->getQuote()->getVersion());
+                $share->setHash($hash);
+
+                // Prod
+                // $url = 'http://orcamentos.coderockr.com/share/' + $hash;
+                // $token = 'eb9b61dd4df8daa4d8e679a4bb8e187034dfcd7a';
+
+                // Desenvolvimento
+                $url = 'http://orcamentos.dev:8080/share/' . $hash;
+                $token = 'eb9b61dd4df8daa4d8e679a4bb8e187034dfcd7a';
+
+                $bitlyJson = fopen("https://api-ssl.bitly.com/v3/shorten?access_token=" . $token . "&longUrl=" . $url, 'rb');
+                $bitly =  json_decode(stream_get_contents($bitlyJson), true);
+                $share->setShortUrl($bitly['data']['url']);
                 $em->persist($share);
                 $shares[] = $share;
             } 

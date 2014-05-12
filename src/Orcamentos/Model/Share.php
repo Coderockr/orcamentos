@@ -43,6 +43,20 @@ class Share
     private $email;
 
     /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    private $hash;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    private $shortUrl;
+
+    /**
      * @ORM\Column(type="boolean")
      *
      * @var boolean
@@ -86,6 +100,26 @@ class Share
     public function setEmail($email)
     {
         return $this->email = $email;
+    }    
+    
+    public function getHash()
+    {
+        return $this->hash;
+    }
+    
+    public function setHash($hash)
+    {
+        return $this->hash = $hash;
+    }  
+
+    public function getShortUrl()
+    {
+        return $this->shortUrl;
+    }
+    
+    public function setShortUrl($shortUrl)
+    {
+        return $this->shortUrl = $shortUrl;
     }    
 
     public function getSent()
