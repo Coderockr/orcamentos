@@ -35,7 +35,7 @@ class ClientController
 		$pagerfanta->setCurrentPage($page);
 		$view = new TwitterBootstrap3View();
 		$routeGenerator = function($page) use ($app) {
-	        return '/user/'.$page;
+	        return '/client/'.$page;
 	    };
 
 		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());

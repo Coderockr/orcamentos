@@ -22,11 +22,12 @@ class ProjectController
 
 		$adapter = new DoctrineCollectionAdapter($projects);
 		$pagerfanta = new Pagerfanta($adapter);
-		$pagerfanta->setCurrentPage($page);
+
 		$view = new TwitterBootstrap3View();
 		$routeGenerator = function($page) use ($app) {
-	        return '/user/'.$page;
+	        return '/project/'.$page;
 	    };
+		$pagerfanta->setCurrentPage($page);
 		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
 		return $app['twig']->render('project/index.twig', array( 
 			'htmlPagination' => $htmlPagination,
