@@ -19,6 +19,10 @@ class ShareController
 		
 		$share = $app['orm.em']->getRepository('Orcamentos\Model\Share')->findOneBy(array('hash'=> $hash));
 		
+		if (!$share){
+			$app->abort(404, "Compartilhamento não existente");
+		}
+
 		$view = new ViewModel();
 		$view->setShare($share);
 

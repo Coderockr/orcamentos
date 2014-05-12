@@ -47,7 +47,7 @@
                                         <span class="caption">
                                             <h5>Orçamento versão {{ quote.version }}</h5>
                                             <p>{{ quote.status == 1 ? 'Esperando' : 'Aprovado' }}</p>
-					    <p>{{quote.priceDescription}}</p>
+					                        <p>{{quote.priceDescription | raw }}</p>
                                             <p>
                                                 <time datetime="2013-11-09T13:40">{{ quote.created |date("d/m/Y H:i") }}</time><br />
                                              <!--    R$ quote.cost  -->

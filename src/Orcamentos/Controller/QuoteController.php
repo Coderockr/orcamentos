@@ -107,7 +107,39 @@ class QuoteController
 		$quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
 
 		$resourceCollection = $quote->getResourceQuoteCollection();
-		
+
+		$cost = 0;
+		$profit = 0;
+		$commission = 0;
+		$taxes = 0;
+
+		foreach ($resourceCollection as $resourceQuote) {
+			$cost = $cost + ($resourceQuote->getValue() * $resourceQuote->getAmount());
+		}
+
+		if ( $quote->getProfit()) {
+			$profit = $quote->getProfit() / 100;
+		}	
+
+		if ( $quote->getCommission()) {
+			$commission = $quote->getCommission() / 100;
+		}	
+
+		if ( $quote->getTaxes()) {
+			$taxes = $quote->getTaxes() / 100;
+		}
+
+		$final = $cost + 1;
+		$finalProfit = (($final - $cost) / $final); //calculo de quantos % de lucro
+		while($finalProfit < $profit) {
+			$tempCost = $cost + ($final * $commission) + ($final * $taxes);
+			$final++;
+			if ($final < $tempCost) {	
+				continue;
+			}
+			$finalProfit = (($final - $tempCost) / $final);
+		}
+
 		$shareCollection = $quote->getShareCollection();
 		
 		$shareNotesCollection = array();
@@ -134,7 +166,11 @@ class QuoteController
 				'quote' => $quote,
 				'shareNotesCollection' => $shareNotesCollection,
 				'shareCollection' => $shareCollection,
-				'resourceCollection' => $resourceCollection
+				'resourceCollection' => $resourceCollection,
+				'final' => $final,
+				'commission' => $commission,
+				'profit' => $profit,
+				'taxes' => $taxes
 			)
 		);
 	}

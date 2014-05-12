@@ -131,16 +131,17 @@
                                 <th class="text-right">Total</th>
                                 <th class="text-right">
                                     {{ result | number_format(2, '.', ',') }}<br> 
-                                    {% if quote.profit is not null %}
-                                        <small>Margem de lucro + {{ quote.profit }} % </small>  <br>
-                                        {% set result = result + (result * ( quote.profit / 100 ))   %}
-                                        {{ result | number_format(2, '.', ',') }}<br> 
+                                    {{ "Final = " ~ final }}<br> 
+                                    {% if commission > 0 %}
+                                        {{ "Comissão = " ~ final * commission }}<br> 
                                     {% endif %}
-                                    {% if quote.taxes is not null %}
-                                        <small>Nota fiscal + {{ quote.taxes ? quote.taxes : quote.project.company.taxes }} % </small> <br>
-                                        {% set result = result + (result * (quote.taxes ? quote.taxes / 100 : quote.project.company.taxes / 100))   %}
-                                        {{ result | number_format(2, '.', ',') }}
+                                    {% if profit > 0 %}
+                                        {{ "Lucro = " ~ final * profit }}<br> 
                                     {% endif %}
+                                    {% if taxes > 0 %}
+                                        {{ "NF = " ~ final * taxes }}
+                                    {% endif %}
+
                                 </th>
                             </tr>
                         </tbody>

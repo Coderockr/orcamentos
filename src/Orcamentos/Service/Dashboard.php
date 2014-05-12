@@ -26,7 +26,12 @@ class Dashboard
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $limit = $data->limit;
+
+        $limit = null;
+        
+        if(isset($data->limit)){
+            $limit = $data->limit;
+        }
 
         if (!$limit) {
             $limit = 10;

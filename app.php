@@ -51,6 +51,9 @@ $app->before(function (Request $request) use ($app) {
 
 $app->error(function (\Exception $e, $code) use($app) {
     switch ($code) {
+        case 404:
+            $message = $app['twig']->render('error404.twig', array('code'=>$code, 'message' => 'Página não encontrada.'));
+            break;
         default:
             $message = $e->getMessage() . ' no arquivo ' . $e->getFile() . ', na linha: '. $e->getLine();
             break;
