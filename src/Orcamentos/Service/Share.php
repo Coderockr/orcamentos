@@ -44,12 +44,13 @@ class Share
                 $share->setHash($hash);
 
                 // Prod
-                // $url = 'http://orcamentos.coderockr.com/share/' + $hash;
-                // $token = 'eb9b61dd4df8daa4d8e679a4bb8e187034dfcd7a';
+                $url = 'http://orcamentos.coderockr.com/share/' + $hash;
+                $token = 'ed0e929d7ff5b92c480f34e4851a96945dd4702b';
 
                 // Desenvolvimento
-                $url = 'http://orcamentos.dev:8080/share/' . $hash;
-                $token = 'eb9b61dd4df8daa4d8e679a4bb8e187034dfcd7a';
+                // $url = 'http://orcamentos.dev:8080/share/' . $hash;
+                // $token = 'eb9b61dd4df8daa4d8e679a4bb8e187034dfcd7a';
+               
                 $bitlyJson = fopen("https://api-ssl.bitly.com/v3/shorten?access_token=" . $token . "&longUrl=" . $url, 'rb');
                 $bitly =  json_decode(stream_get_contents($bitlyJson), true);
                 $share->setShortUrl($bitly['data']['url']);
