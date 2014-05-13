@@ -72,7 +72,6 @@ $app->get('/client/edit/{clientId}', 'Orcamentos\Controller\ClientController::ed
 $app->get('/client/detail/{clientId}', 'Orcamentos\Controller\ClientController::detail');
 $app->post('/client/create', 'Orcamentos\Controller\ClientController::create');
 $app->get('/client/delete/{clientId}', 'Orcamentos\Controller\ClientController::delete');
-
 $app->get('/client/{page}', 'Orcamentos\Controller\ClientController::index')->value('page', 1);
 
 // User controller  
@@ -102,6 +101,8 @@ $app->get('/quote/new/{projectId}', 'Orcamentos\Controller\QuoteController::edit
 $app->get('/quote/edit/{quoteId}', 'Orcamentos\Controller\QuoteController::edit');
 $app->get('/quote/detail/{quoteId}', 'Orcamentos\Controller\QuoteController::detail');
 $app->get('/quote/preview/{quoteId}', 'Orcamentos\Controller\QuoteController::preview');
+$app->get('/quote/delete/{quoteId}', 'Orcamentos\Controller\QuoteController::delete');
+$app->get('/quote/duplicate/{quoteId}', 'Orcamentos\Controller\QuoteController::duplicate');
 $app->post('/quote/create', 'Orcamentos\Controller\QuoteController::create');
 
 // Share Controller

@@ -7,6 +7,7 @@ use Orcamentos\Model\Quote as QuoteModel;
 use Orcamentos\Model\ResourceQuote as ResourceQuoteModel;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
+use Datetime;
 
 /**
  * Quote Entity
@@ -97,5 +98,64 @@ class Quote
         $em->flush();
 
         return $quote;
+    }  
+
+    /**
+     * Function that duplicates a Quote
+     *
+     * @return                A duplicate Quote
+     */
+    public static function duplicate($data, $em)
+    {
+        $data = json_decode($data);
+
+        if (!isset($data->quoteId) ) {
+            throw new Exception("Invalid Parameters", 1);
+        }
+
+        $quote = $em->getRepository("Orcamentos\Model\Quote")->find($data->quoteId);
+        
+        if (!$quote) {
+            throw new Exception("Orçamento não existe", 1);
+        }
+
+        $duplicate = new QuoteModel();
+        $duplicate->setProject($quote->getProject());
+        $duplicate->setVersion(count($quote->getProject()->getQuoteCollection()) + 1);
+        $duplicate->setStatus($quote->getStatus());
+        $duplicate->setPrivateNotes($quote->getPrivateNotes());
+        $duplicate->setProfit($quote->getProfit());
+        $duplicate->setCommission($quote->getCommission());
+        $duplicate->setTaxes($quote->getTaxes());
+        $duplicate->setDueDate($quote->getDueDate());
+        $duplicate->setDeadline($quote->getDeadline());
+        $duplicate->setPriceDescription($quote->getPriceDescription());
+        $duplicate->setPaymentType($quote->getPaymentType());
+
+        $em->persist($duplicate);
+
+        $quoteResourceQuoteCollection = $quote->getResourceQuoteCollection();
+        $duplicateResourceQuoteCollection = $quote->getResourceQuoteCollection();
+
+        if(isset($quoteResourceQuoteCollection)){
+            foreach ($quoteResourceQuoteCollection as $resourceQuote) {
+
+                $resource = $resourceQuote->getResource();
+
+                $quoteResource = new ResourceQuoteModel();
+                $quoteResource->setResource($resource);
+                $quoteResource->setQuote($duplicate);
+                $quoteResource->setAmount($resourceQuote->getAmount());
+                $quoteResource->setValue($resource->getCost());
+
+                $em->persist($quoteResource);
+
+                $duplicateResourceQuoteCollection->add($quoteResource);
+            }
+        }
+
+        $em->flush();
+
+        return $duplicate;
     }
 }

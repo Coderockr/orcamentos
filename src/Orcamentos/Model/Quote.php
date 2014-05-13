@@ -267,6 +267,10 @@ class Quote
         if ($dueDate != null){
             $this->dueDate = \DateTime::createFromFormat('d/m/Y', $dueDate);    
         }
+
+        if (!$this->dueDate){
+            $this->dueDate = \DateTime::createFromFormat('Y-m-d H:i:s', $dueDate);    
+        }
     }
 
     public function getCreated()

@@ -135,6 +135,21 @@ h3 {
 	margin-right: 5px;
 }
 
+.cards .col-md-4 .duplicate {
+	bottom: 64px;
+	right: 34px;
+	font-size: 0.85em;
+	opacity: 0;
+	position: absolute;
+}
+
+.cards .col-md-4:hover .duplicate {
+	opacity: 1;
+}
+.cards .col-md-4 .duplicate i {
+	margin-right: 5px;
+}
+
 .projects > .thumbnail > .caption > h4 > .edit {
 	font-size: 0.8em;
 	font-weight: 400;

@@ -203,6 +203,17 @@ class QuoteController
 		return $app->redirect('/quote/detail/' . $quote->getId());
 	}
 
+	public function delete(Request $request, Application $app, $quoteId)
+	{	
+		$em = $app['orm.em'];
+		$quote = $em->getRepository('Orcamentos\Model\Quote')->find($quoteId);
+		$projectId = $quote->getProject()->getId();
+		$em->remove($quote);
+		$em->flush();
+
+		return $app->redirect('/project/detail/' . $projectId);
+	}
+
 	public function preview(Request $request, Application $app, $quoteId)
 	{	
 		if ( !isset($quoteId) ) {
@@ -276,4 +287,22 @@ class QuoteController
 			)
 		);
 	}
+
+
+	public function duplicate(Request $request, Application $app, $quoteId)
+	{	
+		$quoteId = $request->get('quoteId');
+
+		if ( !isset($quoteId) ) {
+			throw new Exception("Invalid Parameters", 1);
+		}
+		
+		$data['quoteId'] = $quoteId;
+    	$data = json_encode($data);
+		$quoteService = new QuoteService();
+		$duplicate = $quoteService->duplicate($data, $app['orm.em']);
+
+		return $app->redirect('/project/detail/' . $duplicate->getProject()->getId());
+	}
+
 }
