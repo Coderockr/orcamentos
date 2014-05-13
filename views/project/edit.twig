@@ -47,7 +47,11 @@
         </div>
         <div class="row submit">
             <div class="col-md-6">
-                <a href="/project" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
+                {% if project is not null %}
+                    <a href="/project/detail/{{ project.id }}" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
+                {% else %}
+                    <a href="/project" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
+                {% endif %}
             </div>
             <div class="col-md-6">
                 <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
