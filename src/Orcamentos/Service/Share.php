@@ -44,7 +44,7 @@ class Share
                 $share->setHash($hash);
 
                 // Prod
-                $url = 'http://orcamentos.coderockr.com/share/' + $hash;
+                $url = 'http://orcamentos.coderockr.com/share/' . $hash;
                 $token = 'ed0e929d7ff5b92c480f34e4851a96945dd4702b';
 
                 // Desenvolvimento
