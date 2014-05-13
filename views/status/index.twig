@@ -1,0 +1,84 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-9">
+            <h3>Orçamentos</h3>
+        </div>
+    </div>
+    <div class="row cards">
+        <div class="thumbnail">
+            <div class="col-md-4">
+            <h4>Aguardando</h4>
+            {% for quote in awaiting %}
+               <a href="/quote/detail/{{ quote.id }}" class="thumbnail" title="Visualizar projetos e orçamentos">
+                    <span class="caption">
+                        <h5>{{ quote.project.client.name }} - {{ quote.project.name }} - Orçamento versão {{ quote.version }}</h5>
+                        {% if quote.status == 1 %}
+                            <p>Esperando</p>
+                        {% endif %}
+                        {% if quote.status == 2 %}
+                            <p>Aprovado</p>
+                        {% endif %}
+                        {% if quote.status == 3 %}
+                            <p>Não aprovado</p>
+                        {% endif %}
+                        <p>{{quote.priceDescription | raw }}</p>
+                        <p>
+                            <time datetime="2013-11-09T13:40">{{ quote.created |date("d/m/Y H:i") }}</time><br />
+                         <!--    R$ quote.cost  -->
+                        </p>
+                    </span>
+                </a>
+            {% endfor %}
+            </div>
+            <div class="col-md-4">
+            <h4>Aprovados</h4>
+            {% for quote in aproved %}
+                <a href="/quote/detail/{{ quote.id }}" class="thumbnail" title="Visualizar projetos e orçamentos">
+                    <span class="caption">
+                        <h5>{{ quote.project.client.name }} - {{ quote.project.name }} - Orçamento versão {{ quote.version }}</h5>
+                        {% if quote.status == 1 %}
+                            <p>Esperando</p>
+                        {% endif %}
+                        {% if quote.status == 2 %}
+                            <p>Aprovado</p>
+                        {% endif %}
+                        {% if quote.status == 3 %}
+                            <p>Não aprovado</p>
+                        {% endif %}
+                        <p>{{quote.priceDescription | raw }}</p>
+                        <p>
+                            <time datetime="2013-11-09T13:40">{{ quote.created |date("d/m/Y H:i") }}</time><br />
+                         <!--    R$ quote.cost  -->
+                        </p>
+                    </span>
+                </a>
+            {% endfor %}
+            </div>
+            <div class="col-md-4">
+            <h4>Não aprovados</h4>
+            {% for quote in nonAproved %}
+                <a href="/quote/detail/{{ quote.id }}" class="thumbnail" title="Visualizar projetos e orçamentos">
+                    <span class="caption">
+                        <h5>{{ quote.project.client.name }} - {{ quote.project.name }} - Orçamento versão {{ quote.version }}</h5>
+                        {% if quote.status == 1 %}
+                            <p>Esperando</p>
+                        {% endif %}
+                        {% if quote.status == 2 %}
+                            <p>Aprovado</p>
+                        {% endif %}
+                        {% if quote.status == 3 %}
+                            <p>Não aprovado</p>
+                        {% endif %}
+                        <p>{{quote.priceDescription | raw }}</p>
+                        <p>
+                            <time datetime="2013-11-09T13:40">{{ quote.created |date("d/m/Y H:i") }}</time><br />
+                         <!--    R$ quote.cost  -->
+                        </p>
+                    </span>
+                </a>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

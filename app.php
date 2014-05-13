@@ -64,6 +64,9 @@ $app->error(function (\Exception $e, $code) use($app) {
 // Index Controller / Dashboard
 $app->get('/', 'Orcamentos\Controller\IndexController::index');
 
+// Index Controller / Dashboard
+$app->get('/status', 'Orcamentos\Controller\StatusController::index');
+
 // Client controller  
 $app->get('/client/edit/{clientId}', 'Orcamentos\Controller\ClientController::edit')->value( "clientId", null );
 $app->get('/client/detail/{clientId}', 'Orcamentos\Controller\ClientController::detail');

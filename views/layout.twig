@@ -48,6 +48,7 @@
                                 <ul class="nav navbar-nav navbar-right">
                                     {% if app.session.get('isAdmin') %}
                                         <li><a href="/" title="Dashboard" {{ active_page is defined and active_page == 'panel' ? 'class="current"' : ""}}>Painel</a></li>
+                                        <li><a href="/status" title="Gerenice seus Orçamentos" {{  active_page is defined and  active_page == 'status' ? 'class="current"' : ""}}>Status board</a></li>
                                         <li><a href="/client" title="Gerenice seus clientes" {{  active_page is defined and  active_page == 'client' ? 'class="current"' : ""}}>Clientes</a></li>
                                         <li><a href="/project" title="Gerencie seus projetos" {{  active_page is defined and  active_page == 'project' ? 'class="current"' : ""}}>Projetos</a></li>
                                     {% endif %}
