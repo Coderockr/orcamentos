@@ -161,6 +161,23 @@ class QuoteController
 			});
 		}
 		
+		switch ($quote->getStatus()) {
+			case 1:
+			case '1':
+				$status = 'Esperando';
+				break;
+			
+			case 2:
+			case '2':
+				$status = 'Aprovado';
+				break;
+
+			case 3:
+			case '3':
+				$status = 'Não aprovado';
+				break;
+		}
+
 		return $app['twig']->render('quote/detail.twig',
 			array(
 				'quote' => $quote,
@@ -170,6 +187,7 @@ class QuoteController
 				'final' => $final,
 				'commission' => $commission,
 				'profit' => $profit,
+				'status' => $status,
 				'taxes' => $taxes
 			)
 		);
