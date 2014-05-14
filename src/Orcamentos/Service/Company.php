@@ -36,7 +36,9 @@ class Company
 
         if (!$company) {
             $company = $em->getRepository("Orcamentos\Model\Company")->findOneBy(array('name' => $data->name));
-            return $company;
+            if ($company){
+                return $company;
+            }
         }
 
         if (!$company) {
@@ -88,7 +90,7 @@ class Company
         } catch (Exception $e) {
 
           echo $e->getMessage();
-          
+
         }
     }
 }
