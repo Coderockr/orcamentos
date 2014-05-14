@@ -20,7 +20,11 @@
                                 <span>
                                     {% if app.session.get('isAdmin') %}
                                     <a href="/company">
-                                        <img src="/public/img/logotypes/{{ app.session.get('companyLogotype') }}" width="100" height="100" />
+                                        {% if app.session.get('companyLogotype') != null %}
+                                            <img src="/public/img/logotypes/{{ app.session.get('companyLogotype') }}" width="100" height="100" />
+                                        {% else %}
+                                            <img src="/public/img/photo_g.png" width="100" height="100" />
+                                        {% endif %}
                                     </a>
                                     <h1>
                                         <a href="/company">
@@ -31,7 +35,11 @@
                                             <small>editar</small>
                                         </a>
                                     {% else %}
-                                        <img src="/public/img/logotypes/{{ app.session.get('companyLogotype') }}" width="100" height="100" />
+                                        {% if app.session.get('companyLogotype') != null %}
+                                            <img src="/public/img/logotypes/{{ app.session.get('companyLogotype') }}" width="100" height="100" />
+                                        {% else %}
+                                            <img src="/public/img/photo_g.png" width="100" height="100" />
+                                        {% endif %}
                                         <h1>
                                             {{ app.session.get('companyName') }}
                                         </h1>

@@ -24,22 +24,29 @@ class Company
     {
         $data = json_decode($data);
 
-        if (!isset($data->name) || !isset($data->responsable) || !isset($data->telephone) || !isset($data->taxes) || !isset($data->companyId)) {
+        if (!isset($data->name) || !isset($data->responsable) || !isset($data->telephone)) {
             throw new Exception("Invalid Parameters", 1);
         }
 
         $company = null;
-        if ( isset($data->companyId) ) {
+
+        if (isset($data->companyId) ) {
             $company = $em->getRepository("Orcamentos\Model\Company")->find($data->companyId);
         }
         
         if (!$company) {
-            throw new Exception("Error Processing Request", 1);
+            $company = new CompanyModel();
+        }
+
+        $taxes = 6;
+
+        if(isset($data->taxes)){
+            $taxes = $data->taxes;
         }
 
         $company->setName($data->name);
         $company->setResponsable($data->responsable);
-        $company->setTaxes($data->taxes);
+        $company->setTaxes($taxes);
 
         if (isset($data->site)) {
             $company->setSite($data->site);

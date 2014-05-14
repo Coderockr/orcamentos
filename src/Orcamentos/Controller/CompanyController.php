@@ -32,7 +32,6 @@ class CompanyController
 	{
 		$data = $request->request->all();
 		$logotype = $request->files->get('logotype');
-
 		$data['companyId'] = $app['session']->get('companyId');
     	$data = json_encode($data);
 		$companyService = new CompanyService();
