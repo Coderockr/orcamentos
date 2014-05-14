@@ -19,6 +19,8 @@ class ShareController
 		
 		$share = $app['orm.em']->getRepository('Orcamentos\Model\Share')->findOneBy(array('hash'=> $hash));
 		
+		$shareId = $share->getId();
+
 		if (!$share){
 			$app->abort(404, "Compartilhamento não existente");
 		}
@@ -191,7 +193,7 @@ class ShareController
 		$shareService = new ShareService();
 		$note = $shareService->removeComment($data, $app['orm.em']);
 
-		$redirect = '/share/' . $note->getShare()->getId();
+		$redirect = '/share/' . $note->getShare()->getHash();
 
 		if (isset($quoteNoteId)){
 			$redirect = '/quote/detail/' . $note->getShare()->getQuote()->getId();
