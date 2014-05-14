@@ -65,7 +65,7 @@ class User
             $em->persist($user);
             $em->flush();
             return $user;
-        } (Exception $e) {
+        } catch (Exception $e) {
           echo $e->getMessage();
         }
     }
