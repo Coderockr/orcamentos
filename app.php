@@ -71,6 +71,7 @@ $app->get('/status', 'Orcamentos\Controller\StatusController::index');
 $app->get('/client/edit/{clientId}', 'Orcamentos\Controller\ClientController::edit')->value( "clientId", null );
 $app->get('/client/detail/{clientId}', 'Orcamentos\Controller\ClientController::detail');
 $app->post('/client/create', 'Orcamentos\Controller\ClientController::create');
+$app->get('/client/search/{page}', 'Orcamentos\Controller\ClientController::search')->value('page', 1);
 $app->get('/client/delete/{clientId}', 'Orcamentos\Controller\ClientController::delete');
 $app->get('/client/{page}', 'Orcamentos\Controller\ClientController::index')->value('page', 1);
 
@@ -89,6 +90,7 @@ $app->get('/project/new/{clientId}', 'Orcamentos\Controller\ProjectController::e
 $app->get('/project/removeComment/{noteId}', 'Orcamentos\Controller\ProjectController::removeComment');
 $app->post('/project/create', 'Orcamentos\Controller\ProjectController::create');
 $app->post('/project/comment', 'Orcamentos\Controller\ProjectController::comment');
+$app->get('/project/search/{page}', 'Orcamentos\Controller\ProjectController::search')->value('page', 1);
 $app->get('/project/{page}', 'Orcamentos\Controller\ProjectController::index')->value('page', 1);
 
 //Company Controller
@@ -96,7 +98,6 @@ $app->get('/company', 'Orcamentos\Controller\CompanyController::edit');
 $app->post('/company/create', 'Orcamentos\Controller\CompanyController::create');
 
 //quote Controller
-
 $app->get('/quote/new/{projectId}', 'Orcamentos\Controller\QuoteController::edit');
 $app->get('/quote/edit/{quoteId}', 'Orcamentos\Controller\QuoteController::edit');
 $app->get('/quote/detail/{quoteId}', 'Orcamentos\Controller\QuoteController::detail');

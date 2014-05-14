@@ -10,6 +10,7 @@ use Orcamentos\Service\Project as ProjectService;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\TwitterBootstrap3View;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 
 class ProjectController
 {
@@ -28,12 +29,47 @@ class ProjectController
 	        return '/project/'.$page;
 	    };
 		$pagerfanta->setCurrentPage($page);
+
 		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
 		return $app['twig']->render('project/index.twig', array( 
 			'htmlPagination' => $htmlPagination,
 			'pagerfanta' => $pagerfanta,
 			'active_page' => 'project'
 		));
+	}
+
+	public function search(Request $request, Application $app, $page)
+	{
+		$data = $request->query->all();
+
+		if ($data['query'] == ''){
+			return $app->redirect('/project');
+		}
+
+		$data['companyId'] = $app['session']->get('companyId');
+    	$data = json_encode($data);
+		$projectService = new ProjectService();
+		$query = $projectService->search($data, $app['orm.em']);
+
+		$adapter = new DoctrineORMAdapter($query);
+		$pagerfanta = new Pagerfanta($adapter);
+
+		$view = new TwitterBootstrap3View();
+		$routeGenerator = function($page) use ($app) {
+	        return '/project/'.$page;
+	    };
+
+		$pagerfanta->setCurrentPage($page);
+		
+		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
+
+		return $app['twig']->render('project/index.twig', 
+			array(
+				'htmlPagination' => $htmlPagination,
+				'pagerfanta' => $pagerfanta,
+				'active_page' => 'project'
+			)
+		);
 	}
 
 	public function edit(Request $request, Application $app)

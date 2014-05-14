@@ -1,10 +1,22 @@
 {% extends "layout.twig" %}
 {% block content %}
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-3">
         <h3>Clientes</h3>
     </div>
-    <div class="col-md-3">
+   <div class="col-md-5 clearfix col-md-offset-3">
+        <form method="GET" action="/client/search" name="search">
+            <div class="input-group form-search">
+              <input type="text" name="query" class="form-control search-query">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary" data-type="last">
+                    <i class="search-icon glyphicon glyphicon-search"></i>
+                </button>
+              </span>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-1">
         <a href="/client/edit" class="btn btn-primary" title="Cadastre um novo cliente">Novo Cliente</a>
     </div>
 </div>

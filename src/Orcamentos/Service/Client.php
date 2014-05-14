@@ -68,4 +68,31 @@ class Client
 
         return $client;
     }
+
+
+    /**
+     * Function that searches clients
+     *
+     * @return                
+     */
+    public static function search($data, $em)
+    {
+        $data = json_decode($data);
+
+        if (!isset($data->query) || !isset($data->companyId)) {
+            throw new Exception("Invalid Parameters", 1);
+        }
+        $company = $em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
+
+        $result = $em->getRepository("Orcamentos\Model\Client")->createQueryBuilder('c')
+           ->where('c.company = :company')
+           ->andWhere('c.name LIKE :query')
+           ->setParameter('company', $company )
+           ->setParameter('query', '%'. $data->query.'%')
+           ->getQuery();
+
+        $em->flush();
+
+        return $result;
+    }
 }

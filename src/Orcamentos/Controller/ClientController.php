@@ -10,6 +10,7 @@ use Orcamentos\Service\Client as ClientService;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\TwitterBootstrap3View;
 use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 
 class ClientController
 {
@@ -60,7 +61,40 @@ class ClientController
 			)
 		);
 	}
+	
+	public function search(Request $request, Application $app, $page)
+	{
+		$data = $request->query->all();
 
+		if ($data['query'] == ''){
+			return $app->redirect('/client');
+		}
+
+		$data['companyId'] = $app['session']->get('companyId');
+    	$data = json_encode($data);
+		$clientService = new ClientService();
+		$query = $clientService->search($data, $app['orm.em']);
+
+		$adapter = new DoctrineORMAdapter($query);
+		$pagerfanta = new Pagerfanta($adapter);
+
+		$view = new TwitterBootstrap3View();
+		$routeGenerator = function($page) use ($app) {
+	        return '/client/'.$page;
+	    };
+
+		$pagerfanta->setCurrentPage($page);
+		
+		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
+
+		return $app['twig']->render('client/index.twig', 
+			array(
+				'htmlPagination' => $htmlPagination,
+				'pagerfanta' => $pagerfanta,
+				'active_page' => 'client'
+			)
+		);
+	}
 	// Funcao usada para criar o cliente, via post
 	public function create(Request $request, Application $app)
 	{	
