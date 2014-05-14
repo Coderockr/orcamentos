@@ -97,6 +97,9 @@ h3 {
 .cards .col-md-4 a.thumbnail:hover {
 	background: rgba(59,175,218, 0.1);
 }
+.cards .col-md-6 a.thumbnail:hover {
+	background: rgba(59,175,218, 0.1);
+}
 .cards .thumbnail .img-rounded {
 	margin: 10px 20px;
 	-webkit-border-radius: 3px;
@@ -150,15 +153,37 @@ h3 {
 	margin-right: 5px;
 }
 
-.projects > .thumbnail > .caption > h4 > .edit {
-	font-size: 0.8em;
-	font-weight: 400;
-	margin-left: 10px;
+
+.cards .col-md-6 .edit {
+	bottom: 44px;
+	right: 34px;
+	font-size: 0.85em;
 	opacity: 0;
+	position: absolute;
+}
+.cards .col-md-6:hover .edit {
+	opacity: 1;
+}
+.cards .col-md-6 .edit i {
+	margin-right: 5px;
 }
 
+.cards .col-md-6 .duplicate {
+	bottom: 64px;
+	right: 34px;
+	font-size: 0.85em;
+	opacity: 0;
+	position: absolute;
+}
 
-.quotes col-md-4:hover > .edit {
+.cards .col-md-6:hover .duplicate {
+	opacity: 1;
+}
+.cards .col-md-6 .duplicate i {
+	margin-right: 5px;
+}
+
+.quotes col-md-6:hover > .edit {
 	opacity: 1;
 }
 

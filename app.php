@@ -110,7 +110,6 @@ $app->post('/quote/create', 'Orcamentos\Controller\QuoteController::create');
 $app->get('/share/delete/{shareId}', 'Orcamentos\Controller\ShareController::delete');
 $app->post('/share/create', 'Orcamentos\Controller\ShareController::create');
 $app->post('/share/comment', 'Orcamentos\Controller\ShareController::comment');
-$app->get('/share/removeQuoteComment/{quoteNoteId}', 'Orcamentos\Controller\ShareController::removeComment');
 $app->get('/share/removeComment/{shareNoteId}', 'Orcamentos\Controller\ShareController::removeComment');
 $app->post('/share/resend', 'Orcamentos\Controller\ShareController::resend');
 $app->get('/share/sendEmails/{limit}', 'Orcamentos\Controller\ShareController::sendEmails')->value('limit', 10);

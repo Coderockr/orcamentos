@@ -178,27 +178,17 @@ class ShareController
 	{
 		$em = $app['orm.em'];
 		$shareNoteId = $request->get('shareNoteId');
-		$quoteNoteId = $request->get('quoteNoteId');
 
-		if(!isset($shareNoteId) && !isset($quoteNoteId)){
+		if(!isset($shareNoteId)){
 			throw new Exception("Invalid parameters", 1);
 		}
 
 		$noteId = $shareNoteId;
 
-		if (isset($quoteNoteId)){
-			$noteId = $quoteNoteId;
-		} 
     	$data = json_encode(array('noteId' => $noteId));
 		$shareService = new ShareService();
 		$note = $shareService->removeComment($data, $app['orm.em']);
 
-		$redirect = '/share/' . $note->getShare()->getHash();
-
-		if (isset($quoteNoteId)){
-			$redirect = '/quote/detail/' . $note->getShare()->getQuote()->getId();
-		} 
-
-		return $app->redirect($redirect);
+		return $app->redirect($_SERVER['HTTP_REFERER']);
 	}
 }

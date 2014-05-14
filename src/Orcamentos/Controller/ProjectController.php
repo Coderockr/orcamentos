@@ -143,7 +143,7 @@ class ProjectController
 		$em->remove($project);
 		$em->flush();
 
-		return $app->redirect('/project');
+		return $app->redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function comment(Request $request, Application $app)

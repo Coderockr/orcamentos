@@ -11,11 +11,11 @@
 
     <div class="row cards">
         <div class="col-md-4">
-            <a data-href="/client/delete/{{ client.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar cliente"></a>
+            <a data-href="/client/delete/{{ client.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin10 edit " title="Apagar cliente"></a>
             <div class="thumbnail">
-                <span class="caption">
+                <span class="caption ">
                     <span class="img-rounded"><span></span><img src="{{ client and client.logotype ? '/public/img/logotypes/' ~ client.logotype : "/public/img/photo_g.png" }}" alt="" width="80" height="80" /></span>
-                    <h4>{{ client.name }}</h4>
+                    <h4>{{ client.name  }}</h4>
                     <p>
                         {{ client.projectCollection | length }} Projetos
                     </p>
@@ -40,10 +40,11 @@
                     <p>
                         {{ project.tags }}
                     </p>
-                        <div class="row">
+                        <div class="row cards">
                             {% for quote in project.quoteCollection %}
-                                <div class="col-md-4">
-                                    <a href="/quote/detail/{{ quote.id }}" class="thumbnail" title="Visualizar projetos e orçamentos">
+                                 <div class="col-md-6">
+                                    <a data-href="/quote/delete/{{ quote.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin10 edit" title="Apagar orçamento"></a>
+                                    <a href="/quote/detail/{{quote.id}}" class="thumbnail" title="Visualizar projetos e orçamentos">
                                         <span class="caption">
                                             <h5>Orçamento versão {{ quote.version }}</h5>
                                             {% if quote.status == 1 %}
@@ -55,13 +56,13 @@
                                             {% if quote.status == 3 %}
                                                 <p>Não aprovado</p>
                                             {% endif %}
-					                        <p>{{quote.priceDescription | raw }}</p>
                                             <p>
-                                                <time datetime="2013-11-09T13:40">{{ quote.created |date("d/m/Y H:i") }}</time><br />
-                                             <!--    R$ quote.cost  -->
+                                                <time datetime="{{ quote.created }}">{{ quote.created }}</time><br />
                                             </p>
                                         </span>
                                     </a>
+                                    <a href="/quote/duplicate/{{ quote.id }}" title="Duplicar orçamento" class="duplicate"><i class="glyphicon glyphicon-transfer"></i>duplicar</a>
+                                    <a href="/quote/edit/{{ quote.id }}" title="Editar orçamento" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
                                 </div>
                             {% endfor %}
                         </div>

@@ -211,7 +211,7 @@ class QuoteController
 		$em->remove($quote);
 		$em->flush();
 
-		return $app->redirect('/project/detail/' . $projectId);
+		return $app->redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function preview(Request $request, Application $app, $quoteId)
@@ -302,7 +302,7 @@ class QuoteController
 		$quoteService = new QuoteService();
 		$duplicate = $quoteService->duplicate($data, $app['orm.em']);
 
-		return $app->redirect('/project/detail/' . $duplicate->getProject()->getId());
+		return $app->redirect($_SERVER['HTTP_REFERER']);
 	}
 
 }
