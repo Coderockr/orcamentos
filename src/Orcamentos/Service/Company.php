@@ -33,7 +33,12 @@ class Company
         if (isset($data->companyId) ) {
             $company = $em->getRepository("Orcamentos\Model\Company")->find($data->companyId);
         }
-        
+
+        if (!$company) {
+            $company = $em->getRepository("Orcamentos\Model\Company")->findOneBy(array('name' => $data->name));
+            return $company;
+        }
+
         if (!$company) {
             $company = new CompanyModel();
         }

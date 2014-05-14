@@ -37,4 +37,7 @@ $userData = array(
 
 $userData = json_encode($userData);
 $userService = new UserService();
- $user = $userService->save($userData, $app['orm.em']);
+
+$user = $userService->save($userData, $app['orm.em']);
+
+return true;
