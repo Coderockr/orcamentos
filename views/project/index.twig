@@ -31,11 +31,18 @@
                             {{ project.client.name }}<br />
                             {{ project.tags }}
                         </p>
-                         <p>
-                            <small>
-                                {{ project.privateNotesCollection | length == 1 ? project.privateNotesCollection | length ~' Comentário' :  project.privateNotesCollection | length ~' Comentários' }} 
-                            </small>
-                        </p>
+                        <div class='row'>
+                            <div class='col-md-6'>
+                                <small>
+                                    {{ project.privateNotesCollection | length == 1 ? project.privateNotesCollection | length ~' Comentário' :  project.privateNotesCollection | length ~' Comentários' }} 
+                                </small>
+                            </div>
+                            <div class='col-md-6'>
+                                <small>
+                                    {{ project.quoteCollection | length == 1 ? project.quoteCollection | length ~' Orçamento' :  project.quoteCollection | length ~' Orçamentos' }} 
+                                </small>
+                            </div>
+                        </div>
                     </span>
                 </a>
                 <a href="/project/edit/{{ project.id }}" title="Editar projeto" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
