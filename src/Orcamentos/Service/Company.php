@@ -79,9 +79,16 @@ class Company
             $company->setLogotype($fileName);
         }
 
-        $em->persist($company);
-        $em->flush();
+        try {
 
-        return $company;
+            $em->persist($company);
+            $em->flush();
+            return $company;
+
+        } catch (Exception $e) {
+
+          echo $e->getMessage();
+          
+        }
     }
 }
