@@ -54,9 +54,13 @@
                     <label for="site">Site</label>
                     <input type="text" name="site" id="site" class="form-control" value="{{ company and company.site ? company.site : "" }}" />
                 </div>
-                 <div>
+                <div>
                     <label for="email">Email *</label>
                     <input type="email" name="email" id="email" required class="form-control" value="{{ company and company.email ? company.email : "" }}" />
+                </div>
+                <div>
+                    <label for="city">Cidade</label>
+                    <input type="text" name="city" id="city" required class="form-control" value="{{ company and company.city ? company.city : "" }}" />
                 </div>
                 <div class="pull-right margin30">
                     <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>

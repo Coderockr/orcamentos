@@ -48,6 +48,10 @@ class Company
         $company->setResponsable($data->responsable);
         $company->setTaxes($taxes);
 
+        if (isset($data->city)) {
+            $company->setCity($data->city);
+        }
+
         if (isset($data->site)) {
             $company->setSite($data->site);
         }

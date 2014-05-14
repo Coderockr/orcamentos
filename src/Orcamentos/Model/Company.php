@@ -37,6 +37,13 @@ class Company
     private $name;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    private $city;
+
+    /**
      * @ORM\Column(type="float", nullable=false )
      *
      * @var float
@@ -149,6 +156,16 @@ class Company
     public function setEmail($email)
     {
         return $this->email = $email;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+    
+    public function setCity($city)
+    {
+        return $this->city = $city;
     }
     
     public function getSite()

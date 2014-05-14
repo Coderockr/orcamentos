@@ -278,7 +278,12 @@ class QuoteController
 				break;
 		}
 
-		$createdSignature = 'Joinville, ' . $day . ' de ' . $monthName . ' de ' . $year . '.';
+		$city = '';
+		if($quote->getProject()->getCompany()->getCity()){
+			$city = $quote->getProject()->getCompany()->getCity().', ';
+		}
+		
+		$createdSignature = $city . $day . ' de ' . $monthName . ' de ' . $year . '.';
 
 		return $app['twig']->render('share/detail.twig',
 			array(
