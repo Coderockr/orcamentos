@@ -61,10 +61,12 @@ class User
         if (isset($company)) {
             $user->setCompany($company);
         }
-        
-        $em->persist($user);
-        $em->flush();
-
-        return $user;
+        try {
+            $em->persist($user);
+            $em->flush();
+            return $user;
+        } (Exception $e) {
+          echo $e->getMessage();
+        }
     }
 }
