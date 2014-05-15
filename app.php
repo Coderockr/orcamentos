@@ -41,12 +41,17 @@ $app->before(function (Request $request) use ($app) {
         && $app['session']->get('email') == null ) {
         return $app->redirect('/');
     }
+
     if( ( stripos($requestUri, 'client') == true
-        || stripos($requestUri, 'project')   == true
         || stripos($requestUri, 'quote')  == true
-        || stripos($requestUri, 'lead') == true ) && $app['session']->get('isAdmin') == false ) {
-        return $app->redirect('/');
+        || stripos($requestUri, 'user')  == true
+        || stripos($requestUri, 'company')  == true
+        || stripos($requestUri, 'quote')  == true
+        || stripos($requestUri, 'share')  == true
+        || stripos($requestUri, 'status') == true ) && $app['session']->get('isAdmin') == false ) {
+        return $app->redirect('/project');
     }
+
 });
 
 $app->error(function (\Exception $e, $code) use($app) {

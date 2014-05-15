@@ -17,13 +17,17 @@
             </form>
         </div>
         <div class="col-md-1">
-            <a href="/project/edit" class="btn btn-primary" title="Cadastre um novo projeto">Novo Projeto</a>
+            {% if app.session.get('isAdmin') %}
+                <a href="/project/edit" class="btn btn-primary" title="Cadastre um novo projeto">Novo Projeto</a>
+            {% endif %}
         </div>
     </div>
     <div class="row cards">
         {% for project in pagerfanta %}
             <div class="col-md-4">
-                <a data-href="/project/delete/{{ project.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar projeto"></a>
+                {% if app.session.get('isAdmin') %}
+                    <a data-href="/project/delete/{{ project.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar projeto"></a>
+                {% endif %}
                 <a href="/project/detail/{{ project.id }}" class="thumbnail" title="Visualizar projeto">
                     <span class="caption">
                         <h4>{{ project.name }}</h4>
@@ -38,14 +42,18 @@
                                 </small>
                             </div>
                             <div class='col-md-6'>
-                                <small>
-                                    {{ project.quoteCollection | length == 1 ? project.quoteCollection | length ~' Orçamento' :  project.quoteCollection | length ~' Orçamentos' }} 
-                                </small>
+                                {% if app.session.get('isAdmin') %}
+                                    <small>
+                                        {{ project.quoteCollection | length == 1 ? project.quoteCollection | length ~' Orçamento' :  project.quoteCollection | length ~' Orçamentos' }} 
+                                    </small>
+                                {% endif %}
                             </div>
                         </div>
                     </span>
                 </a>
-                <a href="/project/edit/{{ project.id }}" title="Editar projeto" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                {% if app.session.get('isAdmin') %}
+                    <a href="/project/edit/{{ project.id }}" title="Editar projeto" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

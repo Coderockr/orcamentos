@@ -38,7 +38,11 @@ class AdminController
 		$app['session']->set('companyLogotype', $user->getCompany()->getLogotype());
 		$app['session']->set('companyName', $user->getCompany()->getName());
 		
-		return $app->redirect('/');		
+		if($user->getAdmin()){
+			return $app->redirect('/');		
+		}
+
+		return $app->redirect('/project');		
 	}	
 
 	public function logout(Request $request, Application $app)
