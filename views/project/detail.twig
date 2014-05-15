@@ -40,6 +40,9 @@
                     <a href="/quote/detail/{{quote.id}}" class="thumbnail" title="Visualizar projetos e orçamentos">
                         <span class="caption">
                             <h5>Orçamento versão {{ quote.version }}</h5>
+                            {% if quote.priceDescription is not null %}
+                                <p>{{ quote.priceDescription | raw }}</p>
+                            {% endif %}
                             {% if quote.status == 1 %}
                                 <p>Esperando</p>
                             {% endif %}
@@ -49,6 +52,7 @@
                             {% if quote.status == 3 %}
                                 <p>Não aprovado</p>
                             {% endif %}
+
                             <p>
                                 <time datetime="{{ quote.created }}">{{ quote.created }}</time><br />
                             </p>
