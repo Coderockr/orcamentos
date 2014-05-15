@@ -30,10 +30,10 @@ $app['swiftmailer.options'] = array(
     'auth_mode' => 'login'
 );
 
-
 // where does the user want to go?
 $app->before(function (Request $request) use ($app) {
     $requestUri = $request->getRequestUri();
+
     if ( $requestUri !== '/'  
         && $requestUri !== '/logout' 
         && $requestUri !== '/login' 
@@ -42,13 +42,10 @@ $app->before(function (Request $request) use ($app) {
         return $app->redirect('/');
     }
 
-    if( ( stripos($requestUri, 'client') == true
-        || stripos($requestUri, 'quote')  == true
-        || stripos($requestUri, 'user')  == true
-        || stripos($requestUri, 'company')  == true
-        || stripos($requestUri, 'quote')  == true
-        || stripos($requestUri, 'share')  == true
-        || stripos($requestUri, 'status') == true ) && $app['session']->get('isAdmin') == false ) {
+    $allowedAdminRoutes = array('','client', 'quote','user','company','share','status');
+
+    $route = explode('/', $requestUri);
+    if( in_array($route[1], $allowedAdminRoutes) == true && $app['session']->get('email') != null && $app['session']->get('isAdmin') == false ) {
         return $app->redirect('/project');
     }
 
