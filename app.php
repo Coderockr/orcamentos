@@ -132,8 +132,8 @@ $app->register(new DoctrineServiceProvider, array(
         'driver' => 'pdo_mysql',
         'host' => 'localhost',
         'port' => '3306',
-        'user' => 'root',
-        'password' => '',
+        'user' => 'orcamentos',
+        'password' => 'orcamentos',
         'dbname' => 'orcamentos'
     )
 ));
