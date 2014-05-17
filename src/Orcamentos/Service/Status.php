@@ -11,14 +11,14 @@ use Exception;
  * @package Service
  * @author  Mateus Guerra<mateus@coderockr.com>
  */
-class Status
+class Status extends Service
 {
     /**
      * Function that gets the Quotes from the company
      *
      * @return                
      */
-    public static function getData($data, $em)
+    public function getData($data)
     {
         $data = json_decode($data);
 
@@ -26,7 +26,7 @@ class Status
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $company = $em->getRepository("Orcamentos\Model\Company")->find($data->companyId);
+        $company = $this->em->getRepository("Orcamentos\Model\Company")->find($data->companyId);
         
         if (!$company) {
             throw new Exception("Empresa não existe", 1);

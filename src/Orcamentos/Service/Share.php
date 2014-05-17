@@ -15,32 +15,32 @@ use Exception;
  * @package Service
  * @author  Mateus Guerra<mateus@coderockr.com>
  */
-class Share
+class Share extends Service
 {
     /**
      * Function that saves a new Share
      *
      * @return                Function used to save a new Share
      */
-    public static function save($data, $em)
+    public function save($data)
     {
         $data = json_decode($data);
         if (!isset($data->email) || !isset($data->quoteId)) {
            return false;
        }
 
-        $quote = $em->getRepository("Orcamentos\Model\Quote")->find($data->quoteId);
+        $quote = $this->em->getRepository("Orcamentos\Model\Quote")->find($data->quoteId);
         
         $shares = array();
 
-        foreach ($data->email as $email) {
-            $share = $em->getRepository('Orcamentos\Model\Share')->findOneBy(array('quote'=> $quote, 'email' => $email));
+        foreach ($data->email as $this->email) {
+            $share = $this->em->getRepository('Orcamentos\Model\Share')->findOneBy(array('quote'=> $quote, 'email' => $this->email));
             if( !$share) {
                 $share = new ShareModel();
                 $share->setQuote($quote);
-                $share->setEmail($email);
+                $share->setEmail($this->email);
                 $share->setSent(true);
-                $hash = hash('sha256', $email . $share->getQuote()->getProject()->getName() . $share->getQuote()->getVersion());
+                $hash = hash('sha256', $this->email . $share->getQuote()->getProject()->getName() . $share->getQuote()->getVersion());
                 $share->setHash($hash);
 
                 // Prod
@@ -54,12 +54,12 @@ class Share
                 $bitlyJson = fopen("https://api-ssl.bitly.com/v3/shorten?access_token=" . $token . "&longUrl=" . $url, 'rb');
                 $bitly =  json_decode(stream_get_contents($bitlyJson), true);
                 $share->setShortUrl($bitly['data']['url']);
-                $em->persist($share);
+                $this->em->persist($share);
                 $shares[] = $share;
             } 
         }
 
-        $em->flush();
+        $this->em->flush();
 
         $result = array();
         foreach ($shares as $key => $share) {
@@ -77,7 +77,7 @@ class Share
      *
      * @return                Function used to save a new ShareNote
      */
-    public static function comment($data, $em)
+    public function comment($data)
     {
         $data = json_decode($data);
 
@@ -85,15 +85,15 @@ class Share
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $share = $em->getRepository("Orcamentos\Model\Share")->find($data->shareId);
+        $share = $this->em->getRepository("Orcamentos\Model\Share")->find($data->shareId);
 
         $note = new ShareNoteModel();
         $note->setShare($share);
         $note->setNote($data->note);
         
-        $em->persist($note);
+        $this->em->persist($note);
 
-        $em->flush();
+        $this->em->flush();
 
         return $note;
     }
@@ -103,7 +103,7 @@ class Share
      *
      * @return                Function used to set sent to false in a share
      */
-    public static function resend($data, $em)
+    public function resend($data)
     {
         $data = json_decode($data);
 
@@ -111,10 +111,10 @@ class Share
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $share = $em->getRepository("Orcamentos\Model\Share")->find($data->shareId);
+        $share = $this->em->getRepository("Orcamentos\Model\Share")->find($data->shareId);
         $share->setSent(0);
-        $em->persist($share);
-        $em->flush();
+        $this->em->persist($share);
+        $this->em->flush();
 
         return $share->getEmail();
     }
@@ -125,15 +125,15 @@ class Share
      *
      * @return                
      */
-    public static function sendEmails($limit, $app)
+    public function sendEmails($limit, $app)
     {
         if (!isset($limit) ) {
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $em = $app['orm.em'];
+        $this->em = $app['orm.em'];
 
-        $shares = $em->getRepository("Orcamentos\Model\Share")->findBy( array( 'sent' => 0 ), array( 'id' => 'ASC' ), $limit );
+        $shares = $this->em->getRepository("Orcamentos\Model\Share")->findBy( array( 'sent' => 0 ), array( 'id' => 'ASC' ), $limit );
         
         foreach ($shares as $i => $share) {
             $quote = $share->getQuote();
@@ -157,11 +157,11 @@ class Share
 
             $share->setSent(1);
 
-            $em->persist($share);
+            $this->em->persist($share);
 
         }
 
-        $em->flush();
+        $this->em->flush();
         
         return true;
     }
@@ -172,7 +172,7 @@ class Share
      *
      * @return                Function used to delete a Private message
      */
-    public static function removeComment($data, $em)
+    public function removeComment($data)
     {
         $data = json_decode($data);
 
@@ -180,11 +180,11 @@ class Share
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $note = $em->getRepository("Orcamentos\Model\ShareNote")->find($data->noteId);
+        $note = $this->em->getRepository("Orcamentos\Model\ShareNote")->find($data->noteId);
 
-        $em->remove($note);
+        $this->em->remove($note);
 
-        $em->flush();
+        $this->em->flush();
 
         return $note;
     }

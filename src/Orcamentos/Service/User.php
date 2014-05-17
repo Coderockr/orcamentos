@@ -13,14 +13,14 @@ use Exception;
  * @package Service
  * @author  Mateus Guerra<mateus@coderockr.com>
  */
-class User
+class User extends Service
 {
     /**
      * Function that saves a new User
      *
      * @return                Function used to save a new User
      */
-    public static function save($data, $em)
+    public function save($data)
     {
         $data = json_decode($data);
 
@@ -30,7 +30,7 @@ class User
 
         $user = null;
         if ( isset($data->id) ) {
-            $user = $em->getRepository("Orcamentos\Model\User")->find($data->id);
+            $user = $this->em->getRepository("Orcamentos\Model\User")->find($data->id);
         }
 
         if (!$user) {
@@ -56,14 +56,14 @@ class User
 
         $user->setAdmin($admin);
 
-        $company = $em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
+        $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
 
         if (isset($company)) {
             $user->setCompany($company);
         }
         try {
-            $em->persist($user);
-            $em->flush();
+            $this->em->persist($user);
+            $this->em->flush();
             return $user;
         } catch (Exception $e) {
           echo $e->getMessage();

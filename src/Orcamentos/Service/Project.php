@@ -13,14 +13,14 @@ use Exception;
  * @package Service
  * @author  Mateus Guerra<mateus@coderockr.com>
  */
-class Project
+class Project extends Service
 {
     /**
      * Function that saves a new Project
      *
      * @return                Function used to save a new Project
      */
-    public static function save($data, $em)
+    public function save($data)
     {
         $data = json_decode($data);
 
@@ -31,7 +31,7 @@ class Project
         $project = null;
 
         if ( isset($data->id) ) {
-            $project = $em->getRepository("Orcamentos\Model\Project")->find($data->id);
+            $project = $this->em->getRepository("Orcamentos\Model\Project")->find($data->id);
         }
 
         if (!$project) {
@@ -42,7 +42,7 @@ class Project
         $project->setTags($data->tags);
         $project->setDescription($data->description);
         
-        $client = $em->getRepository("Orcamentos\Model\Client")->find($data->client);
+        $client = $this->em->getRepository("Orcamentos\Model\Client")->find($data->client);
 
         if (!$client) {
             throw new Exception("Cliente inválido", 1);
@@ -50,14 +50,14 @@ class Project
         
         $project->setClient($client);
         
-        $company = $em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
+        $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
         
         if (isset($company)) {
             $project->setCompany($company);
         }
 
-        $em->persist($project);
-        $em->flush();
+        $this->em->persist($project);
+        $this->em->flush();
 
         return $project;
     }
@@ -67,23 +67,23 @@ class Project
      *
      * @return                
      */
-    public static function search($data, $em)
+    public function search($data)
     {
         $data = json_decode($data);
 
         if (!isset($data->query) || !isset($data->companyId)) {
             throw new Exception("Invalid Parameters", 1);
         }
-        $company = $em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
+        $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
 
-        $result = $em->getRepository("Orcamentos\Model\Project")->createQueryBuilder('p')
+        $result = $this->em->getRepository("Orcamentos\Model\Project")->createQueryBuilder('p')
            ->where('p.company = :company')
            ->andWhere('p.name LIKE :query')
            ->setParameter('company', $company )
            ->setParameter('query', '%'. $data->query.'%')
            ->getQuery();
 
-        $em->flush();
+        $this->em->flush();
 
         return $result;
     }
@@ -94,24 +94,24 @@ class Project
      *
      * @return                Function used to save a new Private message
      */
-    public static function comment($data, $em)
+    public function comment($data)
     {
         $data = json_decode($data);
         if (!isset($data->note) || !isset($data->projectId) || !isset($data->userId)) {
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $project = $em->getRepository("Orcamentos\Model\Project")->find($data->projectId);
-        $user = $em->getRepository("Orcamentos\Model\User")->find($data->userId);
+        $project = $this->em->getRepository("Orcamentos\Model\Project")->find($data->projectId);
+        $user = $this->em->getRepository("Orcamentos\Model\User")->find($data->userId);
 
         $note = new PrivateNoteModel();
         $note->setProject($project);
         $note->setUser($user);
         $note->setNote($data->note);
         
-        $em->persist($note);
+        $this->em->persist($note);
 
-        $em->flush();
+        $this->em->flush();
 
         return $note;
     }
@@ -121,7 +121,7 @@ class Project
      *
      * @return                Function used to delete a Private message
      */
-    public static function removeComment($data, $em)
+    public function removeComment($data)
     {
         $data = json_decode($data);
 
@@ -129,11 +129,11 @@ class Project
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $note = $em->getRepository("Orcamentos\Model\PrivateNote")->find($data->noteId);
+        $note = $this->em->getRepository("Orcamentos\Model\PrivateNote")->find($data->noteId);
 
-        $em->remove($note);
+        $this->em->remove($note);
 
-        $em->flush();
+        $this->em->flush();
 
         return $note;
     }

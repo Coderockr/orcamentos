@@ -12,14 +12,14 @@ use Exception;
  * @package Service
  * @author  Mateus Guerra<mateus@coderockr.com>
  */
-class Resource
+class Resource extends Service
 {
     /**
      * Function that saves a new Resource
      *
      * @return                Function used to save a new Resource
      */
-    public static function save($data, $em)
+    public function save($data)
     {
         $data = json_decode($data);
 
@@ -27,10 +27,10 @@ class Resource
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $type = $em->getRepository("Orcamentos\Model\Type")->find($data->type);
+        $type = $this->em->getRepository("Orcamentos\Model\Type")->find($data->type);
         
         if ( $data->id ){
-            $resource = $em->getRepository("Orcamentos\Model\Resource")->find($data->id);
+            $resource = $this->em->getRepository("Orcamentos\Model\Resource")->find($data->id);
         } else {
             $resource = new ResourceModel();
         }
@@ -44,14 +44,14 @@ class Resource
             $resource->setEquipmentLife($data->equipmentLife);
         }
         
-        $company = $em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
+        $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
         
         if (isset($company)) {
             $resource->setCompany($company);
         }
 
-        $em->persist($resource);
-        $em->flush();
+        $this->em->persist($resource);
+        $this->em->flush();
 
         return $resource;
     }
@@ -61,7 +61,7 @@ class Resource
      *
      * @return                Function used to load the Resources
      */
-    public  function load($data, $em)
+    public function load($data)
     {
         $data = json_decode($data);
 
@@ -69,7 +69,7 @@ class Resource
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $company = $em->getRepository("Orcamentos\Model\Company")->find($data->companyId);
+        $company = $this->em->getRepository("Orcamentos\Model\Company")->find($data->companyId);
 
         $resources = $company->getResourceCollection();
 
