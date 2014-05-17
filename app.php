@@ -34,6 +34,7 @@ $app['swiftmailer.options'] = array(
 $app->before(function (Request $request) use ($app) {
     $requestUri = $request->getRequestUri();
 
+    //@mateusguerra: por favor arrume este código como vc fez abaixo!
     if ( $requestUri !== '/'  
         && $requestUri !== '/logout' 
         && $requestUri !== '/login' 
