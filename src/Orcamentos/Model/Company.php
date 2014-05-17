@@ -93,6 +93,13 @@ class Company extends Entity
      */
     protected $userCollection;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Plan", cascade={"persist", "merge", "refresh"}, inversedBy="companyCollection")
+     * 
+     * @var Plan
+     */
+    protected $plan;
+
     public function getName()
     {
         return $this->name;
