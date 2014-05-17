@@ -4,6 +4,7 @@ namespace Orcamentos\Service;
 
 use Orcamentos\Model\Client as ClientModel;
 use Intervention\Image\Image;
+use Exception;
   
 /**
  * Client Entity
@@ -12,14 +13,14 @@ use Intervention\Image\Image;
  * @package Service
  * @author  Mateus Guerra<mateus@coderockr.com>
  */
-class Client
+class Client extends Service
 {
     /**
      * Function that saves a new client
      *
      * @return                Function used to save a new Client
      */
-    public static function save($data, $logotype, $em)
+    public function save($data, $logotype = null)
     {
         $data = json_decode($data);
 
@@ -29,7 +30,7 @@ class Client
 
         $client = null;
         if ( isset($data->id) ) {
-            $client = $em->getRepository("Orcamentos\Model\Client")->find($data->id);
+            $client = $this->em->getRepository("Orcamentos\Model\Client")->find($data->id);
         }
 
         if (!$client) {
@@ -46,12 +47,13 @@ class Client
         if (isset($data->telephone)) {
             $client->setTelephone($data->telephone);
         }
-        $company = $em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
+        $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
         
-        if (isset($company)) {
-            $client->setCompany($company);
+        if (!isset($company)) {
+            throw new Exception("No company", 1);
         }
-        
+        $client->setCompany($company);
+
         if (isset($logotype)) {
             $originalName = $logotype->getClientOriginalName();
             $components = explode('.', $originalName);
@@ -63,8 +65,8 @@ class Client
             $client->setLogotype($fileName);
         }
 
-        $em->persist($client);
-        $em->flush();
+        $this->em->persist($client);
+        $this->em->flush();
 
         return $client;
     }
@@ -75,23 +77,23 @@ class Client
      *
      * @return                
      */
-    public static function search($data, $em)
+    public static function search($data)
     {
         $data = json_decode($data);
 
         if (!isset($data->query) || !isset($data->companyId)) {
             throw new Exception("Invalid Parameters", 1);
         }
-        $company = $em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
+        $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
 
-        $result = $em->getRepository("Orcamentos\Model\Client")->createQueryBuilder('c')
+        $result = $this->em->getRepository("Orcamentos\Model\Client")->createQueryBuilder('c')
            ->where('c.company = :company')
            ->andWhere('c.name LIKE :query')
            ->setParameter('company', $company )
            ->setParameter('query', '%'. $data->query.'%')
            ->getQuery();
 
-        $em->flush();
+        $this->em->flush();
 
         return $result;
     }
