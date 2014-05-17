@@ -105,7 +105,8 @@ class ClientController
 
     	$data = json_encode($data);
 		$clientService = new ClientService();
-		$client = $clientService->save($data, $logotype, $app['orm.em']);
+		$clientService->setEm($app['orm.em']);
+		$client = $clientService->save($data, $logotype);
 
 		return $app->redirect('/client/detail/' . $client->getId());
 	}
