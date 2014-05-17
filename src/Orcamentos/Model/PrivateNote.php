@@ -12,7 +12,7 @@ class PrivateNote extends Entity
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project", cascade={"persist", "merge", "refresh"})
+     * @ORM\ManyToOne(targetEntity="Project", cascade={"persist", "merge", "refresh"}, inversedBy="privateNotesCollection")
      * 
      * @var Project
      */
