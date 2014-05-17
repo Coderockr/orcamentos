@@ -1,5 +1,8 @@
 <?php
 
+$loader = require __DIR__.'/vendor/autoload.php';
+$loader->add('Orcamentos', __DIR__.'/src');
+
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Annotations\AnnotationRegistry;
@@ -27,9 +30,10 @@ $config->setMetadataCacheImpl($cache);
 
 $connectionOptions = array(
     'driver' => 'pdo_mysql',
-    'user' => 'root',
-    'password' => '',
-    'dbname' => 'orcamentos'
+    'user' => 'orcamentos',
+    'password' => 'orcamentos',
+    'dbname' => 'orcamentos',
+    'host' => '127.0.0.1'
 );
 
 $em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config);
