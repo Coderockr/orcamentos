@@ -55,7 +55,8 @@ class UserController
 
     	$data = json_encode($data);
 		$userService = new UserService();
-		$user = $userService->save($data, $app['orm.em']);
+		$userService->setEm($app['orm.em']);
+		$user = $userService->save($data);
 		return $app->redirect('/user');
 	}
 

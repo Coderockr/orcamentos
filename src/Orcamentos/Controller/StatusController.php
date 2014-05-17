@@ -23,7 +23,8 @@ class StatusController
 		$companyId = $app['session']->get('companyId');
 		$data = array('companyId' => $companyId);
 		$statusService = new StatusService();
-		$result = $statusService->getData(json_encode($data), $app['orm.em']);
+		$statusService->setEm($app['orm.em']);
+		$result = $statusService->getData(json_encode($data));
 
 		$awaiting = array_shift($result);
 		$aproved = array_shift($result);

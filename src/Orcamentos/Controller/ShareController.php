@@ -130,7 +130,8 @@ class ShareController
 		if ( count($data['email']) > 0 ){
 	    	$data = json_encode($data);
 			$shareService = new ShareService();
-			$emails = $shareService->save($data, $app['orm.em']);
+			$shareService->setEm($app['orm.em']);
+			$emails = $shareService->save($data);
 		}    	
 
 		return json_encode($emails);
@@ -142,7 +143,8 @@ class ShareController
 
     	$data = json_encode($data);
 		$shareService = new ShareService();
-		$note = $shareService->comment($data, $app['orm.em']);
+		$shareService->setEm($app['orm.em']);
+		$note = $shareService->comment($data);
 		$result = array( 'email' => $note->getShare()->getEmail(), 'comment' => $note->getNote(), 'id' => $note->getId());
 		return json_encode($result);
 	}
@@ -161,7 +163,8 @@ class ShareController
 		$data = $request->request->all();
     	$data = json_encode($data);
 		$shareService = new ShareService();
-		$email = $shareService->resend($data, $app['orm.em']);
+		$shareService->setEm($app['orm.em']);
+		$email = $shareService->resend($data);
 		
 		return json_encode($email);
 	}
@@ -187,7 +190,8 @@ class ShareController
 
     	$data = json_encode(array('noteId' => $noteId));
 		$shareService = new ShareService();
-		$note = $shareService->removeComment($data, $app['orm.em']);
+		$shareService->setEm($app['orm.em']);
+		$note = $shareService->removeComment($data);
 
 		return $app->redirect($_SERVER['HTTP_REFERER']);
 	}

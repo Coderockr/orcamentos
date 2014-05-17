@@ -49,7 +49,8 @@ class ProjectController
 		$data['companyId'] = $app['session']->get('companyId');
     	$data = json_encode($data);
 		$projectService = new ProjectService();
-		$query = $projectService->search($data, $app['orm.em']);
+		$projectService->setEm($app['orm.em']);
+		$query = $projectService->search($data);
 
 		$adapter = new DoctrineORMAdapter($query);
 		$pagerfanta = new Pagerfanta($adapter);
@@ -117,7 +118,8 @@ class ProjectController
     	$data = json_encode($data);
 
 		$projectService = new ProjectService();
-		$project = $projectService->save($data, $app['orm.em']);
+		$projectService->setEm($app['orm.em']);
+		$project = $projectService->save($data);
 		return $app->redirect('/project/detail/' . $project->getId() );
 	}
 
@@ -151,7 +153,8 @@ class ProjectController
 		$data = $request->request->all();
     	$data = json_encode($data);
 		$projectService = new ProjectService();
-		$note = $projectService->comment($data, $app['orm.em']);
+		$projectService->setEm($app['orm.em']);
+		$note = $projectService->comment($data);
 		$result = array(
 			'email'=> $note->getUser()->getEmail(),
 			'name' => $note->getUser()->getName(),
@@ -165,7 +168,8 @@ class ProjectController
 	{
     	$data = json_encode(array('noteId' => $noteId));
 		$projectService = new ProjectService();
-		$note = $projectService->removeComment($data, $app['orm.em']);
+		$projectService->setEm($app['orm.em']);
+		$note = $projectService->removeComment($data);
 		return $app->redirect('/project/detail/' . $note->getProject()->getId());
 	}
 }

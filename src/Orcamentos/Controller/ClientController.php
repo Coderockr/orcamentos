@@ -73,7 +73,8 @@ class ClientController
 		$data['companyId'] = $app['session']->get('companyId');
     	$data = json_encode($data);
 		$clientService = new ClientService();
-		$query = $clientService->search($data, $app['orm.em']);
+		$clientService->setEm($app['orm.em']);
+		$query = $clientService->search($data);
 
 		$adapter = new DoctrineORMAdapter($query);
 		$pagerfanta = new Pagerfanta($adapter);
