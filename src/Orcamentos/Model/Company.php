@@ -113,6 +113,13 @@ class Company
      */
     protected $userCollection;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Plan", inversedBy="companyCollection", cascade={"persist", "merge", "refresh"})
+     * 
+     * @var Plan
+     */
+    protected $plan;
+
     public function __construct()
     {
         $this->setCreated(date('Y-m-d H:i:s'));
@@ -237,6 +244,16 @@ class Company
     public function setResourceCollection($resourceCollection)
     {
         return $this->resourceCollection = $resourceCollection;
+    }
+
+    public function getPlan()
+    {
+        return $this->plan;
+    }
+    
+    public function setPlan($plan)
+    {
+        return $this->plan = $plan;
     }
 
     /**
