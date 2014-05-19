@@ -83,14 +83,4 @@ class Plan extends Entity
     {
         return $this->price = $price;
     }
-
-    public function getCompanyCollection()
-    {
-        return $this->companyCollection;
-    }
-    
-    public function setCompanyCollection($companyCollection)
-    {
-        return $this->companyCollection = $companyCollection;
-    }
 }
