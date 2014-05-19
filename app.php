@@ -34,11 +34,10 @@ $app['swiftmailer.options'] = array(
 $app->before(function (Request $request) use ($app) {
     $requestUri = $request->getRequestUri();
 
-    //@mateusguerra: por favor arrume este código como vc fez abaixo!
-    if ( $requestUri !== '/'  
-        && $requestUri !== '/logout' 
-        && $requestUri !== '/login' 
-        && stripos($requestUri, 'share') == false 
+    $allowedNotLoggedRoutes = array('','logout', 'login', 'share');
+    $route = explode('/', $requestUri);
+
+    if (!in_array($route[1], $allowedNotLoggedRoutes)
         && $app['session']->get('email') == null ) {
         return $app->redirect('/');
     }
@@ -46,7 +45,7 @@ $app->before(function (Request $request) use ($app) {
     $allowedAdminRoutes = array('','client', 'quote','user','company','share','status');
 
     $route = explode('/', $requestUri);
-    if( in_array($route[1], $allowedAdminRoutes) == true && $app['session']->get('email') != null && $app['session']->get('isAdmin') == false ) {
+    if(in_array($route[1], $allowedAdminRoutes) == true && $app['session']->get('email') != null && $app['session']->get('isAdmin') == false ) {
         return $app->redirect('/project');
     }
 
