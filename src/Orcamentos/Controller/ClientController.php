@@ -128,6 +128,6 @@ class ClientController
 		$em->remove($client);
 		$em->flush();
 
-		return $app->redirect($_SERVER['HTTP_REFERER']);
+		return $app->redirect('/client');
 	}
 }
