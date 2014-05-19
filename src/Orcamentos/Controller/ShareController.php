@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Orcamentos\Service\Share as ShareService;
 use Orcamentos\Model\View as ViewModel;
+use DateTime;
 
 class ShareController
 {
@@ -54,62 +55,18 @@ class ShareController
 		    return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
 		});
 
-		$day = date('d');
-		$month = date('m');
-		$year = date('Y');
+		$d = new DateTime($quote->getCreated());
+		$fmt = datefmt_create( "pt_BR" ,\IntlDateFormatter::LONG, \IntlDateFormatter::NONE,
+		    'America/Sao_Paulo', \IntlDateFormatter::GREGORIAN  );
 		
-		$monthName = null;
-
-		switch ($month) {
-			case '01':
-				$monthName = 'Janeiro';
-				break;
-
-			case '02':
-				$monthName = 'Fevereiro';
-				break;
-
-			case '03':
-				$monthName = 'Março';
-				break;
-
-			case '04':
-				$monthName = 'Abril';
-				break;
-
-			case '05':
-				$monthName = 'Maio';
-				break;
-
-			case '06':
-				$monthName = 'Junho';
-				break;
-
-			case '07':
-				$monthName = 'Julho';
-				break;
-
-			case '08':
-				$monthName = 'Agosto';
-				break;
-
-			case '09':
-				$monthName = 'Setembro';
-				break;
-
-			case '10':
-				$monthName = 'Outubro';
-				break;
-
-			case '11':
-				$monthName = 'Novembro';
-				break;
-
-			case '12':
-				$monthName = 'Dezembro';
-				break;
+		$city = '';
+		
+		if($quote->getProject()->getCompany()->getCity()){
+			$city = $quote->getProject()->getCompany()->getCity().', ';
 		}
-		$createdSignature = 'Joinville, ' . $day . ' de ' . $monthName . ' de ' . $year . '.';
+		
+		$createdSignature = $city . datefmt_format( $fmt , $d);
+
 		return $app['twig']->render('share/detail.twig',
 			array(
 				'quote' => $quote,
