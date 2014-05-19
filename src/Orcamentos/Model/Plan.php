@@ -7,29 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="Plan")
  */
-class Plan
+
+class Plan extends Entity
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     * @var integer
-     */
-    protected $id;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @var datetime
-     */
-    protected $created;
-
-    /**
-     * @ORM\Column(type="datetime",nullable=true)
-     * @var datetime
-     */
-    protected $updated;
-
-    /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string")
      *
      * @var string
      */
@@ -49,17 +31,18 @@ class Plan
      */
     private $quoteLimit;
 
+     /* @ORM\Column(type="text", nullable=true)
+     *
+     * @var text
+     */
+    private $description;
+    
     /**
      * @ORM\OneToMany(targetEntity="Company", mappedBy="plan", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
      * @var Doctrine\Common\Collections\Collection
      */
     protected $companyCollection;
-
-    public function __construct()
-    {
-        $this->setCreated(date('Y-m-d H:i:s'));
-    }
 
     public function getCompanyCollection()
     {
@@ -88,7 +71,7 @@ class Plan
     
     public function setName($name)
     {
-        return $this->name = $name;
+        return $this->name = filter_var($name, FILTER_SANITIZE_STRING);
     }
 
     public function getPrice()
@@ -101,32 +84,13 @@ class Plan
         return $this->price = $price;
     }
 
-    /**
-     * @return integer
-     */
-    public function getId()
+    public function getCompanyCollection()
     {
-        return $this->id;
-    }
-
-    public function getCreated()
-    {
-        return $this->created->format('Y-m-d H:i:s');
+        return $this->companyCollection;
     }
     
-    public function setCreated($created)
+    public function setCompanyCollection($companyCollection)
     {
-        $this->created = \DateTime::createFromFormat('Y-m-d H:i:s', $created);    
+        return $this->companyCollection = $companyCollection;
     }
-
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-    
-    public function setUpdated($updated)
-    {
-        $this->updated = \DateTime::createFromFormat('Y-m-d H:i:s', $updated);
-    }
-
 }

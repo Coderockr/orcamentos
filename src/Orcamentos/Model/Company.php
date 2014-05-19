@@ -7,28 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="Company")
  */
-class Company
+class Company extends Entity
 {
-
-    /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     * @var integer
-     */
-    protected $id;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @var datetime
-     */
-    protected $created;
-
-    /**
-     * @ORM\Column(type="datetime",nullable=true)
-     * @var datetime
-     */
-    protected $updated;
-
     /**
      * @ORM\Column(type="string")
      *
@@ -119,11 +99,6 @@ class Company
      * @var Plan
      */
     protected $plan;
-
-    public function __construct()
-    {
-        $this->setCreated(date('Y-m-d H:i:s'));
-    }
 
     public function getName()
     {
@@ -254,34 +229,6 @@ class Company
     public function setPlan($plan)
     {
         return $this->plan = $plan;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getCreated()
-    {
-        return $this->created->format('Y-m-d H:i:s');
-    }
-    
-    public function setCreated($created)
-    {
-        $this->created = \DateTime::createFromFormat('Y-m-d H:i:s', $created);    
-    }
-
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-    
-    public function setUpdated($updated)
-    {
-        $this->updated = \DateTime::createFromFormat('Y-m-d H:i:s', $updated);
     }
 
 }

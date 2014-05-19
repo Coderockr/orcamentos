@@ -8,27 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="Quote")
  */
-class Quote
+class Quote extends Entity
 {
-    /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     * @var integer
-     */
-    protected $id;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @var datetime
-     */
-    protected $created;
-
-    /**
-     * @ORM\Column(type="datetime",nullable=true)
-     * @var datetime
-     */
-    protected $updated;
-
     /**
      * @ORM\Column(type="datetime",nullable=true)
      * @var datetime
@@ -243,14 +224,6 @@ class Quote
         return $this->shareCollection = $shareCollection;
     }
 
-    /**
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
     public function getDueDate()
     {
         if ( !$this->dueDate ){
@@ -271,26 +244,6 @@ class Quote
         if (!$this->dueDate){
             $this->dueDate = \DateTime::createFromFormat('Y-m-d H:i:s', $dueDate);    
         }
-    }
-
-    public function getCreated()
-    {
-        return $this->created->format('Y-m-d H:i:s');
-    }
-    
-    public function setCreated($created)
-    {
-        $this->created = \DateTime::createFromFormat('Y-m-d H:i:s', $created);    
-    }
-
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-    
-    public function setUpdated($updated)
-    {
-        $this->updated = \DateTime::createFromFormat('Y-m-d H:i:s', $updated);
     }
 
 }

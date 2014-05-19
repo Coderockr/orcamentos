@@ -20,7 +20,8 @@ class ResourceController
     	$data = json_encode($data);
 
 		$resourceService = new ResourceService();
-		$resource = $resourceService->save($data, $app['orm.em']);
+		$resourceService->setEm($app['orm.em']);
+		$resource = $resourceService->save($data);
 
 		$result = array();
 		$result['name'] = $resource->getName();
@@ -38,7 +39,8 @@ class ResourceController
 		$data['companyId'] = $app['session']->get('companyId');
     	$data = json_encode($data);
 		$resourceService = new ResourceService();
-		$resources = $resourceService->load($data, $app['orm.em']);
+		$resourceService->setEm($app['orm.em']);
+		$resources = $resourceService->load($data);
 		return json_encode($resources);
 	}
 

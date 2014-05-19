@@ -34,6 +34,7 @@ $app['swiftmailer.options'] = array(
 $app->before(function (Request $request) use ($app) {
     $requestUri = $request->getRequestUri();
 
+    //@mateusguerra: por favor arrume este código como vc fez abaixo!
     if ( $requestUri !== '/'  
         && $requestUri !== '/logout' 
         && $requestUri !== '/login' 
@@ -132,8 +133,8 @@ $app->register(new DoctrineServiceProvider, array(
         'driver' => 'pdo_mysql',
         'host' => 'localhost',
         'port' => '3306',
-        'user' => 'root',
-        'password' => '',
+        'user' => 'orcamentos',
+        'password' => 'orcamentos',
         'dbname' => 'orcamentos'
     )
 ));

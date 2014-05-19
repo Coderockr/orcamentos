@@ -14,11 +14,11 @@ class IndexController
 		if ( !$app['session']->get('email')){
 			return $app['twig']->render('login.twig', array());
 		} 
-		$em = $app['orm.em'];
 		$companyId = $app['session']->get('companyId');
 		$data = array('companyId' => $companyId);
 		$dashboardService = new DashboardService();
-		$result = $dashboardService->getData(json_encode($data), $app['orm.em']);
+		$dashboardService->setEm($app['orm.em']);
+		$result = $dashboardService->getData(json_encode($data));
 
 		return $app['twig']->render('index/index.twig', array(
 			'result' => $result,

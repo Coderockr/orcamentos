@@ -11,14 +11,14 @@ use Exception;
  * @package Service
  * @author  Mateus Guerra<mateus@coderockr.com>
  */
-class Dashboard
+class Dashboard extends Service
 {
     /**
      * Function that gets the last 10 updates
      *
      * @return                
      */
-    public static function getData($data, $em)
+    public function getData($data)
     {
         $data = json_decode($data);
 
@@ -38,13 +38,13 @@ class Dashboard
         }
 
         $userNotes = array();
-        $query = $em->createQuery("SELECT pn FROM Orcamentos\Model\PrivateNote pn JOIN pn.project p JOIN p.company c WHERE c.id = ?1 ORDER BY pn.created DESC");
+        $query = $this->em->createQuery("SELECT pn FROM Orcamentos\Model\PrivateNote pn JOIN pn.project p JOIN p.company c WHERE c.id = ?1 ORDER BY pn.created DESC");
         $query->setParameter(1, $data->companyId);
         $query->setMaxResults($limit);
         $userNotes = $query->getResult();
 
         $clientNotes = array();
-        $query = $em->createQuery(
+        $query = $this->em->createQuery(
             "SELECT sn FROM Orcamentos\Model\ShareNote sn JOIN sn.share s JOIN s.quote q JOIN q.project p JOIN p.company c WHERE c.id = ?1 ORDER BY sn.created DESC"
         );
         $query->setParameter(1, $data->companyId);
@@ -52,7 +52,7 @@ class Dashboard
         $clientNotes = $query->getResult();
 
         $clientView = array();
-        $query = $em->createQuery(
+        $query = $this->em->createQuery(
             "SELECT v FROM Orcamentos\Model\View v JOIN v.share s JOIN s.quote q JOIN q.project p JOIN p.company c WHERE c.id = ?1 ORDER BY v.created DESC"
         );
         $query->setParameter(1, $data->companyId);

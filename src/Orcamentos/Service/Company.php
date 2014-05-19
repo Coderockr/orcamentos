@@ -13,14 +13,14 @@ use Exception;
  * @package Service
  * @author  Mateus Guerra<mateus@coderockr.com>
  */
-class Company
+class Company extends Service
 {
     /**
      * Function that saves a new company
      *
      * @return                Function used to save a new company
      */
-    public static function save($data, $logotype, $em)
+    public function save($data, $logotype)
     {
         $data = json_decode($data);
 
@@ -31,11 +31,11 @@ class Company
         $company = null;
 
         if (isset($data->companyId) ) {
-            $company = $em->getRepository("Orcamentos\Model\Company")->find($data->companyId);
+            $company = $this->em->getRepository("Orcamentos\Model\Company")->find($data->companyId);
         }
 
         if (!$company) {
-            $company = $em->getRepository("Orcamentos\Model\Company")->findOneBy(array('name' => $data->name));
+            $company = $this->em->getRepository("Orcamentos\Model\Company")->findOneBy(array('name' => $data->name));
             if ($company){
                 return $company;
             }
@@ -83,8 +83,8 @@ class Company
 
         try {
 
-            $em->persist($company);
-            $em->flush();
+            $this->em->persist($company);
+            $this->em->flush();
             return $company;
 
         } catch (Exception $e) {

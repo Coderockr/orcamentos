@@ -16,14 +16,14 @@ use Datetime;
  * @package Service
  * @author  Mateus Guerra<mateus@coderockr.com>
  */
-class Quote
+class Quote extends Service
 {
     /**
      * Function that saves a new Quote
      *
      * @return                Function used to save a new Quote
      */
-    public static function save($data, $em)
+    public function save($data)
     {
         $data = json_decode($data);
 
@@ -31,11 +31,11 @@ class Quote
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $project = $em->getRepository("Orcamentos\Model\Project")->find($data->projectId);
+        $project = $this->em->getRepository("Orcamentos\Model\Project")->find($data->projectId);
         
         $quote = null;
         if ( isset($data->id) ) {
-            $quote = $em->getRepository("Orcamentos\Model\Quote")->find($data->id);
+            $quote = $this->em->getRepository("Orcamentos\Model\Quote")->find($data->id);
         }
 
         if (!$quote) {
@@ -68,7 +68,7 @@ class Quote
         $quote->setPriceDescription($data->priceDescription);
         $quote->setPaymentType($data->paymentType);
 
-        $em->persist($quote);
+        $this->em->persist($quote);
 
         $quoteResourceCollection = $quote->getResourceQuoteCollection();
 
@@ -81,7 +81,7 @@ class Quote
         if(isset($data->quoteResource)){
             foreach ($data->quoteResource as $id => $amount) {
 
-                $resource = $em->getRepository("Orcamentos\Model\Resource")->find($id);
+                $resource = $this->em->getRepository("Orcamentos\Model\Resource")->find($id);
 
                 $quoteResource = new ResourceQuoteModel();
                 $quoteResource->setResource($resource);
@@ -89,13 +89,13 @@ class Quote
                 $quoteResource->setAmount($amount);
                 $quoteResource->setValue($resource->getCost());
 
-                $em->persist($quoteResource);
+                $this->em->persist($quoteResource);
 
                 $quoteResourceCollection->add($quoteResource);
             }
         }
 
-        $em->flush();
+        $this->em->flush();
 
         return $quote;
     }  
@@ -105,7 +105,7 @@ class Quote
      *
      * @return                A duplicate Quote
      */
-    public static function duplicate($data, $em)
+    public function duplicate($data)
     {
         $data = json_decode($data);
 
@@ -113,7 +113,7 @@ class Quote
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $quote = $em->getRepository("Orcamentos\Model\Quote")->find($data->quoteId);
+        $quote = $this->em->getRepository("Orcamentos\Model\Quote")->find($data->quoteId);
         
         if (!$quote) {
             throw new Exception("Orçamento não existe", 1);
@@ -132,7 +132,7 @@ class Quote
         $duplicate->setPriceDescription($quote->getPriceDescription());
         $duplicate->setPaymentType($quote->getPaymentType());
 
-        $em->persist($duplicate);
+        $this->em->persist($duplicate);
 
         $quoteResourceQuoteCollection = $quote->getResourceQuoteCollection();
         $duplicateResourceQuoteCollection = $quote->getResourceQuoteCollection();
@@ -148,13 +148,13 @@ class Quote
                 $quoteResource->setAmount($resourceQuote->getAmount());
                 $quoteResource->setValue($resource->getCost());
 
-                $em->persist($quoteResource);
+                $this->em->persist($quoteResource);
 
                 $duplicateResourceQuoteCollection->add($quoteResource);
             }
         }
 
-        $em->flush();
+        $this->em->flush();
 
         return $duplicate;
     }

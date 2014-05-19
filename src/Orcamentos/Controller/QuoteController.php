@@ -199,7 +199,8 @@ class QuoteController
 		$data['companyId'] = $app['session']->get('companyId');
     	$data = json_encode($data);
 		$quoteService = new QuoteService();
-		$quote = $quoteService->save($data, $app['orm.em']);
+		$quoteService->setEm($app['orm.em']);
+		$quote = $quoteService->save($data);
 		return $app->redirect('/quote/detail/' . $quote->getId());
 	}
 
@@ -305,7 +306,8 @@ class QuoteController
 		$data['quoteId'] = $quoteId;
     	$data = json_encode($data);
 		$quoteService = new QuoteService();
-		$duplicate = $quoteService->duplicate($data, $app['orm.em']);
+		$quoteService->setEm($app['orm.em']);
+		$duplicate = $quoteService->duplicate($data);
 
 		return $app->redirect($_SERVER['HTTP_REFERER']);
 	}

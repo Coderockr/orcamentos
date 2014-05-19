@@ -73,7 +73,8 @@ class ClientController
 		$data['companyId'] = $app['session']->get('companyId');
     	$data = json_encode($data);
 		$clientService = new ClientService();
-		$query = $clientService->search($data, $app['orm.em']);
+		$clientService->setEm($app['orm.em']);
+		$query = $clientService->search($data);
 
 		$adapter = new DoctrineORMAdapter($query);
 		$pagerfanta = new Pagerfanta($adapter);
@@ -105,7 +106,8 @@ class ClientController
 
     	$data = json_encode($data);
 		$clientService = new ClientService();
-		$client = $clientService->save($data, $logotype, $app['orm.em']);
+		$clientService->setEm($app['orm.em']);
+		$client = $clientService->save($data, $logotype);
 
 		return $app->redirect('/client/detail/' . $client->getId());
 	}
