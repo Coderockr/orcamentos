@@ -15,13 +15,15 @@ class AdminController
 		$data = $request->request->all();
 
 		if ( !isset($data['email']) || !isset($data['password'])) {
-			throw new Exception("Error Processing Request", 1);
+			$app['session']->getFlashBag()->add('message', 'Email e/ou senha inválidos!');
+			return $app->redirect('/');			
 		}
 
 		$user = $app['orm.em']->getRepository('Orcamentos\Model\User')->findOneBy(array( 'email' => $data['email'] ));
 		
 		if ( !$user ) {
-			throw new Exception("Error Processing Request", 1);
+			$app['session']->getFlashBag()->add('message', 'Usuário inválido!');
+			return $app->redirect('/');		
 		}
 
 		$bcrypt = new Bcrypt;
