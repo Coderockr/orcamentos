@@ -45,7 +45,7 @@ $app->before(function (Request $request) use ($app) {
     $allowedAdminRoutes = array('','client', 'quote','user','company','share','status');
 
     $route = explode('/', $requestUri);
-    if(in_array($route[1], $allowedAdminRoutes) == true && $app['session']->get('email') != null && $app['session']->get('isAdmin') == false ) {
+    if(in_array($route[1], $allowedAdminRoutes) && $app['session']->get('email') != null && $app['session']->get('isAdmin') == false ) {
         return $app->redirect('/project');
     }
 
