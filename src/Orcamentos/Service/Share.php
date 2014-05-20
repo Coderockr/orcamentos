@@ -25,6 +25,7 @@ class Share extends Service
     public function save($data)
     {
         $data = json_decode($data);
+
         if (!isset($data->email) || !isset($data->quoteId)) {
            return false;
        }
@@ -62,7 +63,7 @@ class Share extends Service
         try {
             $this->em->flush();
         } catch (Exception $e) {
-          echo $e->getMessage();
+            echo $e->getMessage();
         }
 
         $result = array();
@@ -86,7 +87,7 @@ class Share extends Service
         $data = json_decode($data);
 
         if (!isset($data->note) || !isset($data->shareId)) {
-            throw new Exception("Invalid Parameters", 1);
+            throw new Exception("Parâmetros inválidos", 1);
         }
 
         $share = $this->em->getRepository("Orcamentos\Model\Share")->find($data->shareId);
@@ -104,7 +105,7 @@ class Share extends Service
             return $note;
 
         } catch (Exception $e) {
-          echo $e->getMessage();
+            echo $e->getMessage();
         }
     }
 
@@ -118,7 +119,7 @@ class Share extends Service
         $data = json_decode($data);
 
         if (!isset($data->shareId) ) {
-            throw new Exception("Invalid Parameters", 1);
+            throw new Exception("Parâmetros inválidos", 1);
         }
 
         $share = $this->em->getRepository("Orcamentos\Model\Share")->find($data->shareId);
@@ -131,7 +132,7 @@ class Share extends Service
             return $share->getEmail();
             
         } catch (Exception $e) {
-          echo $e->getMessage();
+            echo $e->getMessage();
         }
     }
 
@@ -144,7 +145,7 @@ class Share extends Service
     public function sendEmails($limit, $app)
     {
         if (!isset($limit) ) {
-            throw new Exception("Invalid Parameters", 1);
+            throw new Exception("Parâmetros inválidos", 1);
         }
 
         $this->em = $app['orm.em'];
@@ -181,7 +182,7 @@ class Share extends Service
             $this->em->flush();
             return true;
         } catch (Exception $e) {
-          echo $e->getMessage();
+            echo $e->getMessage();
         }
     }
 
@@ -196,7 +197,7 @@ class Share extends Service
         $data = json_decode($data);
 
         if ( !isset($data->noteId)) {
-            throw new Exception("Invalid Parameters", 1);
+            throw new Exception("Parâmetros inválidos", 1);
         }
 
         $note = $this->em->getRepository("Orcamentos\Model\ShareNote")->find($data->noteId);

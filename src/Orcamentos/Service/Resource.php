@@ -56,7 +56,7 @@ class Resource extends Service
          
          } catch (Exception $e) {
          
-          echo $e->getMessage();
+            echo $e->getMessage();
         
         }
     }
