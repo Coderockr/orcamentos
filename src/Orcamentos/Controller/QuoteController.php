@@ -56,7 +56,6 @@ class QuoteController
 					};
 				}
 			}
-
 		}
 
 		$equipmentResources = array();
@@ -153,13 +152,7 @@ class QuoteController
 		}
 
 		if( count($shareNotesCollection) > 0 ) {
-			usort($shareNotesCollection, function ($a, $b)
-			{
-			    if ($a->getCreated() == $b->getCreated()) {
-			        return 0;
-			    }
-			    return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
-			});
+			usort($shareNotesCollection, 'sortCreated');
 		}
 		
 		switch ($quote->getStatus()) {
@@ -244,7 +237,6 @@ class QuoteController
 		);
 	}
 
-
 	public function duplicate(Request $request, Application $app, $quoteId)
 	{	
 		$quoteId = $request->get('quoteId');
@@ -262,4 +254,11 @@ class QuoteController
 		return $app->redirect($_SERVER['HTTP_REFERER']);
 	}
 
+	function sortCreated($a, $b) 
+	{
+	    if ($a->getCreated() == $b->getCreated()) {
+	        return 0;
+	    }
+	    return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
+	});
 }

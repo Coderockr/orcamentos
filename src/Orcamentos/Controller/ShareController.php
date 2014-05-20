@@ -19,12 +19,12 @@ class ShareController
 		}
 		
 		$share = $app['orm.em']->getRepository('Orcamentos\Model\Share')->findOneBy(array('hash'=> $hash));
-		
-		$shareId = $share->getId();
 
 		if (!$share){
 			$app->abort(404, "Compartilhamento não existente");
 		}
+
+		$shareId = $share->getId();
 
 		$view = new ViewModel();
 		$view->setShare($share);
@@ -59,13 +59,15 @@ class ShareController
 		$fmt = datefmt_create( "pt_BR" ,\IntlDateFormatter::LONG, \IntlDateFormatter::NONE,
 		    'America/Sao_Paulo', \IntlDateFormatter::GREGORIAN  );
 		
-		$city = '';
-		
-		if($quote->getProject()->getCompany()->getCity()){
-			$city = $quote->getProject()->getCompany()->getCity().', ';
+		$city = $quote->getProject()->getCompany()->getCity();
+
+		$cityName = '';
+
+		if($city){
+			$cityName = $city.', ';
 		}
 		
-		$createdSignature = $city . datefmt_format( $fmt , $d);
+		$createdSignature = $cityName . datefmt_format( $fmt , $d);
 
 		return $app['twig']->render('share/detail.twig',
 			array(

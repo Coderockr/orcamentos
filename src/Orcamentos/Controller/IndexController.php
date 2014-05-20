@@ -11,7 +11,7 @@ class IndexController
 {
 	public function index(Request $request, Application $app)
 	{
-		if ( !$app['session']->get('email')){
+		if ($app['session']->get('email') == null){
 			return $app['twig']->render('login.twig', array());
 		} 
 		$companyId = $app['session']->get('companyId');

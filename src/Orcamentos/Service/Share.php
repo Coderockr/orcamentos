@@ -178,10 +178,8 @@ class Share extends Service
         }
 
         try {
-               
             $this->em->flush();
             return true;
-            
         } catch (Exception $e) {
           echo $e->getMessage();
         }

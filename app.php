@@ -30,30 +30,22 @@ $app['swiftmailer.options'] = array(
     'auth_mode' => 'login'
 );
 
-$app->before(function (Request $request) use ($app) {
-    $requestUri = $request->getRequestUri();
-
-    $allowedNotLoggedRoutes = array('','logout', 'login', 'share');
-    $route = explode('/', $requestUri);
-
-    if (!in_array($route[1], $allowedNotLoggedRoutes)
-        && $app['session']->get('email') == null ) {
+$redirectUnlogged = function () use ($app) {
+    if ($app['session']->get('email') == null) {
         return $app->redirect('/');
     }
+};
 
-    $allowedAdminRoutes = array('','client', 'quote','user','company','share','status');
-
-    $route = explode('/', $requestUri);
-    if(in_array($route[1], $allowedAdminRoutes) && $app['session']->get('email') != null && $app['session']->get('isAdmin') == false ) {
+$redirectCommonUser = function () use ($redirectUnlogged, $app) {
+    if ($app['session']->get('email') && !$app['session']->get('isAdmin')){
         return $app->redirect('/project');
     }
-
-});
+};
 
 $app->error(function (\Exception $e, $code) use($app) {
     switch ($code) {
         case 404:
-            $message = $app['twig']->render('error404.twig', array('code'=>$code, 'message' => 'Página não encontrada.'));
+            $message = $app['twig']->render('error404.twig', array('code'=>$code, 'message' => $e->getMessage()));
             break;
         default:
             $message = $e->getMessage() . ' no arquivo ' . $e->getFile() . ', na linha: '. $e->getLine();
@@ -62,19 +54,51 @@ $app->error(function (\Exception $e, $code) use($app) {
     return new Response($message, $code);
 });
     
-// Group controllers by route
+/**
+ * Group controllers by route and adding before behaviour
+ */
+
 $index = $app['controllers_factory'];
+
 $status = $app['controllers_factory'];
+$status->before($redirectUnlogged);
+$status->before($redirectCommonUser);
+
 $client = $app['controllers_factory'];
+$client->before($redirectUnlogged);
+$client->before($redirectCommonUser);
+
 $user = $app['controllers_factory'];
+$user->before($redirectUnlogged);
+$user->before($redirectCommonUser);
+
 $project = $app['controllers_factory'];
+$project->before($redirectUnlogged);
+
 $company = $app['controllers_factory'];
+$company->before($redirectUnlogged);
+$company->before($redirectCommonUser);
+
 $quote = $app['controllers_factory'];
-$share = $app['controllers_factory'];
+$quote->before($redirectUnlogged);
+$quote->before($redirectCommonUser);
+
 $resource = $app['controllers_factory'];
+$resource->before($redirectUnlogged);
+$resource->before($redirectCommonUser);
+
+$share = $app['controllers_factory'];
+
+/**
+ * Setting the routes for each controller
+ */
 
 // Index controller Routes
 $index->get('/', 'Orcamentos\Controller\IndexController::index');
+
+//Admin Controller
+$app->post('/login', 'Orcamentos\Controller\AdminController::login');
+$app->get('/logout', 'Orcamentos\Controller\AdminController::logout');
 
 //Status controller Routes
 $status->get('/', 'Orcamentos\Controller\StatusController::index');
@@ -118,24 +142,31 @@ $quote->get('/delete/{quoteId}', 'Orcamentos\Controller\QuoteController::delete'
 $quote->get('/duplicate/{quoteId}', 'Orcamentos\Controller\QuoteController::duplicate');
 $quote->post('/create', 'Orcamentos\Controller\QuoteController::create');
 
-// Share Controller
-$share->get('/delete/{shareId}', 'Orcamentos\Controller\ShareController::delete');
-$share->post('/create', 'Orcamentos\Controller\ShareController::create');
-$share->post('/comment', 'Orcamentos\Controller\ShareController::comment');
-$share->get('/removeComment/{shareNoteId}', 'Orcamentos\Controller\ShareController::removeComment');
-$share->post('/resend', 'Orcamentos\Controller\ShareController::resend');
-$share->get('/sendEmails/{limit}', 'Orcamentos\Controller\ShareController::sendEmails')->value('limit', 10);
-$share->get('/{hash}', 'Orcamentos\Controller\ShareController::detail');
-
 //Resource Controller
 $resource->get('/', 'Orcamentos\Controller\ResourceController::index');
 $resource->post('/create', 'Orcamentos\Controller\ResourceController::create');
 $resource->get('/delete/{resourceId}', 'Orcamentos\Controller\ResourceController::delete');
 $resource->get('/get', 'Orcamentos\Controller\ResourceController::get');
 
-//Admin Controller
-$app->post('/login', 'Orcamentos\Controller\AdminController::login');
-$app->get('/logout', 'Orcamentos\Controller\AdminController::logout');
+// Share Controller ( Special case of before behaviour)
+$share->get('/delete/{shareId}', 'Orcamentos\Controller\ShareController::delete')
+    ->before($redirectUnlogged)
+    ->before($redirectCommonUser);
+$share->post('/create', 'Orcamentos\Controller\ShareController::create')
+    ->before($redirectUnlogged)
+    ->before($redirectCommonUser);
+$share->post('/resend', 'Orcamentos\Controller\ShareController::resend')
+    ->before($redirectUnlogged)
+    ->before($redirectCommonUser);
+$share->get('/sendEmails/{limit}', 'Orcamentos\Controller\ShareController::sendEmails')->value('limit', 10)
+    ->before($redirectUnlogged)
+    ->before($redirectCommonUser);
+    
+$share->post('/comment', 'Orcamentos\Controller\ShareController::comment');
+$share->get('/removeComment/{shareNoteId}', 'Orcamentos\Controller\ShareController::removeComment');
+$share->get('/{hash}', 'Orcamentos\Controller\ShareController::detail');
+
+
 
 $app->mount('/', $index);
 $app->mount('/status', $status);
