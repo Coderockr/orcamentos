@@ -96,6 +96,7 @@ class ClientController
 			)
 		);
 	}
+	
 	// Funcao usada para criar o cliente, via post
 	public function create(Request $request, Application $app)
 	{	

@@ -15,8 +15,8 @@ class Dashboard extends Service
 {
     /**
      * Function that gets the last 10 updates
-     *
-     * @return                
+     * @param                 array $data
+     * @return                array $updates
      */
     public function getData($data)
     {
@@ -59,9 +59,9 @@ class Dashboard extends Service
         $query->setMaxResults($limit);
         $clientViews = $query->getResult();
 
-        $result = array_merge($userNotes, $clientNotes, $clientViews);
+        $updates = array_merge($userNotes, $clientNotes, $clientViews);
 
-        usort($result, function ($a, $b)
+        usort($updates, function ($a, $b)
         {
             if ($a->getCreated() == $b->getCreated()) {
                 return 0;
@@ -69,8 +69,8 @@ class Dashboard extends Service
             return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
         });
 
-        $result = array_slice($result, 0, $limit);
+        $updates = array_slice($updates, 0, $limit);
 
-        return $result;
+        return $updates;
     }
 }

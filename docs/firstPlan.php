@@ -3,7 +3,8 @@ require_once '../app.php';
 
 use Orcamentos\Model\Plan;
 
-// php firstPlan.php "Plano beta" 49.90 10
+// php firstPlan.php "Plano beta" 49.90 null
+
 $em = $app['orm.em'];
 $alreadyDone = $em->getRepository('Orcamentos\Model\Plan')->findAll();
 

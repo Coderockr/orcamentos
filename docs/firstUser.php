@@ -4,9 +4,9 @@ require_once '../app.php';
 use Orcamentos\Service\Company as CompanyService;
 use Orcamentos\Service\User as UserService;
 
+// php firstUser.php "Coderockr" Elton 4933218080 exemplo@empresa.com Mateus 123456 mateus@coderockr.com
 
-// php firstUser.php Cacatua Jr. 4936478080 heh@huhu.com marcos 123123 marcos@huhu.com
-
+$em = $app['orm.em'];
 $companyName = $argv[1];
 $companyResponsable = $argv[2];
 $companyTelephone = $argv[3];
@@ -25,7 +25,9 @@ $companyData = array(
 
 $companyData = json_encode($companyData);
 $companyService = new CompanyService();
-$company = $companyService->save($companyData, null, $app['orm.em']);
+$companyService->setEm($em);
+$company = $companyService->save($companyData, null, $em);
+
 
 $userData = array(
 	'name' => $userName,
@@ -37,7 +39,7 @@ $userData = array(
 
 $userData = json_encode($userData);
 $userService = new UserService();
-
-$user = $userService->save($userData, $app['orm.em']);
+$userService->setEm($em);
+$user = $userService->save($userData, $em);
 
 return true;

@@ -17,8 +17,8 @@ class Client extends Service
 {
     /**
      * Function that saves a new client
-     *
-     * @return                Function used to save a new Client
+     * @param                 array $data, string $logotype
+     * @return                Orcamentos\Model\Client $client
      */
     public function save($data, $logotype = null)
     {
@@ -47,11 +47,13 @@ class Client extends Service
         if (isset($data->telephone)) {
             $client->setTelephone($data->telephone);
         }
+
         $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
         
         if (!isset($company)) {
-            throw new Exception("No company", 1);
+            throw new Exception("Empresa não encontrada", 1);
         }
+        
         $client->setCompany($company);
 
         if (isset($logotype)) {
@@ -65,17 +67,24 @@ class Client extends Service
             $client->setLogotype($fileName);
         }
 
-        $this->em->persist($client);
-        $this->em->flush();
+        try {
 
-        return $client;
+            $this->em->persist($client);
+            $this->em->flush();
+            return $client;
+
+        } catch (Exception $e) {
+
+          echo $e->getMessage();
+
+        }
     }
 
 
     /**
      * Function that searches clients
-     *
-     * @return                
+     * @param                 array $data
+     * @return                Query $result
      */
     public static function search($data)
     {

@@ -20,8 +20,8 @@ class Quote extends Service
 {
     /**
      * Function that saves a new Quote
-     *
-     * @return                Function used to save a new Quote
+     * @param                 array $data
+     * @return                Orcamentos\Model\Quote $quote
      */
     public function save($data)
     {
@@ -33,42 +33,65 @@ class Quote extends Service
 
         $project = $this->em->getRepository("Orcamentos\Model\Project")->find($data->projectId);
         
+        $quote->getQuote($data);
+
+        if(!$quote->getProject()){
+            $quote->setProject($project);
+        }
+
+        if(!$quote->getVersion()){
+            $quote->setVersion($data->version);
+        }
+
+        $quote->setStatus($data->status);
+        $quote->setPrivateNotes($data->privateNotes);
+        $quote->setProfit($data->profit);
+        $quote->setCommission($data->commission);
+        $quote->setDueDate($data->dueDate);
+        $quote->setTaxes($data->taxes);
+        $quote->setDeadline($data->deadline);
+        $quote->setPriceDescription($data->priceDescription);
+        $quote->setPaymentType($data->paymentType);
+       
+        $this->em->persist($quote);
+
+        $this->addResourceQuotes($data->quoteResource, $quote);
+
+        try {
+            $this->em->flush();
+            return $quote;
+        } catch (Exception $e) {
+          echo $e->getMessage();
+        }
+    }  
+
+    /**
+     * Function used to get a already saved or a new Quote Object
+     * @param                 array $data
+     * @return                Orcamentos\Model\Quote $quote
+     */
+    private function getQuote($data){
+
         $quote = null;
+
         if ( isset($data->id) ) {
             $quote = $this->em->getRepository("Orcamentos\Model\Quote")->find($data->id);
         }
 
         if (!$quote) {
             $quote = new QuoteModel();
-            $quote->setProject($project);
-            $quote->setVersion($data->version);
         }
 
-        $quote->setStatus($data->status);
+        return $quote;
+    }
 
-        $quote->setPrivateNotes($data->privateNotes);
-        
-        if(isset($data->profit)){
-            $quote->setProfit($data->profit);
-        }  
-
-        if(isset($data->commission)){
-            $quote->setCommission($data->commission);
-        }
-
-        if(isset($data->dueDate)){
-            $quote->setDueDate($data->dueDate);
-        }
-        
-        if(isset($data->taxes)){
-            $quote->setTaxes($data->taxes);
-        }
-
-        $quote->setDeadline($data->deadline);
-        $quote->setPriceDescription($data->priceDescription);
-        $quote->setPaymentType($data->paymentType);
-
-        $this->em->persist($quote);
+    /**
+     * Function used to add amounts of resources (Orcamentos\Model\ResourceQuote) to the quote
+     * @param                 array $resourceQuotes
+     * @param                 Orcamentos\Model\Quote $quote
+     * @return                void
+     */
+    public function addResourceQuotes($resourceQuotes, $quote){
 
         $quoteResourceCollection = $quote->getResourceQuoteCollection();
 
@@ -78,8 +101,8 @@ class Quote extends Service
 
         $quoteResourceCollection->clear();
 
-        if(isset($data->quoteResource)){
-            foreach ($data->quoteResource as $id => $amount) {
+        if(isset($resourceQuotes)){
+            foreach ($resourceQuotes as $id => $amount) {
 
                 $resource = $this->em->getRepository("Orcamentos\Model\Resource")->find($id);
 
@@ -94,16 +117,12 @@ class Quote extends Service
                 $quoteResourceCollection->add($quoteResource);
             }
         }
-
-        $this->em->flush();
-
-        return $quote;
-    }  
+    }
 
     /**
      * Function that duplicates a Quote
-     *
-     * @return                A duplicate Quote
+     * @param                 array $data
+     * @return                Orcamentos\Model\Quote $quote
      */
     public function duplicate($data)
     {
@@ -122,6 +141,7 @@ class Quote extends Service
         $duplicate = new QuoteModel();
         $duplicate->setProject($quote->getProject());
         $duplicate->setVersion(count($quote->getProject()->getQuoteCollection()) + 1);
+        
         $duplicate->setStatus($quote->getStatus());
         $duplicate->setPrivateNotes($quote->getPrivateNotes());
         $duplicate->setProfit($quote->getProfit());
@@ -134,28 +154,22 @@ class Quote extends Service
 
         $this->em->persist($duplicate);
 
-        $quoteResourceQuoteCollection = $quote->getResourceQuoteCollection();
-        $duplicateResourceQuoteCollection = $quote->getResourceQuoteCollection();
+        $resourceQuoteCollection = $quote->getResourceQuoteCollection();
 
-        if(isset($quoteResourceQuoteCollection)){
-            foreach ($quoteResourceQuoteCollection as $resourceQuote) {
+        $resources = array();
 
-                $resource = $resourceQuote->getResource();
-
-                $quoteResource = new ResourceQuoteModel();
-                $quoteResource->setResource($resource);
-                $quoteResource->setQuote($duplicate);
-                $quoteResource->setAmount($resourceQuote->getAmount());
-                $quoteResource->setValue($resource->getCost());
-
-                $this->em->persist($quoteResource);
-
-                $duplicateResourceQuoteCollection->add($quoteResource);
-            }
+        foreach ($resourceQuoteCollection as $resourceQuote){
+            $resource = $resourceQuote->getResource();
+            $resources[$resource->getId()] = $resourceQuote->getAmount();
         }
+        
+        $this->addResourceQuotes($resources, $duplicate);
 
-        $this->em->flush();
-
-        return $duplicate;
+        try {
+            $this->em->flush();
+            return $duplicate;
+        } catch (Exception $e) {
+          echo $e->getMessage();
+        }
     }
 }

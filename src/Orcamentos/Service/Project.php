@@ -17,8 +17,8 @@ class Project extends Service
 {
     /**
      * Function that saves a new Project
-     *
-     * @return                Function used to save a new Project
+     * @param                 array $data
+     * @return                Orcamentos\Model\Project $project
      */
     public function save($data)
     {
@@ -28,15 +28,7 @@ class Project extends Service
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $project = null;
-
-        if ( isset($data->id) ) {
-            $project = $this->em->getRepository("Orcamentos\Model\Project")->find($data->id);
-        }
-
-        if (!$project) {
-            $project = new ProjectModel();
-        }
+        $project = $this->getProject($data);
 
         $project->setName($data->name);
         $project->setTags($data->tags);
@@ -52,20 +44,50 @@ class Project extends Service
         
         $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
         
-        if (isset($company)) {
-            $project->setCompany($company);
+        if (!isset($company)) {
+            throw new Exception("Empresa não encontrada", 1);
+        }
+        
+        $project->setCompany($company);
+
+        try {
+
+            $this->em->persist($project);
+            $this->em->flush();
+            return $project;
+
+        } catch (Exception $e) {
+
+          echo $e->getMessage();
+
+        }
+    }
+
+    /**
+     * Function used to get a already saved or a new Project Object
+     * @param                 array $data
+     * @return                Orcamentos\Model\Project $project
+     */
+    private function getProject($data){
+
+        $project = null;
+
+        if ( isset($data->id) ) {
+            $project = $this->em->getRepository("Orcamentos\Model\Project")->find($data->id);
         }
 
-        $this->em->persist($project);
-        $this->em->flush();
+        if (!$project) {
+            $project = new ProjectModel();
+        }
 
         return $project;
     }
 
+
     /**
      * Function that searches projetcs
-     *
-     * @return                
+     * @param                 array $data
+     * @return                Query $query
      */
     public function search($data)
     {
@@ -76,7 +98,7 @@ class Project extends Service
         }
         $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
 
-        $result = $this->em->getRepository("Orcamentos\Model\Project")->createQueryBuilder('p')
+        $query = $this->em->getRepository("Orcamentos\Model\Project")->createQueryBuilder('p')
            ->where('p.company = :company')
            ->andWhere('p.name LIKE :query')
            ->setParameter('company', $company )
@@ -85,14 +107,14 @@ class Project extends Service
 
         $this->em->flush();
 
-        return $result;
+        return $query;
     }
 
 
     /**
      * Function that saves a new Private message
-     *
-     * @return                Function used to save a new Private message
+     * @param                 array $data
+     * @return                Orcamentos\Model\PrivateNote $note
      */
     public function comment($data)
     {
@@ -109,17 +131,23 @@ class Project extends Service
         $note->setUser($user);
         $note->setNote($data->note);
         
-        $this->em->persist($note);
+        try {
 
-        $this->em->flush();
+            $this->em->persist($note);
+            $this->em->flush();
+            return $note;
 
-        return $note;
+        } catch (Exception $e) {
+
+          echo $e->getMessage();
+
+        }
     }
 
     /**
      * Function that deletes a Private message 
-     *
-     * @return                Function used to delete a Private message
+     * @param                 array $data
+     * @return                Orcamentos\Model\PrivateNote $note
      */
     public function removeComment($data)
     {
@@ -131,10 +159,16 @@ class Project extends Service
 
         $note = $this->em->getRepository("Orcamentos\Model\PrivateNote")->find($data->noteId);
 
-        $this->em->remove($note);
+        try {
 
-        $this->em->flush();
+            $this->em->remove($note);
+            $this->em->flush();
+            return $note;
 
-        return $note;
+        } catch (Exception $e) {
+
+          echo $e->getMessage();
+
+        }
     }
 }

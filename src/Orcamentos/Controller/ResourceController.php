@@ -34,13 +34,13 @@ class ResourceController
 		return json_encode($result);
 	}
 
-	public function load(Request $request, Application $app)
+	public function get(Request $request, Application $app)
 	{	
 		$data['companyId'] = $app['session']->get('companyId');
     	$data = json_encode($data);
 		$resourceService = new ResourceService();
 		$resourceService->setEm($app['orm.em']);
-		$resources = $resourceService->load($data);
+		$resources = $resourceService->get($data);
 		return json_encode($resources);
 	}
 

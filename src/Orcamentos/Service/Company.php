@@ -17,8 +17,8 @@ class Company extends Service
 {
     /**
      * Function that saves a new company
-     *
-     * @return                Function used to save a new company
+     * @param                 array $data, string $logotype
+     * @return                Orcamentos\Model\Company $company
      */
     public function save($data, $logotype)
     {
@@ -28,22 +28,7 @@ class Company extends Service
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $company = null;
-
-        if (isset($data->companyId) ) {
-            $company = $this->em->getRepository("Orcamentos\Model\Company")->find($data->companyId);
-        }
-
-        if (!$company) {
-            $company = $this->em->getRepository("Orcamentos\Model\Company")->findOneBy(array('name' => $data->name));
-            if ($company){
-                return $company;
-            }
-        }
-
-        if (!$company) {
-            $company = new CompanyModel();
-        }
+        $company = $this->getCompany($data);
 
         $taxes = 6;
 
@@ -92,5 +77,32 @@ class Company extends Service
           echo $e->getMessage();
 
         }
+    }
+
+    /**
+     * Function used to get a already saved or a new Company Object
+     * @param                 array $data
+     * @return                Orcamentos\Model\Company $company
+     */
+    private function getCompany($data){
+
+        $company = null;
+
+        if (isset($data->companyId) ) {
+            $company = $this->em->getRepository("Orcamentos\Model\Company")->find($data->companyId);
+        }
+
+        if (!$company) {
+            $company = $this->em->getRepository("Orcamentos\Model\Company")->findOneBy(array('name' => $data->name));
+            if ($company){
+                return $company;
+            }
+        }
+
+        if (!$company) {
+            $company = new CompanyModel();
+        }
+
+        return $company;
     }
 }

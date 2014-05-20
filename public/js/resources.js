@@ -16,7 +16,7 @@ var resources = [];
 $(document).ready(function(){
 	$.ajax({
 		type: "GET",
-		url: "/resource/load",
+		url: "/resource/get",
 		dataType: "json",
 		success: function( dados )
 		{

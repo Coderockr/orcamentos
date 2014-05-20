@@ -30,7 +30,6 @@ $app['swiftmailer.options'] = array(
     'auth_mode' => 'login'
 );
 
-// where does the user want to go?
 $app->before(function (Request $request) use ($app) {
     $requestUri = $request->getRequestUri();
 
@@ -63,68 +62,90 @@ $app->error(function (\Exception $e, $code) use($app) {
     return new Response($message, $code);
 });
     
-// Index Controller / Dashboard
-$app->get('/', 'Orcamentos\Controller\IndexController::index');
+// Group controllers by route
+$index = $app['controllers_factory'];
+$status = $app['controllers_factory'];
+$client = $app['controllers_factory'];
+$user = $app['controllers_factory'];
+$project = $app['controllers_factory'];
+$company = $app['controllers_factory'];
+$quote = $app['controllers_factory'];
+$share = $app['controllers_factory'];
+$resource = $app['controllers_factory'];
 
-// Index Controller / Dashboard
-$app->get('/status', 'Orcamentos\Controller\StatusController::index');
+// Index controller Routes
+$index->get('/', 'Orcamentos\Controller\IndexController::index');
 
-// Client controller  
-$app->get('/client/edit/{clientId}', 'Orcamentos\Controller\ClientController::edit')->value( "clientId", null );
-$app->get('/client/detail/{clientId}', 'Orcamentos\Controller\ClientController::detail');
-$app->post('/client/create', 'Orcamentos\Controller\ClientController::create');
-$app->get('/client/search/{page}', 'Orcamentos\Controller\ClientController::search')->value('page', 1);
-$app->get('/client/delete/{clientId}', 'Orcamentos\Controller\ClientController::delete');
-$app->get('/client/{page}', 'Orcamentos\Controller\ClientController::index')->value('page', 1);
+//Status controller Routes
+$status->get('/', 'Orcamentos\Controller\StatusController::index');
 
-// User controller  
-$app->get('/user/edit/{userId}', 'Orcamentos\Controller\UserController::edit')->value( "userId", null );
-$app->get('/user/detail/{userId}', 'Orcamentos\Controller\UserController::detail');
-$app->post('/user/create', 'Orcamentos\Controller\UserController::create');
-$app->get('/user/delete/{userId}', 'Orcamentos\Controller\UserController::delete');
-$app->get('/user/{page}', 'Orcamentos\Controller\UserController::index')->value('page', 1);
+//Client Controller Routes
+$client->get('/edit/{clientId}', 'Orcamentos\Controller\ClientController::edit')->value( "clientId", null );
+$client->get('/detail/{clientId}', 'Orcamentos\Controller\ClientController::detail');
+$client->post('/create', 'Orcamentos\Controller\ClientController::create');
+$client->get('/search/{page}', 'Orcamentos\Controller\ClientController::search')->value('page', 1);
+$client->get('/delete/{clientId}', 'Orcamentos\Controller\ClientController::delete');
+$client->get('{page}', 'Orcamentos\Controller\ClientController::index')->value('page', 1);
+
+//User Controller Routes
+$user->get('/edit/{userId}', 'Orcamentos\Controller\UserController::edit')->value( "userId", null );
+$user->get('/detail/{userId}', 'Orcamentos\Controller\UserController::detail');
+$user->post('/create', 'Orcamentos\Controller\UserController::create');
+$user->get('/delete/{userId}', 'Orcamentos\Controller\UserController::delete');
+$user->get('/{page}', 'Orcamentos\Controller\UserController::index')->value('page', 1);
 
 // Project Controller
-$app->get('/project/edit/{projectId}', 'Orcamentos\Controller\ProjectController::edit')->value( "projectId", null );
-$app->get('/project/detail/{projectId}', 'Orcamentos\Controller\ProjectController::detail');
-$app->get('/project/delete/{projectId}', 'Orcamentos\Controller\ProjectController::delete');
-$app->get('/project/new/{clientId}', 'Orcamentos\Controller\ProjectController::edit');
-$app->get('/project/removeComment/{noteId}', 'Orcamentos\Controller\ProjectController::removeComment');
-$app->post('/project/create', 'Orcamentos\Controller\ProjectController::create');
-$app->post('/project/comment', 'Orcamentos\Controller\ProjectController::comment');
-$app->get('/project/search/{page}', 'Orcamentos\Controller\ProjectController::search')->value('page', 1);
-$app->get('/project/{page}', 'Orcamentos\Controller\ProjectController::index')->value('page', 1);
+$project->get('/edit/{projectId}', 'Orcamentos\Controller\ProjectController::edit')->value( "projectId", null );
+$project->get('/detail/{projectId}', 'Orcamentos\Controller\ProjectController::detail');
+$project->get('/delete/{projectId}', 'Orcamentos\Controller\ProjectController::delete');
+$project->get('/new/{clientId}', 'Orcamentos\Controller\ProjectController::edit');
+$project->get('/removeComment/{noteId}', 'Orcamentos\Controller\ProjectController::removeComment');
+$project->post('/create', 'Orcamentos\Controller\ProjectController::create');
+$project->post('/comment', 'Orcamentos\Controller\ProjectController::comment');
+$project->get('/search/{page}', 'Orcamentos\Controller\ProjectController::search')->value('page', 1);
+$project->get('{page}', 'Orcamentos\Controller\ProjectController::index')->value('page', 1);
 
 //Company Controller
-$app->get('/company', 'Orcamentos\Controller\CompanyController::edit');
-$app->post('/company/create', 'Orcamentos\Controller\CompanyController::create');
+$company->get('/', 'Orcamentos\Controller\CompanyController::edit');
+$company->post('/create', 'Orcamentos\Controller\CompanyController::create');
 
 //quote Controller
-$app->get('/quote/new/{projectId}', 'Orcamentos\Controller\QuoteController::edit');
-$app->get('/quote/edit/{quoteId}', 'Orcamentos\Controller\QuoteController::edit');
-$app->get('/quote/detail/{quoteId}', 'Orcamentos\Controller\QuoteController::detail');
-$app->get('/quote/preview/{quoteId}', 'Orcamentos\Controller\QuoteController::preview');
-$app->get('/quote/delete/{quoteId}', 'Orcamentos\Controller\QuoteController::delete');
-$app->get('/quote/duplicate/{quoteId}', 'Orcamentos\Controller\QuoteController::duplicate');
-$app->post('/quote/create', 'Orcamentos\Controller\QuoteController::create');
+$quote->get('/new/{projectId}', 'Orcamentos\Controller\QuoteController::edit');
+$quote->get('/edit/{quoteId}', 'Orcamentos\Controller\QuoteController::edit');
+$quote->get('/detail/{quoteId}', 'Orcamentos\Controller\QuoteController::detail');
+$quote->get('/preview/{quoteId}', 'Orcamentos\Controller\QuoteController::preview');
+$quote->get('/delete/{quoteId}', 'Orcamentos\Controller\QuoteController::delete');
+$quote->get('/duplicate/{quoteId}', 'Orcamentos\Controller\QuoteController::duplicate');
+$quote->post('/create', 'Orcamentos\Controller\QuoteController::create');
 
 // Share Controller
-$app->get('/share/delete/{shareId}', 'Orcamentos\Controller\ShareController::delete');
-$app->post('/share/create', 'Orcamentos\Controller\ShareController::create');
-$app->post('/share/comment', 'Orcamentos\Controller\ShareController::comment');
-$app->get('/share/removeComment/{shareNoteId}', 'Orcamentos\Controller\ShareController::removeComment');
-$app->post('/share/resend', 'Orcamentos\Controller\ShareController::resend');
-$app->get('/share/sendEmails/{limit}', 'Orcamentos\Controller\ShareController::sendEmails')->value('limit', 10);
-$app->get('/share/{hash}', 'Orcamentos\Controller\ShareController::detail');
+$share->get('/delete/{shareId}', 'Orcamentos\Controller\ShareController::delete');
+$share->post('/create', 'Orcamentos\Controller\ShareController::create');
+$share->post('/comment', 'Orcamentos\Controller\ShareController::comment');
+$share->get('/removeComment/{shareNoteId}', 'Orcamentos\Controller\ShareController::removeComment');
+$share->post('/resend', 'Orcamentos\Controller\ShareController::resend');
+$share->get('/sendEmails/{limit}', 'Orcamentos\Controller\ShareController::sendEmails')->value('limit', 10);
+$share->get('/{hash}', 'Orcamentos\Controller\ShareController::detail');
 
 //Resource Controller
-$app->post('/resource/create', 'Orcamentos\Controller\ResourceController::create');
-$app->get('/resource/delete/{resourceId}', 'Orcamentos\Controller\ResourceController::delete');
-$app->get('/resource/load', 'Orcamentos\Controller\ResourceController::load');
+$resource->get('/', 'Orcamentos\Controller\ResourceController::index');
+$resource->post('/create', 'Orcamentos\Controller\ResourceController::create');
+$resource->get('/delete/{resourceId}', 'Orcamentos\Controller\ResourceController::delete');
+$resource->get('/get', 'Orcamentos\Controller\ResourceController::get');
 
 //Admin Controller
 $app->post('/login', 'Orcamentos\Controller\AdminController::login');
 $app->get('/logout', 'Orcamentos\Controller\AdminController::logout');
+
+$app->mount('/', $index);
+$app->mount('/status', $status);
+$app->mount('/client', $client);
+$app->mount('/user', $user);
+$app->mount('/project', $project);
+$app->mount('/company', $company);
+$app->mount('/quote', $quote);
+$app->mount('/share', $share);
+$app->mount('/resource', $resource);
 
 //getting the EntityManager
 $app->register(new DoctrineServiceProvider, array(
@@ -132,8 +153,8 @@ $app->register(new DoctrineServiceProvider, array(
         'driver' => 'pdo_mysql',
         'host' => 'localhost',
         'port' => '3306',
-        'user' => 'orcamentos',
-        'password' => 'orcamentos',
+        'user' => 'root',
+        'password' => '',
         'dbname' => 'orcamentos'
     )
 ));
@@ -153,4 +174,3 @@ $app->register(new DoctrineOrmServiceProvider(), array(
     'orm.proxies_namespace' => 'EntityProxy',
     'orm.auto_generate_proxies' => true
 ));
-

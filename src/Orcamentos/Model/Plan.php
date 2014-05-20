@@ -18,20 +18,20 @@ class Plan extends Entity
     private $name;
 
     /**
-     * @ORM\Column(type="float", nullable=false )
+     * @ORM\Column(type="float", nullable=true )
      *
      * @var float
      */
     private $price;
 
     /**
-     * @ORM\Column(type="integer", nullable=false )
+     * @ORM\Column(type="integer", nullable=true )
      *
      * @var integer
      */
     private $quoteLimit;
 
-     /* @ORM\Column(type="text", nullable=true)
+     /* @ORM\Column(type="text", nullable=false)
      *
      * @var text
      */

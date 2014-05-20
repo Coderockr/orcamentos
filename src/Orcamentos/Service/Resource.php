@@ -16,24 +16,20 @@ class Resource extends Service
 {
     /**
      * Function that saves a new Resource
-     *
-     * @return                Function used to save a new Resource
+     * @param                 array $data
+     * @return                Orcamentos\Model\Resource $resource
      */
     public function save($data)
     {
         $data = json_decode($data);
 
         if (!isset($data->name) || !isset($data->cost) || !isset($data->type) || !isset($data->companyId)) {
-            throw new Exception("Invalid Parameters", 1);
+            throw new Exception("Parâmetros inválidos", 1);
         }
 
         $type = $this->em->getRepository("Orcamentos\Model\Type")->find($data->type);
         
-        if ( $data->id ){
-            $resource = $this->em->getRepository("Orcamentos\Model\Resource")->find($data->id);
-        } else {
-            $resource = new ResourceModel();
-        }
+        $resource = $this->getResource($data);
 
         $resource->setName($data->name);
         $data->cost = str_replace(',', '.', $data->cost);
@@ -46,22 +42,52 @@ class Resource extends Service
         
         $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
         
-        if (isset($company)) {
-            $resource->setCompany($company);
+        if (!isset($company)) {
+            throw new Exception("Empresa não encontrada", 1);
         }
 
-        $this->em->persist($resource);
-        $this->em->flush();
+        $resource->setCompany($company);
+        
+        try {
+
+            $this->em->persist($resource);
+            $this->em->flush();
+            return $resource;
+         
+         } catch (Exception $e) {
+         
+          echo $e->getMessage();
+        
+        }
+    }
+
+    /**
+     * Function used to get a already saved or a new Resource Object
+     * @param                 array $data
+     * @return                Orcamentos\Model\Resource $resource
+     */
+    private function getResource($data){
+
+        $resource = null;
+
+        if ( isset($data->id) ) {
+            $resource = $this->em->getRepository("Orcamentos\Model\Resource")->find($data->id);
+        }
+
+        if (!$resource) {
+            $resource = new ResourceModel();
+        }
 
         return $resource;
     }
 
+
     /**
-     * Function thatloads a company resources
-     *
-     * @return                Function used to load the Resources
+     * Function that gets a company resources
+     * @param                 array $data
+     * @return                array
      */
-    public function load($data)
+    public function get($data)
     {
         $data = json_decode($data);
 

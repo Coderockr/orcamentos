@@ -19,8 +19,8 @@ class Share extends Service
 {
     /**
      * Function that saves a new Share
-     *
-     * @return                Function used to save a new Share
+     * @param                 array $data
+     * @return                array $result
      */
     public function save($data)
     {
@@ -58,8 +58,12 @@ class Share extends Service
                 $shares[] = $share;
             } 
         }
-
-        $this->em->flush();
+        
+        try {
+            $this->em->flush();
+        } catch (Exception $e) {
+          echo $e->getMessage();
+        }
 
         $result = array();
         foreach ($shares as $key => $share) {
@@ -91,11 +95,17 @@ class Share extends Service
         $note->setShare($share);
         $note->setNote($data->note);
         
-        $this->em->persist($note);
+        try {
+               
+            $this->em->persist($note);
 
-        $this->em->flush();
+            $this->em->flush();
 
-        return $note;
+            return $note;
+
+        } catch (Exception $e) {
+          echo $e->getMessage();
+        }
     }
 
     /**
@@ -113,10 +123,16 @@ class Share extends Service
 
         $share = $this->em->getRepository("Orcamentos\Model\Share")->find($data->shareId);
         $share->setSent(0);
-        $this->em->persist($share);
-        $this->em->flush();
 
-        return $share->getEmail();
+        try {
+               
+            $this->em->persist($share);
+            $this->em->flush();
+            return $share->getEmail();
+            
+        } catch (Exception $e) {
+          echo $e->getMessage();
+        }
     }
 
 
@@ -161,16 +177,21 @@ class Share extends Service
 
         }
 
-        $this->em->flush();
-        
-        return true;
+        try {
+               
+            $this->em->flush();
+            return true;
+            
+        } catch (Exception $e) {
+          echo $e->getMessage();
+        }
     }
 
 
     /**
      * Function that deletes a Private message 
      *
-     * @return                Function used to delete a Private message
+     * @return                Orcamentos\Model\ShareNote $note
      */
     public function removeComment($data)
     {
@@ -182,10 +203,16 @@ class Share extends Service
 
         $note = $this->em->getRepository("Orcamentos\Model\ShareNote")->find($data->noteId);
 
-        $this->em->remove($note);
+        try {
 
-        $this->em->flush();
+            $this->em->remove($note);
 
-        return $note;
+            $this->em->flush();
+
+            return $note;
+            
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 }

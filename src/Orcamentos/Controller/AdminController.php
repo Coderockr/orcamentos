@@ -49,11 +49,7 @@ class AdminController
 
 	public function logout(Request $request, Application $app)
 	{
-		$app['session']->set('email', null);
-		$app['session']->set('isAdmin', null);
-		$app['session']->set('companyId', null);
-		$app['session']->set('companyLogotype', null);
-		$app['session']->set('companyName', null);
+		$app['session']->clear();
 		
 		return $app->redirect('/');		
 	}

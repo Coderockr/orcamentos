@@ -17,8 +17,8 @@ class User extends Service
 {
     /**
      * Function that saves a new User
-     *
-     * @return                Function used to save a new User
+     * @param                 array $data
+     * @return                Orcamentos\Model\User $user
      */
     public function save($data)
     {
@@ -28,14 +28,7 @@ class User extends Service
             throw new Exception("Invalid Parameters", 1);
         }
 
-        $user = null;
-        if ( isset($data->id) ) {
-            $user = $this->em->getRepository("Orcamentos\Model\User")->find($data->id);
-        }
-
-        if (!$user) {
-            $user = new UserModel();
-        }
+        $user = $this->getUser($data);
 
         $user->setName($data->name);
         $user->setEmail($data->email);
@@ -58,9 +51,12 @@ class User extends Service
 
         $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
 
-        if (isset($company)) {
-            $user->setCompany($company);
+        if (!isset($company)) {
+            throw new Exception("Empresa não encontrada", 1);
         }
+        
+        $user->setCompany($company);
+
         try {
             $this->em->persist($user);
             $this->em->flush();
@@ -68,5 +64,31 @@ class User extends Service
         } catch (Exception $e) {
           echo $e->getMessage();
         }
+    }
+
+    /**
+     * Function used to get a already saved or a new User Object
+     * @param                 array $data
+     * @return                Orcamentos\Model\User $user
+     */
+    private function getUser($data){
+
+        $user = null;
+
+        $user = $this->em->getRepository("Orcamentos\Model\User")->findOneBy(array('email' => $data->email));
+
+        if ($user){
+            throw new Exception("Usuário com este email já cadastrado", 1);
+        }
+
+        if ( isset($data->id) ) {
+            $user = $this->em->getRepository("Orcamentos\Model\User")->find($data->id);
+        }
+
+        if (!$user) {
+            $user = new UserModel();
+        }
+
+        return $user;
     }
 }

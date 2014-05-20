@@ -15,10 +15,10 @@ class Status extends Service
 {
     /**
      * Function that gets the Quotes from the company
-     *
-     * @return                
+     * @param                 array $data
+     * @return                array $data
      */
-    public function getData($data)
+    public function get($data)
     {
         $data = json_decode($data);
 
@@ -59,9 +59,8 @@ class Status extends Service
             }
         }
 
-        $result = array( 'awaiting' => $awaiting, 'aproved' => $aproved, 'nonAproved' => $nonAproved );
-        
+        $data = array( 'awaiting' => $awaiting, 'aproved' => $aproved, 'nonAproved' => $nonAproved );
 
-        return $result;
+        return $data;
     }
 }
