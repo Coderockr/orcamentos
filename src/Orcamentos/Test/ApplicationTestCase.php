@@ -49,7 +49,7 @@ class ApplicationTestCase extends PHPUnit_Framework_TestCase
                 return true;
             }))
             ->andReturnUsing(function() use (&$entity) {
-                if ($entity == '\CodeSquad\Model\User')
+                if ($entity == '\Orcamentos\Model\User')
                     return null;
                 return new $entity();
             })->byDefault();

@@ -30,6 +30,7 @@ $app['swiftmailer.options'] = array(
     'auth_mode' => 'login'
 );
 
+
 $redirectUnlogged = function () use ($app) {
     if ($app['session']->get('email') == null) {
         return $app->redirect('/');
@@ -54,6 +55,13 @@ $app->error(function (\Exception $e, $code) use($app) {
     return new Response($message, $code);
 });
     
+$app['sortCreated'] = $app->protect(function ($a, $b) {
+    if ($a->getCreated() == $b->getCreated()) {
+        return 0;
+    }
+    return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
+});
+
 /**
  * Group controllers by route and adding before behaviour
  */
@@ -166,8 +174,6 @@ $share->post('/comment', 'Orcamentos\Controller\ShareController::comment');
 $share->get('/removeComment/{shareNoteId}', 'Orcamentos\Controller\ShareController::removeComment');
 $share->get('/{hash}', 'Orcamentos\Controller\ShareController::detail');
 
-
-
 $app->mount('/', $index);
 $app->mount('/status', $status);
 $app->mount('/client', $client);
@@ -184,8 +190,8 @@ $app->register(new DoctrineServiceProvider, array(
         'driver' => 'pdo_mysql',
         'host' => 'localhost',
         'port' => '3306',
-        'user' => 'root',
-        'password' => '',
+        'user' => 'orcamentos',
+        'password' => 'orcamentos',
         'dbname' => 'orcamentos'
     )
 ));

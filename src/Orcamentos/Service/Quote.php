@@ -33,7 +33,7 @@ class Quote extends Service
 
         $project = $this->em->getRepository("Orcamentos\Model\Project")->find($data->projectId);
         
-        $quote->getQuote($data);
+        $quote = $this->getQuote($data);
 
         if(!$quote->getProject()){
             $quote->setProject($project);

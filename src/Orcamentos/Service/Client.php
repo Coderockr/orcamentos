@@ -25,7 +25,7 @@ class Client extends Service
         $data = json_decode($data);
 
         if (!isset($data->name) || !isset($data->responsable) || !isset($data->email) || !isset($data->companyId)) {
-            throw new Exception("Invalid Parameters", 1);
+            throw new Exception("Parâmetros inválidos", 1);
         }
 
         $client = null;
@@ -91,7 +91,7 @@ class Client extends Service
         $data = json_decode($data);
 
         if (!isset($data->query) || !isset($data->companyId)) {
-            throw new Exception("Invalid Parameters", 1);
+            throw new Exception("Parâmetros inválidos", 1);
         }
         $company = $this->em->getRepository('Orcamentos\Model\Company')->find($data->companyId);
 

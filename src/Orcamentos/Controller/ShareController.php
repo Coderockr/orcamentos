@@ -47,27 +47,11 @@ class ShareController
 			}
 		}
 
-		usort($shareNotesCollection, function ($a, $b)
-		{
-		    if ($a->getCreated() == $b->getCreated()) {
-		        return 0;
-		    }
-		    return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
-		});
+		usort($shareNotesCollection, $app['sortCreated']);
 
-		$d = new DateTime($quote->getCreated());
-		$fmt = datefmt_create( "pt_BR" ,\IntlDateFormatter::LONG, \IntlDateFormatter::NONE,
-		    'America/Sao_Paulo', \IntlDateFormatter::GREGORIAN  );
-		
 		$city = $quote->getProject()->getCompany()->getCity();
-
-		$cityName = '';
-
-		if($city){
-			$cityName = $city.', ';
-		}
 		
-		$createdSignature = $cityName . datefmt_format( $fmt , $d);
+		$createdSignature = $this->createdSignature($quote->getCreated(), $city);
 
 		return $app['twig']->render('share/detail.twig',
 			array(
@@ -154,4 +138,20 @@ class ShareController
 
 		return $app->redirect($_SERVER['HTTP_REFERER']);
 	}
+
+	private function createdSignature($created, $city)
+	{
+		$d = new DateTime($created);
+		$fmt = datefmt_create( "pt_BR" ,\IntlDateFormatter::LONG, \IntlDateFormatter::NONE,
+		    'America/Sao_Paulo', \IntlDateFormatter::GREGORIAN  );
+		
+		$cityName = '';
+
+		if($city){
+			$cityName = $city.', ';
+		}
+
+		return $cityName . datefmt_format( $fmt , $d);
+	}
+
 }

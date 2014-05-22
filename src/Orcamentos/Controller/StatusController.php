@@ -9,13 +9,6 @@ use Orcamentos\Service\Status as StatusService;
 
 class StatusController
 {
-	function sort ($a, $b)
-    {
-        if ($a->getCreated() == $b->getCreated()) {
-            return 0;
-        }
-        return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
-    }
 
 	public function index(Request $request, Application $app)
 	{
@@ -29,10 +22,12 @@ class StatusController
 		$awaiting = array_shift($result);
 		$aproved = array_shift($result);
 		$nonAproved = array_shift($result);
+		
+		$sortCreated = $app['sortCreated'];
 
-		usort($awaiting, "sort" );
-		usort($aproved, "sort" );
-		usort($nonAproved, "sort" );
+		usort($awaiting, $app['sortCreated'] );
+		usort($aproved, $app['sortCreated'] );
+		usort($nonAproved, $app['sortCreated'] );
         
 		return $app['twig']->render('status/index.twig', array(
 			'awaiting' => $awaiting,

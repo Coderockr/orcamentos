@@ -100,6 +100,7 @@ class QuoteController
 	public function detail(Request $request, Application $app, $quoteId)
 	{	
 		$resourceCollection = null;
+		
 		if ( !isset($quoteId) ) {
 			throw new Exception("Parâmetros inválidos", 1);
 		}
@@ -108,37 +109,12 @@ class QuoteController
 
 		$resourceCollection = $quote->getResourceQuoteCollection();
 
-		$cost = 0;
-		$profit = 0;
-		$commission = 0;
-		$taxes = 0;
+		$result = $this->quoteCalculateCost($quote);
 
-		foreach ($resourceCollection as $resourceQuote) {
-			$cost = $cost + ($resourceQuote->getValue() * $resourceQuote->getAmount());
-		}
-
-		if ( $quote->getProfit()) {
-			$profit = $quote->getProfit() / 100;
-		}	
-
-		if ( $quote->getCommission()) {
-			$commission = $quote->getCommission() / 100;
-		}	
-
-		if ( $quote->getTaxes()) {
-			$taxes = $quote->getTaxes() / 100;
-		}
-
-		$final = $cost + 1;
-		$finalProfit = (($final - $cost) / $final); //calculo de quantos % de lucro
-		while($finalProfit < $profit) {
-			$tempCost = $cost + ($final * $commission) + ($final * $taxes);
-			$final++;
-			if ($final < $tempCost) {	
-				continue;
-			}
-			$finalProfit = (($final - $tempCost) / $final);
-		}
+		$final = $result['final'];
+		$commission = $result['commission'];
+		$profit = $result['profit'];
+		$taxes = $result['taxes'];
 
 		$shareCollection = $quote->getShareCollection();
 		
@@ -152,7 +128,7 @@ class QuoteController
 		}
 
 		if( count($shareNotesCollection) > 0 ) {
-			usort($shareNotesCollection, 'sortCreated');
+			usort($shareNotesCollection, $app['sortCreated']);
 		}
 		
 		switch ($quote->getStatus()) {
@@ -186,6 +162,49 @@ class QuoteController
 			)
 		);
 	}
+
+	private function quoteCalculateCost($quote){
+
+		$cost = 0;
+		$profit = 0;
+		$commission = 0;
+		$taxes = 0;
+
+		foreach ($quote->getResourceQuoteCollection() as $resourceQuote) {
+			$cost = $cost + ($resourceQuote->getValue() * $resourceQuote->getAmount());
+		}
+
+		if ( $quote->getProfit()) {
+			$profit = $quote->getProfit() / 100;
+		}	
+
+		if ( $quote->getCommission()) {
+			$commission = $quote->getCommission() / 100;
+		}	
+
+		if ( $quote->getTaxes()) {
+			$taxes = $quote->getTaxes() / 100;
+		}
+
+		$final = $cost + 1;
+		$finalProfit = (($final - $cost) / $final); //calculo de quantos % de lucro
+		while($finalProfit < $profit) {
+			$tempCost = $cost + ($final * $commission) + ($final * $taxes);
+			$final++;
+			if ($final < $tempCost) {	
+				continue;
+			}
+			$finalProfit = (($final - $tempCost) / $final);
+		}
+
+		return array( 
+			'final' => $final, 
+			'commission' => $commission, 
+			'profit' => $profit, 
+			'taxes' => $taxes
+		);
+	}
+
 
 	public function create(Request $request, Application $app)
 	{	
@@ -254,11 +273,4 @@ class QuoteController
 		return $app->redirect($_SERVER['HTTP_REFERER']);
 	}
 
-	function sortCreated($a, $b) 
-	{
-	    if ($a->getCreated() == $b->getCreated()) {
-	        return 0;
-	    }
-	    return ($a->getCreated()  < $b->getCreated() ) ? 1 : -1;
-	});
 }

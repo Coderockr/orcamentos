@@ -236,13 +236,8 @@ class Quote extends Entity
     public function setDueDate($dueDate)
     {
         $this->dueDate = null;
-        
         if ($dueDate != null){
-            $this->dueDate = \DateTime::createFromFormat('d/m/Y', $dueDate);    
-        }
-
-        if (!$this->dueDate){
-            $this->dueDate = \DateTime::createFromFormat('Y-m-d H:i:s', $dueDate);    
+            $this->dueDate = \DateTime::createFromFormat('d/m/Y', $dueDate); 
         }
     }
 
