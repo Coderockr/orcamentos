@@ -20,6 +20,7 @@ class UserController
 
 		$adapter = new DoctrineCollectionAdapter($users);
 		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setMaxPerPage(9);
 		$pagerfanta->setCurrentPage($page);
 		$view = new TwitterBootstrap3View();
 		$routeGenerator = function($page) use ($app) {

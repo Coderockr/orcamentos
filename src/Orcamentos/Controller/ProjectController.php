@@ -23,7 +23,8 @@ class ProjectController
 
 		$adapter = new DoctrineCollectionAdapter($projects);
 		$pagerfanta = new Pagerfanta($adapter);
-
+		$pagerfanta->setMaxPerPage(9);
+		
 		$view = new TwitterBootstrap3View();
 		$routeGenerator = function($page) use ($app) {
 	        return '/project/'.$page;
