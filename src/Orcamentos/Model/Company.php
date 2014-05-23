@@ -68,14 +68,14 @@ class Company extends Entity
     /**
      * @ORM\OneToMany(targetEntity="Client", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
-     * @OrderBy({"name" = "ASC"})
+     * @ORM\OrderBy({"name" = "ASC"})
      * @var Doctrine\Common\Collections\Collection
      */
     protected $clientCollection;
 
     /**
      * @ORM\OneToMany(targetEntity="Project", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
-     * @OrderBy({"name" = "ASC"})
+     * @ORM\OrderBy({"name" = "ASC"})
      * 
      * @var Doctrine\Common\Collections\Collection
      */
@@ -90,7 +90,7 @@ class Company extends Entity
 
     /**
      * @ORM\OneToMany(targetEntity="User", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
-     * @OrderBy({"name" = "ASC"})
+     * @ORM\OrderBy({"name" = "ASC"})
      * 
      * @var Doctrine\Common\Collections\Collection
      */
