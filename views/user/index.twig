@@ -14,7 +14,7 @@
                 <a data-href="/user/delete/{{ user.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar usuário"></a>
                 <a href="/user/detail/{{ user.id }}" class="thumbnail" title="Visualizar usuário">
                     <span class="caption">
-                        <h4>{{ user.name }}</h4>
+                        <h4>{{ user.name  | length > 25 ? user.name[:21]~' ...' : user.name }} }}</h4>
                         <p>{{ user.email }}</p>
                     </span>
                 </a>

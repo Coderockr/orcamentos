@@ -30,7 +30,7 @@
                 {% endif %}
                 <a href="/project/detail/{{ project.id }}" class="thumbnail" title="Visualizar projeto">
                     <span class="caption">
-                        <h4>{{ project.name }}</h4>
+                        <h4>{{ project.name | length > 25 ? project.name[:21]~' ...' : project.name }}</h4>
                         <p>
                             {{ project.client.name }}<br />
                             {{ project.tags }}
