@@ -19,6 +19,9 @@ $(document).ready(function(){
 	$(document).on('click',".resources h5 .glyphicon-minus",function(){
 		$(this).parent().parent().find("div.thumbnail").slideUp();
 		$(this).parent().removeClass("add");
+		var form = $(this).parent().parent().find('form');
+		$(form)[0].reset();
+		$(form).find('#id').val('');
 		return false;
 	});
 

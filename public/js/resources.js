@@ -93,6 +93,7 @@ $(document).ready(function(){
 				if ( $('.thumbnail[rel='+data.id+']').length > 0 ) {
 					$('.thumbnail[rel='+data.id+'] h4').html(data.name);
 					$('.thumbnail[rel='+data.id+'] p').html("R$ "+ data.cost +"<br>" + data.type.name);
+
 				} else {
 					var template;
 					var thumbnail = $('<span class="thumbnail" rel="'+ data.id + '">');
@@ -128,6 +129,7 @@ $(document).ready(function(){
 					
 					$(form).parent().parent().append(template);
 				}			
+				$(form).find('#id').val('');
 				$(form)[0].reset();
 				$(".resources h5 .glyphicon-minus").click();
 
