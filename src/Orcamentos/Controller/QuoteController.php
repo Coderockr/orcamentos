@@ -7,8 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Orcamentos\Service\Quote as QuoteService;
 use DateTime;
+use Orcamentos\Controller\BaseController;
 
-class QuoteController
+class QuoteController extends BaseController
 {
 	public function edit(Request $request, Application $app)
 	{	
@@ -56,6 +57,10 @@ class QuoteController
 					};
 				}
 			}
+		}
+
+		if($project && $project->getCompany()->getId() != $app['session']->get('companyId')){
+		    return $this->redirectMessage($app,'Orçamento inválido','/project');
 		}
 
 		$equipmentResources = array();
@@ -106,6 +111,10 @@ class QuoteController
 		}
 		
 		$quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
+
+		if($quote->getProject()->getCompany()->getId() != $app['session']->get('companyId')){
+		    return $this->redirectMessage($app,'Orçamento inválido','/project');
+		}
 
 		$resourceCollection = $quote->getResourceQuoteCollection();
 
@@ -236,6 +245,10 @@ class QuoteController
 		
 		$quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
 		
+		if($quote->getProject()->getCompany()->getId() != $app['session']->get('companyId')){
+		    return $this->redirectMessage($app,'Orçamento inválido','/project');
+		}
+
 		$d = new DateTime($quote->getCreated());
 		$fmt = datefmt_create( "pt_BR" ,\IntlDateFormatter::LONG, \IntlDateFormatter::NONE,
 		    'America/Sao_Paulo', \IntlDateFormatter::GREGORIAN  );

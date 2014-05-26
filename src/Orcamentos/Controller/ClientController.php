@@ -6,13 +6,14 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Orcamentos\Service\Client as ClientService;
+use Orcamentos\Controller\BaseController;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\TwitterBootstrap3View;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 
-class ClientController
+class ClientController extends BaseController
 {
 	public function index(Request $request, Application $app, $page)
 	{
@@ -53,6 +54,10 @@ class ClientController
 		$client = null;
 		if ( isset($clientId) ) {
 			$client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
+		}
+
+		if ($client && $client->getCompany()->getId() != $app['session']->get('companyId')){
+			return $this->redirectMessage($app,'Cliente inválido','/client');
 		}
 
 		return $app['twig']->render('client/edit.twig', 
@@ -117,6 +122,11 @@ class ClientController
 	public function detail(Request $request, Application $app, $clientId )
 	{
 		$client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
+		
+		if ($client->getCompany()->getId() != $app['session']->get('companyId')){
+			return $this->redirectMessage($app,'Cliente inválido','/client');
+		}
+
 		return $app['twig']->render('client/detail.twig', array( 
 			'client' => $client,
 			'active_page' => 'client'

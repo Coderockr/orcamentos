@@ -6,13 +6,14 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Orcamentos\Service\Project as ProjectService;
+use Orcamentos\Controller\BaseController;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\TwitterBootstrap3View;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 
-class ProjectController
+class ProjectController extends BaseController
 {
 	public function index(Request $request, Application $app, $page)
 	{
@@ -86,7 +87,7 @@ class ProjectController
 
 		$companyId = $app['session']->get('companyId');
 		$company = $app['orm.em']->getRepository('Orcamentos\Model\Company')->find($companyId);
-
+		
 		if ( isset($clientId) ) {
 			$client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
 		} 
@@ -94,6 +95,10 @@ class ProjectController
 		if ( isset($projectId) ){
 			$project = $em->getRepository('Orcamentos\Model\Project')->find($projectId);
 			$client = $project->getClient();
+		}
+
+		if($project && $project->getCompany()->getId() != $companyId){
+		    return $this->redirectMessage($app,'Projeto inválido','/project');
 		}
 
 		if(!$client){
@@ -127,6 +132,13 @@ class ProjectController
 	public function detail(Request $request, Application $app, $projectId )
 	{
 		$project = $app['orm.em']->getRepository('Orcamentos\Model\Project')->find($projectId);
+		
+		$projectCompanyId = $project->getCompany()->getId();
+
+		if($projectCompanyId != $app['session']->get('companyId')){
+		    return $this->redirectMessage($app,'Projeto inválido','/project');
+		}
+		
 		$user = $app['orm.em']->getRepository('Orcamentos\Model\User')->findOneBy(array('email' => $app['session']->get('email')));
 
 		$projectNotesCollection = $project->getPrivateNotesCollection();

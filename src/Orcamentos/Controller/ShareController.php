@@ -64,7 +64,6 @@ class ShareController
 		);
 	}
 
-
 	public function create(Request $request, Application $app)
 	{
 		$data = $request->request->all();
