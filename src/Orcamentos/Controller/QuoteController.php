@@ -19,6 +19,7 @@ class QuoteController extends BaseController
 		if ( !isset($projectId) && !isset($quoteId) ) {
 			throw new Exception("Invalid Parameters", 1);
 		}
+
 		$quote = null;
 		$project = null;
 
@@ -107,7 +108,7 @@ class QuoteController extends BaseController
 		$resourceCollection = null;
 		
 		if ( !isset($quoteId) ) {
-			throw new Exception("Parâmetros inválidos", 1);
+		    return $this->redirectMessage($app,'Parâmetros inválidos','/project');
 		}
 		
 		$quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
@@ -240,7 +241,7 @@ class QuoteController extends BaseController
 	public function preview(Request $request, Application $app, $quoteId)
 	{	
 		if ( !isset($quoteId) ) {
-			throw new Exception("Parâmetros inválidos", 1);
+			 return $this->redirectMessage($app,'Parâmetros inválidos','/project');
 		}
 		
 		$quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
