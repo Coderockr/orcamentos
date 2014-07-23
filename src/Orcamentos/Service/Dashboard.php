@@ -34,7 +34,7 @@ class Dashboard extends Service
         }
 
         if (!$limit) {
-            $limit = 10;
+            $limit = 50;
         }
 
         $userNotes = array();
