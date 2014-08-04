@@ -12,6 +12,12 @@ $app = new Application();
 
 $app['debug'] = true;
 
+$config = require_once __DIR__ . '/config/config.php';
+
+if (!$config) {
+    throw new \Exception("Error Processing Config", 1);
+}
+
 //configuration
 $app->register(new Silex\Provider\SessionServiceProvider());
 
@@ -21,14 +27,8 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 
-$app['swiftmailer.options'] = array(
-    'host' => 'smtp.gmail.com',
-    'port' => '465',
-    'username' => 'contato@coderockr.com',
-    'password' => 'H&m6&mUE',
-    'encryption' => 'ssl',
-    'auth_mode' => 'login'
-);
+
+$app['swiftmailer.options'] = $config['swiftmailer.options'];
 
 
 $redirectUnlogged = function () use ($app) {
@@ -186,14 +186,7 @@ $app->mount('/resource', $resource);
 
 //getting the EntityManager
 $app->register(new DoctrineServiceProvider, array(
-    'db.options' => array(
-        'driver' => 'pdo_mysql',
-        'host' => 'localhost',
-        'port' => '3306',
-        'user' => 'orcamentos',
-        'password' => 'orcamentos',
-        'dbname' => 'orcamentos'
-    )
+    'db.options' => $config['db.options']
 ));
 
 $app->register(new DoctrineOrmServiceProvider(), array(

@@ -34,6 +34,13 @@ class Share extends Service
         
         $shares = array();
 
+        //@todo: melhorar isso, buscar a configuração do $app
+        $config = require_once __DIR__ . '/../../../config/config.php';
+
+        if (!$config) {
+            throw new \Exception("Error Processing Config", 1);
+        }
+
         foreach ($data->email as $this->email) {
             $share = $this->em->getRepository('Orcamentos\Model\Share')->findOneBy(array('quote'=> $quote, 'email' => $this->email));
             if( !$share) {
@@ -44,15 +51,9 @@ class Share extends Service
                 $hash = hash('sha256', $this->email . $share->getQuote()->getProject()->getName() . $share->getQuote()->getVersion());
                 $share->setHash($hash);
 
-                // Prod
-                $url = 'http://orcamentos.coderockr.com/share/' . $hash;
-                $token = 'ed0e929d7ff5b92c480f34e4851a96945dd4702b';
-
-                // Desenvolvimento
-                // $url = 'http://orcamentos.dev:8080/share/' . $hash;
-                // $token = 'eb9b61dd4df8daa4d8e679a4bb8e187034dfcd7a';
+                $url = $config['bitly']['url'] . $hash;
                
-                $bitlyJson = fopen("https://api-ssl.bitly.com/v3/shorten?access_token=" . $token . "&longUrl=" . $url, 'rb');
+                $bitlyJson = fopen("https://api-ssl.bitly.com/v3/shorten?access_token=" . $config['bitly']['token'] . "&longUrl=" . $url, 'rb');
                 $bitly =  json_decode(stream_get_contents($bitlyJson), true);
                 $share->setShortUrl($bitly['data']['url']);
                 $this->em->persist($share);
