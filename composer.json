@@ -16,7 +16,8 @@
         "mockery/mockery": "dev-master@dev",
         "zendframework/zend-crypt": "*",    
         "phpunit/phpunit": "*",
-        "pagerfanta/pagerfanta": "1.0.*@dev"
+        "pagerfanta/pagerfanta": "1.0.*@dev",
+        "sebastian/phpcpd": "*"
     },
     "minimum-stability": "dev"
 }
