@@ -35,7 +35,7 @@ class Share extends Service
         $shares = array();
 
         //@todo: melhorar isso, buscar a configuração do $app
-        $config = require_once __DIR__ . '/../../../config/config.php';
+        $config = include __DIR__ . '/../../../config/config.php';
 
         if (!$config) {
             throw new \Exception("Error Processing Config", 1);
