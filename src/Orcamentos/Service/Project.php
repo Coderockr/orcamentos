@@ -68,7 +68,8 @@ class Project extends Service
      * @param                 array $data
      * @return                Orcamentos\Model\Project $project
      */
-    private function getProject($data){
+    private function getProject($data)
+    {
 
         $project = null;
 
