@@ -66,7 +66,8 @@ class Resource extends Service
      * @param                 array $data
      * @return                Orcamentos\Model\Resource $resource
      */
-    private function getResource($data){
+    private function getResource($data)
+    {
 
         $resource = null;
 

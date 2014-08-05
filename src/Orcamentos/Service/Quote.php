@@ -70,7 +70,8 @@ class Quote extends Service
      * @param                 array $data
      * @return                Orcamentos\Model\Quote $quote
      */
-    private function getQuote($data){
+    private function getQuote($data)
+    {
 
         $quote = null;
 
@@ -91,7 +92,8 @@ class Quote extends Service
      * @param                 Orcamentos\Model\Quote $quote
      * @return                void
      */
-    public function addResourceQuotes($resourceQuotes, $quote){
+    public function addResourceQuotes($resourceQuotes, $quote)
+    {
 
         $quoteResourceCollection = $quote->getResourceQuoteCollection();
 
