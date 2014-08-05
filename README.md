@@ -23,7 +23,7 @@
 
 `127.0.0.1 orcamentos.dev`
 
-Para criação de um virtual host no *Windows*, siga as instruções encontradas [http://www.emersoncarvalho.com/web/configurando-virtual-hosts-no-windows/](neste link).
+Para criação de um virtual host no *Windows*, siga as instruções encontradas [neste link](http://www.emersoncarvalho.com/web/configurando-virtual-hosts-no-windows/).
 
 ### Instalação
 
