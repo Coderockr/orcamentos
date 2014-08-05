@@ -49,7 +49,15 @@ O projeto usa o Doctrine, então é preciso criar a base de dados (de acordo com
 
 `./vendor/bin/doctrine orm:schema-tool:create`
 
-**Importante** A extensão APC é um pré-requisito para o projeto. Caso encontre erros ao rodar o comando acima, instale a extensão.
+**Importante**: A extensão APC é um pré-requisito para o projeto. Caso encontre erros ao rodar o comando acima, instale a extensão.
+
+### Acesso ao sistema
+
+Antes de acessar o sistema é necessário criar o primeiro usuário, rodando **através da linha de comando** o seguinte script:
+
+`cd <pasta do projeto>/docs/` e `php firstUser.php "Nome da Empresa" "Nome da pessoa responsável" "(xx) xxxx-xxxx" "e-mail da pessoa responsável" "usuario" "senha" "e-mail do usuário"`.
+
+**Dica**: substituir as informações entre parênteses por suas próprias informações.
 
 ### Exemplo de uso
 
