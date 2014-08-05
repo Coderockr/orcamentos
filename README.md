@@ -21,14 +21,23 @@
 
 É preciso criar o alias para o endereço _orcamentos.dev_ no seu /etc/hosts (Linux ou Mac)
 
-        `127.0.0.1 orcamentos.dev`
+`127.0.0.1 orcamentos.dev`
 
-Para criação de um virtual host no windows, siga as instruções encontradas [http://www.emersoncarvalho.com/web/configurando-virtual-hosts-no-windows/]neste link.
+Para criação de um virtual host no *Windows*, siga as instruções encontradas [http://www.emersoncarvalho.com/web/configurando-virtual-hosts-no-windows/](neste link).
 
 ### Instalação
 
-        `php composer.phar self-update`
-        `php composer.phar update`
+Clonar o projeto:
+
+Através da linha de comando, acessar sua pasta de projetos e clonar com `git clone git@github.com:Coderockr/orcamentos.git <nome da pasta do projeto>`
+
+Acessar a pasta criada `cd <nome da pasta do projeto>` e atualizar o Composer fornecido:
+
+`php composer.phar self-update`
+
+Instalar as dependências do projeto:
+
+`php composer.phar update`
 
 ### Configuração
 
@@ -39,6 +48,8 @@ Basta duplicar o arquivo `config/config.php.sample` para `config/config.php` e m
 O projeto usa o Doctrine, então é preciso criar a base de dados (de acordo com as configurações do config.php) e executar:
 
 `./vendor/bin/doctrine orm:schema-tool:create`
+
+*Importante* A extensão APC é um pré-requisito para o projeto. Caso encontre erros ao rodar o comando acima, instale a extensão.
 
 ### Exemplo de uso
 
