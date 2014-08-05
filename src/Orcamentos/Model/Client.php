@@ -30,6 +30,13 @@ class Client extends Entity
      *
      * @var string
      */
+    private $corporateName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
     private $email;
 
     /**
@@ -90,6 +97,17 @@ class Client extends Entity
     public function setCnpj($cnpj)
     {
         return $this->cnpj = $cnpj;
+    }
+
+    public function getCorporateName()
+    {
+        return $this->corporateName;
+    }
+    
+    public function setCorporateName($corporateName)
+    {
+        $this->corporateName = $corporateName;
+        return $this;
     }
     
     public function getEmail()
