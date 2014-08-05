@@ -23,7 +23,7 @@
 
 `127.0.0.1 orcamentos.dev`
 
-Para criação de um virtual host no *Windows*, siga as instruções encontradas [neste link](http://www.emersoncarvalho.com/web/configurando-virtual-hosts-no-windows/).
+Para criação de um virtual host no **Windows**, siga as instruções encontradas [neste link](http://www.emersoncarvalho.com/web/configurando-virtual-hosts-no-windows/).
 
 ### Instalação
 
@@ -49,7 +49,7 @@ O projeto usa o Doctrine, então é preciso criar a base de dados (de acordo com
 
 `./vendor/bin/doctrine orm:schema-tool:create`
 
-*Importante* A extensão APC é um pré-requisito para o projeto. Caso encontre erros ao rodar o comando acima, instale a extensão.
+**Importante** A extensão APC é um pré-requisito para o projeto. Caso encontre erros ao rodar o comando acima, instale a extensão.
 
 ### Exemplo de uso
 
