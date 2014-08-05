@@ -1,0 +1,23 @@
+<?php
+return array(
+	'swiftmailer.options' => array(
+	    'host' => 'smtp.gmail.com',
+	    'port' => '465',
+	    'username' => 'email@gmail.com',
+	    'password' => 'senha',
+	    'encryption' => 'ssl',
+	    'auth_mode' => 'login'
+	),
+	'db.options' => array(
+        'driver' => 'pdo_mysql',
+        'host' => 'localhost',
+        'port' => '3306',
+        'user' => 'orcamentos',
+        'password' => 'orcamentos',
+        'dbname' => 'orcamentos'
+    ),
+    'bitly' => array( //usado para compartilhar os orçamentos. o /share é obrigatório
+    	'url' => 'http://server/share/',
+    	'token' => 'TOKEN'
+    )
+);
