@@ -3,10 +3,10 @@
 ### Configure o Apache VirtualHost
 
 	<VirtualHost *:80>
-        DocumentRoot "/vagrant/orcamentos"
+        DocumentRoot "<sua pasta de projetos>/<nome escolhido ao clonar>" #ver instruções abaixo
         ServerName orcamentos.dev
 
-        <Directory "/vagrant/orcamentos">
+        <Directory "<sua pasta de projetos>/<nome escolhido ao clonar>">
                 Options Indexes Multiviews FollowSymLinks
                 AllowOverride All
                 Order allow,deny
