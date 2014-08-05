@@ -20,6 +20,10 @@
                     <input type="text" name="name" id="name" minlength="2" required value="{{ client and client.name ? client.name : "" }}" class="form-control" />
                 </div>
                 <div>
+                    <label for="responsable">Razão Social *</label>
+                    <input type="text" name="corporateName" id="corporateName" required value="{{ client and client.corporateName ? client.corporateName : "" }}" class="form-control" />
+                </div>
+                <div>
                     <label for="responsable">Responsável *</label>
                     <input type="text" name="responsable" id="responsable" required value="{{ client and client.responsable ? client.responsable : "" }}" class="form-control" />
                 </div>

@@ -24,7 +24,7 @@ class Client extends Service
     {
         $data = json_decode($data);
 
-        if (!isset($data->name) || !isset($data->responsable) || !isset($data->email) || !isset($data->companyId)) {
+        if (!isset($data->name) || !isset($data->corporateName) || !isset($data->responsable) || !isset($data->email) || !isset($data->companyId)) {
             throw new Exception("Parâmetros inválidos", 1);
         }
 
@@ -38,6 +38,7 @@ class Client extends Service
         }
 
         $client->setName($data->name);
+        $client->setCorporateName($data->corporateName);
         $client->setResponsable($data->responsable);
         $client->setEmail($data->email);
 

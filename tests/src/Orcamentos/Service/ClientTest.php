@@ -30,6 +30,7 @@ class ClientTest extends ApplicationTestCase
         $data = array(
         	'name' => 'Apple',
         	'responsable' => 'Steve Jobs',
+            'corporateName' => 'Apple Inc',
         	'email' => 'steve@apple.com',
         	'companyId' => -1
         );
@@ -43,6 +44,7 @@ class ClientTest extends ApplicationTestCase
         $data = array(
         	'name' => 'Apple',
         	'responsable' => 'Steve Jobs',
+            'corporateName' => 'Apple Inc',
         	'email' => 'steve@apple.com',
         	'companyId' => 1
         );
@@ -58,6 +60,7 @@ class ClientTest extends ApplicationTestCase
         $data = array(
         	'name' => 'Apple',
         	'responsable' => 'Steve Jobs',
+            'corporateName' => 'Apple Inc',
         	'email' => 'steve@apple.com',
         	'companyId' => 1
         );
@@ -68,6 +71,7 @@ class ClientTest extends ApplicationTestCase
         $data = array(
         	'name' => 'Apple Store',
         	'responsable' => 'Steve Jobs',
+            'corporateName' => 'Apple Inc',
         	'email' => 'steve@apple.com',
         	'companyId' => 1,
         	'id' => 1
