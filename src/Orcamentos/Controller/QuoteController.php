@@ -173,7 +173,8 @@ class QuoteController extends BaseController
 		);
 	}
 
-	private function quoteCalculateCost($quote){
+	private function quoteCalculateCost($quote)
+    {
 
 		$cost = 0;
 		$profit = 0;

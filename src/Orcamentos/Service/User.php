@@ -71,7 +71,8 @@ class User extends Service
      * @param                 array $data
      * @return                Orcamentos\Model\User $user
      */
-    private function getUser($data){
+    private function getUser($data)
+    {
 
         $user = null;
 
