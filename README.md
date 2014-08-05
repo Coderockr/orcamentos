@@ -21,22 +21,24 @@
 
 É preciso criar o alias para o endereço _orcamentos.dev_ no seu /etc/hosts (Linux ou Mac)
 
-        127.0.0.1 orcamentos.dev
+        `127.0.0.1 orcamentos.dev`
+
+Para criação de um virtual host no windows, siga as instruções encontradas [http://www.emersoncarvalho.com/web/configurando-virtual-hosts-no-windows/]neste link.
 
 ### Instalação
 
-        php composer.php self-update
-        php composer.phar update
+        `php composer.phar self-update`
+        `php composer.phar update`
 
 ### Configuração
 
-Basta duplicar o arquivo config/config.php.sample para config/config.php e mudar as configurações
+Basta duplicar o arquivo `config/config.php.sample` para `config/config.php` e mudar as configurações de acesso ao banco de dados.
 
 ### Criação da base de dados
 
 O projeto usa o Doctrine, então é preciso criar a base de dados (de acordo com as configurações do config.php) e executar:
-        
-        ./vendor/bin/doctrine orm:schema-tool:create
+
+`./vendor/bin/doctrine orm:schema-tool:create`
 
 ### Exemplo de uso
 
