@@ -23,7 +23,7 @@ class ClientController extends BaseController
 		foreach ($clientObjs as $i => $client) {
 			$clients[$i]['id'] = $client->getId();
 			$clients[$i]['name'] = $client->getName();
-			$clients[$i]['coporateName'] = $client->getCorporateName();
+			$clients[$i]['corporateName'] = $client->getCorporateName();
 			$clients[$i]['logotype'] = $client->getLogotype();
 			$projectCollection = $client->getProjectCollection();
 			$clients[$i]['numProjects'] = count($projectCollection);
