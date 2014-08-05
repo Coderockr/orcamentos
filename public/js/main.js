@@ -28,6 +28,8 @@ $(document).ready(function(){
 	$('[data-toggle="confirmation"]').confirmation();
 
 	$('#telephone').mask("(99) 9999-99999");
+
+	$('#cnpj').mask("99.999.999/9999-99");
 	
 	$("#dueDate").datepicker({
 	    dateFormat: 'dd/mm/yy',
