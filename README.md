@@ -59,7 +59,7 @@ Antes de acessar o sistema é necessário criar o primeiro usuário, rodando **a
 
 `cd <pasta do projeto>/docs/` e `php firstUser.php "Nome da Empresa" "Nome da pessoa responsável" "(xx) xxxx-xxxx" "e-mail da pessoa responsável" "usuario" "senha" "e-mail do usuário"`.
 
-**Dica**: substituir as informações entre parênteses por suas próprias informações.
+**Dica**: substituir as informações entre as aspas por suas próprias informações.
 
 ### Exemplo de uso
 
