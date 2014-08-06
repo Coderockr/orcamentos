@@ -15,7 +15,8 @@ class ClientTest extends ApplicationTestCase
         	'responsable' => 'Steve Jobs',
             'corporateName' => 'Apple Inc',
         	'email' => 'steve@apple.com',
-        	'companyId' => 1
+        	'companyId' => 1,
+            'telephone' => '(99) 9999-9999'
         );
     }
     
@@ -71,5 +72,19 @@ class ClientTest extends ApplicationTestCase
         $saved = $clientService->save(json_encode($data));
 
         $this->assertEquals('Apple Store', $saved->getName());
+    }
+    
+    public function testSaveNewClientWithCompanyProfile()
+    {
+        $clientService = new ClientService();
+        $clientService->setEm($this->getDefaultEmMock());
+        
+        $data = $this->getClientData();
+        $data['cnpj'] = '99.999.999/9999-99';
+        
+        $saved = $clientService->save(json_encode($data));
+        
+        $this->assertInternalType('object', $saved);
+        $this->assertInstanceOf('Orcamentos\Model\Client', $saved);
     }
 }
