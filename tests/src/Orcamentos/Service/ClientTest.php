@@ -3,14 +3,25 @@
 namespace Orcamentos\Service;
 
 use Orcamentos\Test\ApplicationTestCase;
-use Orcamentos\Model\Client as ClientModel;
 use Orcamentos\Service\Client as ClientService;
 
 class ClientTest extends ApplicationTestCase
 {
+   
+    public function getClientData()
+    {
+        return array(
+        	'name' => 'Apple',
+        	'responsable' => 'Steve Jobs',
+            'corporateName' => 'Apple Inc',
+        	'email' => 'steve@apple.com',
+        	'companyId' => 1
+        );
+    }
+    
 	/**
 	 * @expectedException Exception
-	 * @expectedExceptionMessage Invalid Parameters
+	 * @expectedExceptionMessage Parâmetros inválidos
 	 */
     public function testSaveWithoutData()
     {
@@ -21,19 +32,15 @@ class ClientTest extends ApplicationTestCase
 
     /**
 	 * @expectedException Exception
-	 * @expectedExceptionMessage No company
+	 * @expectedExceptionMessage Empresa não encontrada
 	 */
     public function testSaveWithoutCompany()
     {
         $clientService = new ClientService();
         $clientService->setEm($this->getDefaultEmMock());
-        $data = array(
-        	'name' => 'Apple',
-        	'responsable' => 'Steve Jobs',
-            'corporateName' => 'Apple Inc',
-        	'email' => 'steve@apple.com',
-        	'companyId' => -1
-        );
+        $data = $this->getClientData();
+        $data['companyId'] = -1;
+        
         $clientService->save(json_encode($data));
     }
 
@@ -41,13 +48,8 @@ class ClientTest extends ApplicationTestCase
     {
         $clientService = new ClientService();
         $clientService->setEm($this->getDefaultEmMock());
-        $data = array(
-        	'name' => 'Apple',
-        	'responsable' => 'Steve Jobs',
-            'corporateName' => 'Apple Inc',
-        	'email' => 'steve@apple.com',
-        	'companyId' => 1
-        );
+        $data = $this->getClientData();
+        
         $saved = $clientService->save(json_encode($data));
 
         $this->assertEquals('Apple', $saved->getName());
@@ -57,25 +59,15 @@ class ClientTest extends ApplicationTestCase
     {
         $clientService = new ClientService();
         $clientService->setEm($this->getDefaultEmMock());
-        $data = array(
-        	'name' => 'Apple',
-        	'responsable' => 'Steve Jobs',
-            'corporateName' => 'Apple Inc',
-        	'email' => 'steve@apple.com',
-        	'companyId' => 1
-        );
-        $saved = $clientService->save(json_encode($data));
+        
+        $saved = $clientService->save(json_encode($this->getClientData()));
 
         $this->assertEquals('Apple', $saved->getName());
 
-        $data = array(
-        	'name' => 'Apple Store',
-        	'responsable' => 'Steve Jobs',
-            'corporateName' => 'Apple Inc',
-        	'email' => 'steve@apple.com',
-        	'companyId' => 1,
-        	'id' => 1
-        );
+        $data = $this->getClientData();
+        $data['name'] = 'Apple Store';
+        $data['id'] = 1;
+        
         $saved = $clientService->save(json_encode($data));
 
         $this->assertEquals('Apple Store', $saved->getName());
