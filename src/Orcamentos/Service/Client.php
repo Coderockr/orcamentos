@@ -87,7 +87,7 @@ class Client extends Service
      * @param                 array $data
      * @return                Query $result
      */
-    public static function search($data)
+    public function search($data)
     {
         $data = json_decode($data);
 
