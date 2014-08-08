@@ -2,11 +2,10 @@
 namespace Orcamentos\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use DateTime;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Client")
+ * @ORM\Table(name="client")
  */
 class Client extends Entity
 {
@@ -70,7 +69,7 @@ class Client extends Entity
     /**
      * @ORM\OneToMany(targetEntity="Project", mappedBy="client", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $projectCollection;
 

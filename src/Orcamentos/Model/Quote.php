@@ -6,13 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Quote")
+ * @ORM\Table(name="quote")
  */
 class Quote extends Entity
 {
     /**
      * @ORM\Column(type="datetime",nullable=true)
-     * @var datetime
+     * @var \DateTime
      */
     protected $dueDate;
 
@@ -54,28 +54,28 @@ class Quote extends Entity
     /**
      * @ORM\Column(type="text",nullable=true)
      *
-     * @var text
+     * @var string
      */
     private $privateNotes;
 
     /**
      * @ORM\Column(type="text",nullable=true)
      *
-     * @var text
+     * @var string
      */
     private $deadline;
 
     /**
      * @ORM\Column(type="text",nullable=true)
      *
-     * @var text
+     * @var string
      */
     private $priceDescription;
 
     /**
      * @ORM\Column(type="text",nullable=true)
      *
-     * @var text
+     * @var string
      */
     private $paymentType;
 
@@ -89,14 +89,14 @@ class Quote extends Entity
     /**
      * @ORM\OneToMany(targetEntity="ResourceQuote", mappedBy="quote", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $resourceQuoteCollection;
 
     /**
      * @ORM\OneToMany(targetEntity="Share", mappedBy="quote", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $shareCollection;
     

@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Resource")
+ * @ORM\Table(name="resource")
  */
 class Resource extends Entity
 {
@@ -47,7 +47,7 @@ class Resource extends Entity
     /**
      * @ORM\OneToMany(targetEntity="ResourceQuote", mappedBy="resource", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $resourceQuoteCollection;
 
@@ -94,46 +94,6 @@ class Resource extends Entity
     public function setCompany($company)
     {
         return $this->company = $company;
-    }
-    
-    public function getPrivateNotes()
-    {
-        return $this->privateNotes;
-    }
-    
-    public function setPrivateNotes($privateNotes)
-    {
-        return $this->privateNotes = $privateNotes;
-    }
-    
-    public function getDescription()
-    {
-        return $this->description;
-    }
-    
-    public function setDescription($description)
-    {
-        return $this->description = $description;
-    }
-    
-      public function getClientNotes()
-    {
-        return $this->clientNotes;
-    }
-    
-    public function setClientNotes($clientNotes)
-    {
-        return $this->clientNotes = $clientNotes;
-    }
-
-    public function getTags()
-    {
-        return $this->tags;
-    }
-    
-    public function setTags($tags)
-    {
-        return $this->tags = $tags;
     }
 
     public function getType()

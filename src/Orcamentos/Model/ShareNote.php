@@ -2,11 +2,10 @@
 namespace Orcamentos\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use DateTime;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="ShareNote")
+ * @ORM\Table(name="sharenote")
  */
 class ShareNote extends Entity
 {
@@ -20,7 +19,7 @@ class ShareNote extends Entity
     /**
      * @ORM\Column(type="text", nullable=true)
      *
-     * @var text
+     * @var string
      */
     private $note;
 
@@ -49,13 +48,4 @@ class ShareNote extends Entity
         return $this->note = $note;
     }   
 
-    public function getShareNotesCollection()
-    {
-        return $this->shareNotesCollection;
-    }
-    
-    public function setShareNotesCollection($shareNotesCollection)
-    {
-        return $this->shareNotesCollection = $shareNotesCollection;
-    }
 }

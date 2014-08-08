@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Company")
+ * @ORM\Table(name="company")
  */
 class Company extends Entity
 {
@@ -69,7 +69,7 @@ class Company extends Entity
      * @ORM\OneToMany(targetEntity="Client", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
      * @ORM\OrderBy({"name" = "ASC"})
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $clientCollection;
 
@@ -77,14 +77,14 @@ class Company extends Entity
      * @ORM\OneToMany(targetEntity="Project", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * @ORM\OrderBy({"name" = "ASC"})
      * 
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $projectCollection;  
 
     /**
      * @ORM\OneToMany(targetEntity="Resource", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $resourceCollection;
 
@@ -92,7 +92,7 @@ class Company extends Entity
      * @ORM\OneToMany(targetEntity="User", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * @ORM\OrderBy({"name" = "ASC"})
      * 
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $userCollection;
 

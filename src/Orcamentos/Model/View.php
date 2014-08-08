@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="View")
+ * @ORM\Table(name="view")
  */
 class View extends Entity
 {

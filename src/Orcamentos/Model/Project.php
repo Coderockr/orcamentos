@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Project")
+ * @ORM\Table(name="project")
  */
 class Project extends Entity
 {
@@ -20,7 +20,7 @@ class Project extends Entity
     /**
      * @ORM\Column(type="text", nullable=true)
      *
-     * @var text
+     * @var string
      */
     private $description;
 
@@ -48,14 +48,14 @@ class Project extends Entity
     /**
      * @ORM\OneToMany(targetEntity="Quote", mappedBy="project", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $quoteCollection;
 
     /**
      * @ORM\OneToMany(targetEntity="PrivateNote", mappedBy="project", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * @ORM\OrderBy({"created" = "DESC"})
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $privateNotesCollection;
 
@@ -92,16 +92,6 @@ class Project extends Entity
     public function setDescription($description)
     {
         return $this->description = $description;
-    }
-    
-      public function getClientNotes()
-    {
-        return $this->clientNotes;
-    }
-    
-    public function setClientNotes($clientNotes)
-    {
-        return $this->clientNotes = $clientNotes;
     }
 
     public function getTags()

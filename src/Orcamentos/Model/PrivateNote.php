@@ -2,11 +2,10 @@
 namespace Orcamentos\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use DateTime;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="PrivateNote")
+ * @ORM\Table(name="privatenote")
  */
 class PrivateNote extends Entity
 {
@@ -28,7 +27,7 @@ class PrivateNote extends Entity
     /**
      * @ORM\Column(type="text", nullable=true)
      *
-     * @var text
+     * @var string
      */
     private $note;
 
