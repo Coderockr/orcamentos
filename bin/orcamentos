@@ -2,6 +2,7 @@
 <?php
 
 use Symfony\Component\Console\Application as ConsoleApplication;
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
 
 chdir(__DIR__ . '/..');
 
@@ -10,4 +11,7 @@ $application = new ConsoleApplication();
 $application->setHelperSet(include 'cli-config.php');
 $application->add(new Orcamentos\Console\InitializeCommand);
 $application->add(new Orcamentos\Console\ResetPasswordCommand);
+
+ConsoleRunner::addCommands($application);
+
 $application->run();

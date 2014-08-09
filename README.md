@@ -47,11 +47,7 @@ Basta duplicar o arquivo `config/config.php.sample` para `config/config.php` e m
 
 O projeto usa o Doctrine, então é preciso criar a base de dados (de acordo com as configurações do config.php) e executar:
 
-`./vendor/bin/doctrine orm:schema-tool:create`
-
-**Importante**: A extensão APC é um pré-requisito para o projeto. Caso encontre erros ao rodar o comando acima, instale a extensão.
-
-**Importante**: Nas versões mais atuais do PHP (5.5+) a extensão APC não é mais compatível. Uma solução é instalar o php5-apcu.
+`./bin/orcamentos orm:schema-tool:create`
 
 ### Acesso ao sistema
 
