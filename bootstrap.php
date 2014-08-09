@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set('America/Sao_Paulo');
+
 use Doctrine\ORM\Tools\Setup,
     Doctrine\ORM\EntityManager,
     Doctrine\Common\EventManager as EventManager,

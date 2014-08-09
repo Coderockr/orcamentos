@@ -51,13 +51,15 @@ O projeto usa o Doctrine, então é preciso criar a base de dados (de acordo com
 
 **Importante**: A extensão APC é um pré-requisito para o projeto. Caso encontre erros ao rodar o comando acima, instale a extensão.
 
+**Importante**: Nas versões mais atuais do PHP (5.5+) a extensão APC não é mais compatível. Uma solução é instalar o php5-apcu.
+
 ### Acesso ao sistema
 
 Antes de acessar o sistema é necessário criar o primeiro usuário, rodando **através da linha de comando** o seguinte script:
 
 `cd <pasta do projeto>/docs/` e `php firstUser.php "Nome da Empresa" "Nome da pessoa responsável" "(xx) xxxx-xxxx" "e-mail da pessoa responsável" "usuario" "senha" "e-mail do usuário"`.
 
-**Dica**: substituir as informações entre parênteses por suas próprias informações.
+**Dica**: substituir as informações entre as aspas por suas próprias informações.
 
 ### Exemplo de uso
 
