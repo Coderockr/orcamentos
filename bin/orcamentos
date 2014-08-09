@@ -1,48 +1,13 @@
 #!/usr/bin/env php
 <?php
 
-use Silex\Application as SilexApplication;
 use Symfony\Component\Console\Application as ConsoleApplication;
-use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
-use Silex\Provider\DoctrineServiceProvider;
-use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 
 chdir(__DIR__ . '/..');
 
 require_once('vendor/autoload.php');
-
-$config = include('config/config.php');
-
-$app = new SilexApplication();
-
-//getting the EntityManager
-$app->register(new DoctrineServiceProvider, array(
-    'db.options' => $config['db.options']
-));
-
-$app->register(new DoctrineOrmServiceProvider(), array(
-    'orm.proxies_dir' => sys_get_temp_dir() . '/' . md5(__DIR__),
-    'orm.em.options' => array(
-        'mappings' => array(
-            array(
-                'type' => 'annotation',
-                'use_simple_annotation_reader' => false,
-                'namespace' => 'Orcamentos\Model',
-                'path' => __DIR__ . '/src'
-            )
-        )
-    ),
-    'orm.proxies_namespace' => 'EntityProxy',
-    'orm.auto_generate_proxies' => true,
-    'orm.default_cache' => $config['db.options']['cache']
-));
-
-$em = $app['orm.em'];
-
 $application = new ConsoleApplication();
-
-$application->getHelperSet()->set(new EntityManagerHelper($em), 'em');
-
+$application->setHelperSet(include 'cli-config.php');
 $application->add(new Orcamentos\Console\InitializeCommand);
 $application->add(new Orcamentos\Console\ResetPasswordCommand);
 $application->run();
