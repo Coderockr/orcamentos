@@ -28,15 +28,18 @@ class InitializeCommand extends Command
     {
         $this
             ->setName('orcamentos:initialize')
-            ->setDescription('Initialize the database');
+            ->setDescription('Initialize the database and insert the initial data');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
+        $command = $this->getApplication()->find('orm:schema-tool:create');
+        $returnCode = $command->run($input, $output);
+
         $this->input = $input;
         $this->output = $output;
-        
+
         $em = $this->getEm();
 
         $userRepo = $this->getEm()->getRepository('Orcamentos\Model\User');
@@ -65,27 +68,27 @@ class InitializeCommand extends Command
         $userData['companyId'] = $company->getId();
 
         $user = $this->saveUser($userData);
-        
+
         $output->writeln("\n<info>Plan setup:</info>");
         $planName = $this->askFor('Enter a name for the default plan:');
         $planPrice = 1 * $this->askFor('Enter the price for this plan (49.90):');
-        
+
     	$plan = new Plan();
         $plan->setName($planName);
         $plan->setPrice($planPrice);
         $plan->setQuoteLimit(null);
 
         $em->persist($plan);
-        
+
         $company->setPlan($plan);
-        
+
         $output->writeln("<info>Creating default types: <info>");
 
         $equipmentType = new EquipmentType();
 	    $equipmentType->setName('Computador');
 	    $em->persist($equipmentType);
 	    $output->writeln("<info>- Equipment<info>");
-	
+
 	    $serviceType = new ServiceType();
 	    $serviceType->setName('Conta');
 	    $em->persist($serviceType);
