@@ -12,6 +12,7 @@ use Symfony\Component\Console\Question\Question;
 
 use Orcamentos\Service\Company as CompanyService;
 use Orcamentos\Service\User as UserService;
+use Symfony\Component\Console\Input\ArrayInput;
 
 use Orcamentos\Model\EquipmentType;
 use Orcamentos\Model\ServiceType;
@@ -34,8 +35,14 @@ class InitializeCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $command = $this->getApplication()->find('orm:schema-tool:create');
-        $returnCode = $command->run($input, $output);
+
+        try {
+            $command = $this->getApplication()->find('orm:schema-tool:create');
+            $returnCode = $command->run($input, $output);
+        } catch (\Exception $e) {
+            $output->writeln("<error>Your database alread have the schema!</error>");
+        }
+
 
         $this->input = $input;
         $this->output = $output;
