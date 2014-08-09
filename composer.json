@@ -2,6 +2,7 @@
     "name": "eminetto/silex-sample",
     "description": "Silex sample",
     "require": {
+        "php": ">=5.3.3",
         "silex/silex": "1.0.*",
         "symfony/http-kernel": "*",
         "symfony/browser-kit": "*",
@@ -13,11 +14,18 @@
         "symfony/twig-bridge": "2.1.*",
         "swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev",
         "dflydev/doctrine-orm-service-provider": "1.0.*@dev",
-        "mockery/mockery": "dev-master@dev",
-        "zendframework/zend-crypt": "*",    
-        "phpunit/phpunit": "*",
-        "pagerfanta/pagerfanta": "1.0.*@dev",
-        "sebastian/phpcpd": "*"
+        "zendframework/zend-crypt": "*",
+        "pagerfanta/pagerfanta": "1.0.*@dev"
     },
-    "minimum-stability": "dev"
+    "require-dev": {
+        "sebastian/phpcpd": "*",
+        "phpunit/phpunit": "*",
+        "mockery/mockery": "dev-master@dev"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "Orcamentos\\": "src/"
+        }
+    }
 }

@@ -14,7 +14,8 @@ return array(
         'port' => '3306',
         'user' => 'orcamentos',
         'password' => 'orcamentos',
-        'dbname' => 'orcamentos'
+        'dbname' => 'orcamentos',
+        'cache' => 'array' // array, apc, xcache...
     ),
     'bitly' => array( //usado para compartilhar os orçamentos. o /share é obrigatório
     	'url' => 'http://server/share/',
