@@ -1,4 +1,4 @@
 name: Gerenciamento de Orçamentos - Migrations
 migrations_namespace: Orcamentos\Migrations
 table_name: doctrine_migration_versions
-migrations_directory: migrations
+migrations_directory: src/Orcamentos/Migrations

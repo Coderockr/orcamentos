@@ -31,7 +31,8 @@ $driver = new Doctrine\ORM\Mapping\Driver\AnnotationDriver(
 );
 
 // Doctrine cache
-$cache = new \Doctrine\Common\Cache\ApcCache();
+$configCache = ucwords(strtolower($configValues['db.options']['cache']));
+$cache = new \ReflectionClass("\\Doctrine\\Common\\Cache\\{$configCache}Cache");
 
 // Doctrine
 $config = new Configuration();
@@ -41,7 +42,7 @@ $config->setProxyDir(sys_get_temp_dir() . '/' . md5(__DIR__));
 $config->setProxyNamespace('Proxies');
 $config->setAutoGenerateProxyClasses(true);
 $config->setMetadataDriverImpl($driver);
-$config->setMetadataCacheImpl($cache);
+$config->setMetadataCacheImpl($cache->newInstance());
 
 // EntityManager
 $em = EntityManager::create($configValues['db.options'], $config);
@@ -50,11 +51,11 @@ $em = EntityManager::create($configValues['db.options'], $config);
 $console = new ConsoleApplication('Gerenciamento de Orçamentos', '1.0.0');
 $console->setCatchExceptions(true);
 $console->setHelperSet(new HelperSet([
-    new ConnectionHelper($em->getConnection()),
-    new EntityManagerHelper($em),
-    $console->getHelperSet()->get('dialog'),
-    $console->getHelperSet()->get('progress'),
-    $console->getHelperSet()->get('table'),
+    'db' => new ConnectionHelper($em->getConnection()),
+    'em' => new EntityManagerHelper($em),
+    'dialog' => $console->getHelperSet()->get('dialog'),
+    'progress' => $console->getHelperSet()->get('progress'),
+    'table' => $console->getHelperSet()->get('table'),
     new FormatterHelper(),
     new DebugFormatterHelper(),
     new ProcessHelper(),
@@ -62,25 +63,16 @@ $console->setHelperSet(new HelperSet([
 ]));
 
 $console->addCommands(array(
-    // DBAL Commands
-    new \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand(),
-    new \Doctrine\DBAL\Tools\Console\Command\ImportCommand(),
-
     // ORM Commands
     new \Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand(),
     new \Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand(),
     new \Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand(),
     new \Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand(),
     new \Doctrine\ORM\Tools\Console\Command\ConvertDoctrine1SchemaCommand(),
     new \Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand(),
     new \Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand(),
     new \Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand(),
     new \Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\RunDqlCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand(),
 
     // Migrations Commands
     new \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand(),

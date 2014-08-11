@@ -24,9 +24,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-            "Orcamentos\\": "src/Orcamentos",
-            "Orcamentos\\Migrations\\": "migrations"
-        }
-    },
-    "minimum-stability": "dev"
+			"Orcamentos\\": "src/Orcamentos"
+		}
+	},
+	"minimum-stability": "dev"
 }
