@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Application as ConsoleApplication;
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+
+chdir(__DIR__ . '/..');
+
+require_once('vendor/autoload.php');
+$application = new ConsoleApplication();
+$application->setHelperSet(include 'cli-config.php');
+$application->add(new Orcamentos\Console\InitializeCommand);
+$application->add(new Orcamentos\Console\ResetPasswordCommand);
+
+ConsoleRunner::addCommands($application);
+
+$application->run();

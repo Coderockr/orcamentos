@@ -1,11 +1,11 @@
 <?php
-require_once __DIR__.'/bootstrap.php';
 
-use Silex\Application,
-    Silex\Provider\DoctrineServiceProvider,
-    Symfony\Component\HttpFoundation\Request,
-    Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
+require_once __DIR__.'/vendor/autoload.php';
 
+use Silex\Application;
+use Silex\Provider\DoctrineServiceProvider;
+use Symfony\Component\HttpFoundation\Request;
+use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 
 $app = new Application();
@@ -24,7 +24,7 @@ $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
-    
+
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 
 
@@ -43,7 +43,7 @@ $redirectCommonUser = function () use ($redirectUnlogged, $app) {
     }
 };
 
-$app->error(function (\Exception $e, $code) use($app) {
+$app->error(function (\Exception $e, $code) use ($app) {
     switch ($code) {
         case 404:
             $message = $app['twig']->render('error404.twig', array('code'=>$code, 'message' => $e->getMessage()));
@@ -54,7 +54,7 @@ $app->error(function (\Exception $e, $code) use($app) {
     }
     return new Response($message, $code);
 });
-    
+
 $app['sortCreated'] = $app->protect(function ($a, $b) {
     if ($a->getCreated() == $b->getCreated()) {
         return 0;
@@ -169,7 +169,7 @@ $share->post('/resend', 'Orcamentos\Controller\ShareController::resend')
 $share->get('/sendEmails/{limit}', 'Orcamentos\Controller\ShareController::sendEmails')->value('limit', 10)
     ->before($redirectUnlogged)
     ->before($redirectCommonUser);
-    
+
 $share->post('/comment', 'Orcamentos\Controller\ShareController::comment');
 $share->get('/removeComment/{shareNoteId}', 'Orcamentos\Controller\ShareController::removeComment');
 $share->get('/{hash}', 'Orcamentos\Controller\ShareController::detail');
@@ -190,7 +190,7 @@ $app->register(new DoctrineServiceProvider, array(
 ));
 
 $app->register(new DoctrineOrmServiceProvider(), array(
-    'orm.proxies_dir' => '/tmp/' . getenv('APPLICATION_ENV'),
+    'orm.proxies_dir' => sys_get_temp_dir() . '/' . md5(__DIR__ . getenv('APPLICATION_ENV')),
     'orm.em.options' => array(
         'mappings' => array(
             array(
@@ -202,5 +202,6 @@ $app->register(new DoctrineOrmServiceProvider(), array(
         )
     ),
     'orm.proxies_namespace' => 'EntityProxy',
-    'orm.auto_generate_proxies' => true
+    'orm.auto_generate_proxies' => true,
+    'orm.default_cache' => $config['db.options']['cache']
 ));

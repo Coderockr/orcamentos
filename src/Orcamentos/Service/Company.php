@@ -5,7 +5,7 @@ namespace Orcamentos\Service;
 use Orcamentos\Model\Company as CompanyModel;
 use Intervention\Image\Image;
 use Exception;
-  
+
 /**
  * Company Entity
  *
@@ -24,7 +24,7 @@ class Company extends Service
     {
         $data = json_decode($data);
 
-        if (!isset($data->name) || !isset($data->responsable) || !isset($data->telephone)) {
+        if (!isset($data->name) || !isset($data->telephone)) {
             throw new Exception("Invalid Parameters", 1);
         }
 
@@ -32,8 +32,12 @@ class Company extends Service
 
         $taxes = 6;
 
-        if(isset($data->taxes)){
+        if (isset($data->taxes)) {
             $taxes = $data->taxes;
+        }
+
+        if (!isset($data->responsable)) {
+            $data->responsable = null;
         }
 
         $company->setName($data->name);
@@ -47,10 +51,10 @@ class Company extends Service
         if (isset($data->site)) {
             $company->setSite($data->site);
         }
-        
+
         if (isset($data->telephone)) {
             $company->setTelephone($data->telephone);
-        } 
+        }
 
         if (isset($data->email)) {
             $company->setEmail($data->email);
@@ -60,7 +64,7 @@ class Company extends Service
             $originalName = $logotype->getClientOriginalName();
             $components = explode('.', $originalName);
             $fileName = md5(time()) . '.' . end($components);
-            
+
             $file = Image::make($logotype->getPathName())->grab(80);
             $file->save("public/img/logotypes/" . $fileName );
             $company->setLogotype($fileName);
