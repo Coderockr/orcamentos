@@ -2,22 +2,16 @@
 
 namespace Orcamentos\Console;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-
-use Symfony\Component\Console\Question\Question;
-
-use Orcamentos\Service\Company as CompanyService;
-use Orcamentos\Service\User as UserService;
-use Symfony\Component\Console\Input\ArrayInput;
-
 use Orcamentos\Model\EquipmentType;
-use Orcamentos\Model\ServiceType;
 use Orcamentos\Model\HumanType;
 use Orcamentos\Model\Plan;
+use Orcamentos\Model\ServiceType;
+use Orcamentos\Service\Company as CompanyService;
+use Orcamentos\Service\User as UserService;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 class InitializeCommand extends Command
 {
@@ -27,22 +21,14 @@ class InitializeCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setName('orcamentos:initialize')
+        $this->setName('orcamentos:initialize')
             ->setDescription('Initialize the database and insert the initial data');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
-
-        try {
-            $command = $this->getApplication()->find('orm:schema-tool:create');
-            $returnCode = $command->run($input, $output);
-        } catch (\Exception $e) {
-            $output->writeln("<error>Your database alread have the schema!</error>");
-        }
-
+        $command = $this->getApplication()->find('migrations:migrate');
+        $command->run($input, $output);
 
         $this->input = $input;
         $this->output = $output;

@@ -3,16 +3,11 @@
 namespace Orcamentos\Console;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
 use Zend\Crypt\Password\Bcrypt;
-
-use Orcamentos\Service\User as UserService;
 
 class ResetPasswordCommand extends Command
 {
@@ -22,14 +17,12 @@ class ResetPasswordCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setName('orcamentos:resetpwd')
+        $this->setName('orcamentos:resetpwd')
             ->setDescription('Reset user password');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $this->input = $input;
         $this->output = $output;
 
@@ -75,7 +68,6 @@ class ResetPasswordCommand extends Command
         $this->getEm()->flush();
 
         $output->writeln("<info>The password has been successfully changed</info>");
-
     }
 
     private function askForPassword()
