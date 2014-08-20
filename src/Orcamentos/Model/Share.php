@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Share")
+ * @ORM\Table(name="share")
  */
 class Share extends Entity
 {
@@ -47,14 +47,14 @@ class Share extends Entity
     /**
      * @ORM\OneToMany(targetEntity="View", mappedBy="share", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $viewCollection;
 
     /**
      * @ORM\OneToMany(targetEntity="ShareNote", mappedBy="share", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * @ORM\OrderBy({"created" = "DESC"})
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $shareNotesCollection;
 

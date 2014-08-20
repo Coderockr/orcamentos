@@ -1,31 +1,32 @@
 {
-    "name": "eminetto/silex-sample",
-    "description": "Silex sample",
-    "require": {
-        "php": ">=5.3.3",
-        "silex/silex": "1.0.*",
-        "symfony/http-kernel": "*",
-        "symfony/browser-kit": "*",
-        "symfony/console": "*",
-        "doctrine/dbal": "*",
-        "doctrine/orm": "*",
-        "twig/twig": ">=1.8,<2.0-dev",
-        "intervention/image": "dev-master",
-        "symfony/twig-bridge": "2.1.*",
-        "swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev",
-        "dflydev/doctrine-orm-service-provider": "1.0.*@dev",
-        "zendframework/zend-crypt": "*",
-        "pagerfanta/pagerfanta": "1.0.*@dev"
-    },
-    "require-dev": {
-        "sebastian/phpcpd": "*",
-        "phpunit/phpunit": "*",
-        "mockery/mockery": "dev-master@dev"
-    },
-    "minimum-stability": "dev",
-    "autoload": {
-        "psr-0": {
-            "Orcamentos\\": "src/"
-        }
-    }
+	"name": "coderockr/orcamentos",
+	"description": "Aplicativo de gerenciamento de Orçamentos",
+	"require": {
+		"php": ">=5.3.3",
+		"silex/silex": "1.0.*",
+		"symfony/http-kernel": "*",
+		"symfony/browser-kit": "*",
+		"symfony/console": "*",
+		"doctrine/dbal": "*",
+		"doctrine/orm": "*",
+		"doctrine/migrations": "1.0.*@dev",
+		"dflydev/doctrine-orm-service-provider": "1.0.*@dev",
+		"twig/twig": ">=1.8,<2.0-dev",
+		"symfony/twig-bridge": "2.1.*",
+		"intervention/image": "dev-master",
+		"swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev",
+		"zendframework/zend-crypt": "*",
+		"pagerfanta/pagerfanta": "1.0.*@dev"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "*",
+		"mockery/mockery": "dev-master@dev",
+		"sebastian/phpcpd": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Orcamentos\\": "src/Orcamentos"
+		}
+	},
+	"minimum-stability": "dev"
 }

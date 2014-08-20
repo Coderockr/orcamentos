@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="ResourceQuote")
+ * @ORM\Table(name="resourcequote")
  */
 class ResourceQuote extends Entity
 {

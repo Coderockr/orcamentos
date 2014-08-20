@@ -1,0 +1,4 @@
+name: Gerenciamento de Orcamentos - Migrations
+migrations_namespace: Orcamentos\Migrations
+table_name: doctrine_migration
+migrations_directory: src/Orcamentos/Migrations

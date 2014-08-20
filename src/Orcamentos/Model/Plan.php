@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Plan")
+ * @ORM\Table(name="plan")
  */
 
 class Plan extends Entity
@@ -33,14 +33,14 @@ class Plan extends Entity
 
      /* @ORM\Column(type="text", nullable=false)
      *
-     * @var text
+     * @var string
      */
     private $description;
     
     /**
      * @ORM\OneToMany(targetEntity="Company", mappedBy="plan", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
      * 
-     * @var Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $companyCollection;
 
@@ -83,4 +83,15 @@ class Plan extends Entity
     {
         return $this->price = $price;
     }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
 }
