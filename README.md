@@ -57,7 +57,7 @@ $ ./bin/orcamentos
 ou
 
 ```bash
-$ php bin/orcamentos
+$ php bin/orcamentos.php
 ```
 
 Executando o comando acima será exibido os comandos disponiveis, para executar algum comando disponível basta exectuar:
@@ -69,7 +69,7 @@ $ ./bin/orcamentos comando
 ou
 
 ```bash
-$ php bin/orcamentos comando
+$ php bin/orcamentos.php comando
 ```
 
 ### Configuração
