@@ -15,132 +15,144 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 
 class ClientController extends BaseController
 {
-	public function index(Request $request, Application $app, $page)
-	{
-		$company = $app['orm.em']->getRepository('Orcamentos\Model\Company')->find($app['session']->get("companyId"));
-		$clientObjs = $company->getClientCollection();
-		$clients = array();
-		foreach ($clientObjs as $i => $client) {
-			$clients[$i]['id'] = $client->getId();
-			$clients[$i]['name'] = $client->getName();
-			$clients[$i]['corporateName'] = $client->getCorporateName();
-			$clients[$i]['logotype'] = $client->getLogotype();
-			$projectCollection = $client->getProjectCollection();
-			$clients[$i]['numProjects'] = count($projectCollection);
-			$clients[$i]['numQuotes'] = 0;
-			foreach ($projectCollection as  $project) {
-				$clients[$i]['numQuotes'] += count($project->getQuoteCollection());
-			}
-		}
 
-		$adapter = new ArrayAdapter($clients);
-		$pagerfanta = new Pagerfanta($adapter);
-		$pagerfanta->setMaxPerPage(9);
-		$pagerfanta->setCurrentPage($page);
-		$view = new TwitterBootstrap3View();
-		$routeGenerator = function($page) use ($app) {
-	        return '/client/'.$page;
-	    };
+    public function mount($controller)
+    {
+        $controller->get('/edit/{clientId}', array($this, 'edit'))->value("clientId", null);
+        $controller->get('/detail/{clientId}', array($this, 'detail'));
+        $controller->post('/create', array($this, 'create'));
+        $controller->get('/search/{page}', array($this, 'search'))->value('page', 1);
+        $controller->get('/delete/{clientId}', array($this, 'delete'));
+        $controller->get('{page}', array($this, 'index'))->value('page', 1);
+    }
 
-		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
-		return $app['twig']->render('client/index.twig', array( 
-			'htmlPagination' => $htmlPagination,
-			'pagerfanta' => $pagerfanta,
-			'active_page' => 'client'
-		));
-	}	
+    public function index(Request $request, Application $app, $page)
+    {
+        $company = $app['orm.em']->getRepository('Orcamentos\Model\Company')->find($app['session']->get("companyId"));
+        $clientObjs = $company->getClientCollection();
+        $clients = array();
+        foreach ($clientObjs as $i => $client) {
+            $clients[$i]['id'] = $client->getId();
+            $clients[$i]['name'] = $client->getName();
+            $clients[$i]['corporateName'] = $client->getCorporateName();
+            $clients[$i]['logotype'] = $client->getLogotype();
+            $projectCollection = $client->getProjectCollection();
+            $clients[$i]['numProjects'] = count($projectCollection);
+            $clients[$i]['numQuotes'] = 0;
+            foreach ($projectCollection as $project) {
+                $clients[$i]['numQuotes'] += count($project->getQuoteCollection());
+            }
+        }
 
-	public function edit(Request $request, Application $app, $clientId)
-	{	
-		$client = null;
-		if ( isset($clientId) ) {
-			$client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
-		}
+        $adapter = new ArrayAdapter($clients);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage(9);
+        $pagerfanta->setCurrentPage($page);
+        $view = new TwitterBootstrap3View();
+        $routeGenerator = function ($page) use ($app) {
+            return '/client/'.$page;
+        };
 
-		if ($client && $client->getCompany()->getId() != $app['session']->get('companyId')){
-			return $this->redirectMessage($app,'Cliente inválido','/client');
-		}
+        $htmlPagination = $view->render($pagerfanta, $routeGenerator, array());
+        return $app['twig']->render('client/index.twig', array(
+            'htmlPagination' => $htmlPagination,
+            'pagerfanta' => $pagerfanta,
+            'active_page' => 'client'
+        ));
+    }
 
-		return $app['twig']->render('client/edit.twig', 
-			array(
-				'client' => $client,
-				'active_page' => 'client'
-			)
-		);
-	}
-	
-	public function search(Request $request, Application $app, $page)
-	{
-		$data = $request->query->all();
+    public function edit(Request $request, Application $app, $clientId)
+    {
+        $client = null;
+        if (isset($clientId)) {
+            $client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
+        }
 
-		if ($data['query'] == ''){
-			return $app->redirect('/client');
-		}
+        if ($client && $client->getCompany()->getId() != $app['session']->get('companyId')) {
+            return $this->redirectMessage($app, 'Cliente inválido', '/client');
+        }
 
-		$data['companyId'] = $app['session']->get('companyId');
-    	$data = json_encode($data);
-		$clientService = new ClientService();
-		$clientService->setEm($app['orm.em']);
-		$query = $clientService->search($data);
+        return $app['twig']->render('client/edit.twig',
+            array(
+                'client' => $client,
+                'active_page' => 'client'
+            )
+        );
+    }
 
-		$adapter = new DoctrineORMAdapter($query);
-		$pagerfanta = new Pagerfanta($adapter);
+    public function search(Request $request, Application $app, $page)
+    {
+        $data = $request->query->all();
 
-		$view = new TwitterBootstrap3View();
-		$routeGenerator = function($page) use ($app) {
-	        return '/client/'.$page;
-	    };
+        if ($data['query'] == '') {
+            return $app->redirect('/client');
+        }
 
-		$pagerfanta->setCurrentPage($page);
-		
-		$htmlPagination = $view->render( $pagerfanta, $routeGenerator, array());
+        $data['companyId'] = $app['session']->get('companyId');
+        $data = json_encode($data);
+        $clientService = new ClientService();
+        $clientService->setEm($app['orm.em']);
+        $query = $clientService->search($data);
 
-		return $app['twig']->render('client/index.twig', 
-			array(
-				'htmlPagination' => $htmlPagination,
-				'pagerfanta' => $pagerfanta,
-				'active_page' => 'client'
-			)
-		);
-	}
-	
-	// Funcao usada para criar o cliente, via post
-	public function create(Request $request, Application $app)
-	{	
-		$data = $request->request->all();
-		$logotype = $request->files->get('logotype');
+        $adapter = new DoctrineORMAdapter($query);
+        $pagerfanta = new Pagerfanta($adapter);
 
-		$data['companyId']= $app['session']->get('companyId');
+        $view = new TwitterBootstrap3View();
+        $routeGenerator = function ($page) use ($app) {
+            return '/client/'.$page;
+        };
 
-    	$data = json_encode($data);
-		$clientService = new ClientService();
-		$clientService->setEm($app['orm.em']);
-		$client = $clientService->save($data, $logotype);
+        $pagerfanta->setCurrentPage($page);
 
-		return $app->redirect('/client/detail/' . $client->getId());
-	}
+        $htmlPagination = $view->render($pagerfanta, $routeGenerator, array());
 
-	public function detail(Request $request, Application $app, $clientId )
-	{
-		$client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
-		
-		if ($client->getCompany()->getId() != $app['session']->get('companyId')){
-			return $this->redirectMessage($app,'Cliente inválido','/client');
-		}
+        return $app['twig']->render(
+            'client/index.twig',
+            array(
+                'htmlPagination' => $htmlPagination,
+                'pagerfanta' => $pagerfanta,
+                'active_page' => 'client'
+            )
+        );
+    }
 
-		return $app['twig']->render('client/detail.twig', array( 
-			'client' => $client,
-			'active_page' => 'client'
-		));
-	}
+    // Funcao usada para criar o cliente, via post
+    public function create(Request $request, Application $app)
+    {
+        $data = $request->request->all();
+        $logotype = $request->files->get('logotype');
 
-	public function delete(Request $request, Application $app, $clientId)
-	{	
-		$em = $app['orm.em'];
-		$client = $em->getRepository('Orcamentos\Model\Client')->find($clientId);
-		$em->remove($client);
-		$em->flush();
+        $data['companyId']= $app['session']->get('companyId');
 
-		return $app->redirect('/client');
-	}
+        $data = json_encode($data);
+        $clientService = new ClientService();
+        $clientService->setEm($app['orm.em']);
+        $client = $clientService->save($data, $logotype);
+
+        return $app->redirect('/client/detail/' . $client->getId());
+    }
+
+    public function detail(Request $request, Application $app, $clientId)
+    {
+        $client = $app['orm.em']->getRepository('Orcamentos\Model\Client')->find($clientId);
+
+        if ($client->getCompany()->getId() != $app['session']->get('companyId')) {
+            return $this->redirectMessage($app, 'Cliente inválido', '/client');
+        }
+
+        return $app['twig']->render('client/detail.twig', array(
+            'client' => $client,
+            'active_page' => 'client'
+        ));
+    }
+
+    public function delete(Request $request, Application $app, $clientId)
+    {
+        $em = $app['orm.em'];
+        $client = $em->getRepository('Orcamentos\Model\Client')->find($clientId);
+        $em->remove($client);
+        $em->flush();
+
+        return $app->redirect('/client');
+    }
 }

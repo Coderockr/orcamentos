@@ -7,55 +7,60 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Orcamentos\Service\Resource as ResourceService;
 
-
-class ResourceController
+class ResourceController extends BaseController
 {
-	/**
-	* 	Funcao usada para criar o resource, via post
-	*/
-	public function create(Request $request, Application $app)
-	{	
-		$data = $request->request->all();
-		$data['companyId'] = $app['session']->get('companyId');
-    	$data = json_encode($data);
 
-		$resourceService = new ResourceService();
-		$resourceService->setEm($app['orm.em']);
-		$resource = $resourceService->save($data);
+    public function mount($controller)
+    {
+        $controller->get('/', array($this, 'index'));
+        $controller->post('/create', array($this, 'create'));
+        $controller->get('/delete/{resourceId}', array($this, 'delete'));
+        $controller->get('/get', array($this, 'get'));
+    }
 
-		$result = array();
-		$result['name'] = $resource->getName();
-		$result['cost'] = $resource->getCost();
-		$typename=$resource->getType()->getName();
-		$result['equipmentLife'] = $resource->getEquipmentLife();
-		$result['type']['name'] = $typename;
-		$result['id'] = $resource->getId();
+    public function create(Request $request, Application $app)
+    {
+        $data = $request->request->all();
+        $data['companyId'] = $app['session']->get('companyId');
+        $data = json_encode($data);
 
-		return json_encode($result);
-	}
+        $resourceService = new ResourceService();
+        $resourceService->setEm($app['orm.em']);
+        $resource = $resourceService->save($data);
 
-	public function get(Request $request, Application $app)
-	{	
-		$data['companyId'] = $app['session']->get('companyId');
-    	$data = json_encode($data);
-		$resourceService = new ResourceService();
-		$resourceService->setEm($app['orm.em']);
-		$resources = $resourceService->get($data);
-		return json_encode($resources);
-	}
+        $result = array();
+        $result['name'] = $resource->getName();
+        $result['cost'] = $resource->getCost();
+        $typename=$resource->getType()->getName();
+        $result['equipmentLife'] = $resource->getEquipmentLife();
+        $result['type']['name'] = $typename;
+        $result['id'] = $resource->getId();
 
-	public function delete(Request $request, Application $app, $resourceId)
-	{	
-		$em = $app['orm.em'];
-		$resource = $em->getRepository('Orcamentos\Model\Resource')->find($resourceId);
-		
-		if (count($resource->getResourceQuoteCollection()) > 0) {
-			$app['session']->getFlashBag()->add('message', 'Recurso já está ligado a algum orçamento');
-			return $app->redirect('/company');	
-		}
+        return json_encode($result);
+    }
 
-		$em->remove($resource);
-		$em->flush();
-		return $app->redirect('/company');
-	}
+    public function get(Request $request, Application $app)
+    {
+        $data['companyId'] = $app['session']->get('companyId');
+        $data = json_encode($data);
+        $resourceService = new ResourceService();
+        $resourceService->setEm($app['orm.em']);
+        $resources = $resourceService->get($data);
+        return json_encode($resources);
+    }
+
+    public function delete(Request $request, Application $app, $resourceId)
+    {
+        $em = $app['orm.em'];
+        $resource = $em->getRepository('Orcamentos\Model\Resource')->find($resourceId);
+
+        if (count($resource->getResourceQuoteCollection()) > 0) {
+            $app['session']->getFlashBag()->add('message', 'Recurso já está ligado a algum orçamento');
+            return $app->redirect('/company');
+        }
+
+        $em->remove($resource);
+        $em->flush();
+        return $app->redirect('/company');
+    }
 }

@@ -54,7 +54,7 @@ class User extends Service
         if (!isset($company)) {
             throw new Exception("Empresa não encontrada", 1);
         }
-        
+
         $user->setCompany($company);
 
         try {
@@ -78,7 +78,8 @@ class User extends Service
 
         $user = $this->em->getRepository("Orcamentos\Model\User")->findOneBy(array('email' => $data->email));
 
-        if ($user){
+
+        if ($user && $user->getId() != $data->id){
             throw new Exception("Usuário com este email já cadastrado", 1);
         }
 

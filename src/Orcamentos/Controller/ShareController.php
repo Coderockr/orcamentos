@@ -7,150 +7,178 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Orcamentos\Service\Share as ShareService;
 use Orcamentos\Model\View as ViewModel;
-use DateTime;
+use \DateTime;
+use \Exception;
+use \IntlDateFormatter;
 
-class ShareController
+class ShareController extends BaseController
 {
 
-	public function detail(Request $request, Application $app, $hash)
-	{	
-		if ( !isset($hash) ) {
-			throw new Exception("Parâmetros inválidos", 1);
-		}
-		
-		$share = $app['orm.em']->getRepository('Orcamentos\Model\Share')->findOneBy(array('hash'=> $hash));
+    public static function getGuestActions()
+    {
+        return array('comment', 'removeComment', 'detail');
+    }
 
-		if (!$share){
-			$app->abort(404, "Compartilhamento não existente");
-		}
+    public static function getPublicActions()
+    {
+        return self::getGuestActions();
+    }
 
-		$shareId = $share->getId();
+    public function mount($controller)
+    {
+        $controller->get('/delete/{shareId}', array($this, 'delete'));
+        $controller->post('/create', array($this, 'create'));
+        $controller->post('/resend', array($this, 'resend'));
+        $controller->get('/sendEmails/{limit}', array($this, 'sendEmails'))->value('limit', 10);
+        $controller->post('/comment', array($this, 'comment'));
+        $controller->get('/removeComment/{shareNoteId}', array($this, 'removeComment'));
+        $controller->get('/{hash}', array($this, 'detail'));
+    }
 
-		$view = new ViewModel();
-		$view->setShare($share);
+    public function detail(Request $request, Application $app, $hash)
+    {
+        if (!isset($hash)) {
+            throw new Exception("Parâmetros inválidos", 1);
+        }
 
-		$app['orm.em']->persist($view);
-		$app['orm.em']->flush();
+        $share = $app['orm.em']->getRepository('Orcamentos\Model\Share')->findOneBy(array('hash'=> $hash));
 
-		$quote = $share->getQuote();
+        if (!$share) {
+            $app->abort(404, "Compartilhamento não existente");
+        }
 
-		$resourceCollection = $quote->getResourceQuoteCollection();
-		
-		$shareCollection = $quote->getShareCollection();
-		
-		$shareNotesCollection = array();
+        $shareId = $share->getId();
 
-		foreach ($shareCollection as $sc) {
-			$notes = $sc->getShareNotesCollection();
-			foreach ($notes as $note) {
-				$shareNotesCollection[] = $note;
-			}
-		}
+        $view = new ViewModel();
+        $view->setShare($share);
 
-		usort($shareNotesCollection, $app['sortCreated']);
+        $app['orm.em']->persist($view);
+        $app['orm.em']->flush();
 
-		$city = $quote->getProject()->getCompany()->getCity();
-		
-		$createdSignature = $this->createdSignature($quote->getCreated(), $city);
+        $quote = $share->getQuote();
 
-		return $app['twig']->render('share/detail.twig',
-			array(
-				'quote' => $quote,
-				'resourceCollection' => $resourceCollection,
-				'createdSignature' => $createdSignature,
-				'shareNotesCollection' => $shareNotesCollection,
-				'shareId' => $shareId
-			)
-		);
-	}
+        $resourceCollection = $quote->getResourceQuoteCollection();
 
-	public function create(Request $request, Application $app)
-	{
-		$data = $request->request->all();
-		$data['companyId'] = $app['session']->get('companyId');
+        $shareCollection = $quote->getShareCollection();
 
-		if ( count($data['email']) > 0 ){
-	    	$data = json_encode($data);
-			$shareService = new ShareService();
-			$shareService->setEm($app['orm.em']);
-			$emails = $shareService->save($data);
-		}    	
+        $shareNotesCollection = array();
 
-		return json_encode($emails);
-	}
+        foreach ($shareCollection as $sc) {
+            $notes = $sc->getShareNotesCollection();
+            foreach ($notes as $note) {
+                $shareNotesCollection[] = $note;
+            }
+        }
 
-	public function comment(Request $request, Application $app)
-	{
-		$data = $request->request->all();
+        usort($shareNotesCollection, $app['sortCreated']);
 
-    	$data = json_encode($data);
-		$shareService = new ShareService();
-		$shareService->setEm($app['orm.em']);
-		$note = $shareService->comment($data);
-		$result = array( 'email' => $note->getShare()->getEmail(), 'comment' => $note->getNote(), 'id' => $note->getId());
-		return json_encode($result);
-	}
+        $city = $quote->getProject()->getCompany()->getCity();
 
-	public function delete(Request $request, Application $app, $shareId)
-	{	
-		$em = $app['orm.em'];
-		$share = $em->getRepository('Orcamentos\Model\Share')->find($shareId);
-		$em->remove($share);
-		$em->flush();
-		return true;
-	}
+        $createdSignature = $this->createdSignature($quote->getCreated(), $city);
 
-	public function resend(Request $request, Application $app)
-	{	
-		$data = $request->request->all();
-    	$data = json_encode($data);
-		$shareService = new ShareService();
-		$shareService->setEm($app['orm.em']);
-		$email = $shareService->resend($data);
-		
-		return json_encode($email);
-	}
+        return $app['twig']->render(
+            'share/detail.twig',
+            array(
+                'quote' => $quote,
+                'resourceCollection' => $resourceCollection,
+                'createdSignature' => $createdSignature,
+                'shareNotesCollection' => $shareNotesCollection,
+                'shareId' => $shareId
+            )
+        );
+    }
 
-	public function sendEmails(Request $request, Application $app, $limit)
-	{	
-		$shareService = new ShareService();
-		$result = $shareService->sendEmails($limit, $app);
-		
-		return json_encode($result);
-	}
+    public function create(Request $request, Application $app)
+    {
+        $data = $request->request->all();
+        $data['companyId'] = $app['session']->get('companyId');
 
-	public function removeComment(Request $request, Application $app)
-	{
-		$em = $app['orm.em'];
-		$shareNoteId = $request->get('shareNoteId');
+        if (count($data['email']) > 0) {
+            $data = json_encode($data);
+            $shareService = new ShareService();
+            $shareService->setEm($app['orm.em']);
+            $emails = $shareService->save($data);
+        }
 
-		if(!isset($shareNoteId)){
-			throw new Exception("Invalid parameters", 1);
-		}
+        return json_encode($emails);
+    }
 
-		$noteId = $shareNoteId;
+    public function comment(Request $request, Application $app)
+    {
+        $data = $request->request->all();
 
-    	$data = json_encode(array('noteId' => $noteId));
-		$shareService = new ShareService();
-		$shareService->setEm($app['orm.em']);
-		$note = $shareService->removeComment($data);
+        $data = json_encode($data);
+        $shareService = new ShareService();
+        $shareService->setEm($app['orm.em']);
+        $note = $shareService->comment($data);
+        $result = array( 'email' => $note->getShare()->getEmail(), 'comment' => $note->getNote(), 'id' => $note->getId());
+        return json_encode($result);
+    }
 
-		return $app->redirect($_SERVER['HTTP_REFERER']);
-	}
+    public function delete(Request $request, Application $app, $shareId)
+    {
+        $em = $app['orm.em'];
+        $share = $em->getRepository('Orcamentos\Model\Share')->find($shareId);
+        $em->remove($share);
+        $em->flush();
+        return true;
+    }
 
-	private function createdSignature($created, $city)
-	{
-		$d = new DateTime($created);
-		$fmt = datefmt_create( "pt_BR" ,\IntlDateFormatter::LONG, \IntlDateFormatter::NONE,
-		    'America/Sao_Paulo', \IntlDateFormatter::GREGORIAN  );
-		
-		$cityName = '';
+    public function resend(Request $request, Application $app)
+    {
+        $data = $request->request->all();
+        $data = json_encode($data);
+        $shareService = new ShareService();
+        $shareService->setEm($app['orm.em']);
+        $email = $shareService->resend($data);
 
-		if($city){
-			$cityName = $city.', ';
-		}
+        return json_encode($email);
+    }
 
-		return $cityName . datefmt_format( $fmt , $d);
-	}
+    public function sendEmails(Request $request, Application $app, $limit)
+    {
+        $shareService = new ShareService();
+        $result = $shareService->sendEmails($limit, $app);
 
+        return json_encode($result);
+    }
+
+    public function removeComment(Request $request, Application $app)
+    {
+        $em = $app['orm.em'];
+        $shareNoteId = $request->get('shareNoteId');
+
+        if (!isset($shareNoteId)) {
+            throw new Exception("Invalid parameters", 1);
+        }
+
+        $noteId = $shareNoteId;
+
+        $data = json_encode(array('noteId' => $noteId));
+        $shareService = new ShareService();
+        $shareService->setEm($app['orm.em']);
+        $note = $shareService->removeComment($data);
+
+        return $app->redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    private function createdSignature($created, $city)
+    {
+        $d = new DateTime($created);
+        $fmt = datefmt_create(
+            "pt_BR",
+            IntlDateFormatter::LONG,
+            IntlDateFormatter::NONE,
+            'America/Sao_Paulo',
+            IntlDateFormatter::GREGORIAN
+        );
+
+        $cityName = '';
+
+        if ($city) {
+            $cityName = $city.', ';
+        }
+
+        return $cityName . datefmt_format($fmt, $d);
+    }
 }

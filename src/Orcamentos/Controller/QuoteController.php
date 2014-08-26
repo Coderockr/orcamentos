@@ -9,283 +9,305 @@ use Orcamentos\Service\Quote as QuoteService;
 use DateTime;
 use Orcamentos\Controller\BaseController;
 
+use \IntlDateFormatter;
+
 class QuoteController extends BaseController
 {
-	public function edit(Request $request, Application $app)
-	{	
-		$projectId = $request->get('projectId');
-		$quoteId = $request->get('quoteId');
 
-		if ( !isset($projectId) && !isset($quoteId) ) {
-			throw new Exception("Invalid Parameters", 1);
-		}
+    public function mount($controller)
+    {
+        $controller->get('/new/{projectId}', array($this, 'edit'));
+        $controller->get('/edit/{quoteId}', array($this, 'edit'));
+        $controller->get('/detail/{quoteId}', array($this, 'detail'));
+        $controller->get('/preview/{quoteId}', array($this, 'preview'));
+        $controller->get('/delete/{quoteId}', array($this, 'delete'));
+        $controller->get('/duplicate/{quoteId}', array($this, 'duplicate'));
+        $controller->post('/create', array($this, 'create'));
+    }
 
-		$quote = null;
-		$project = null;
+    public function edit(Request $request, Application $app)
+    {
+        $projectId = $request->get('projectId');
+        $quoteId = $request->get('quoteId');
 
-		$quoteEquipmentResources = array();
-		$quoteServiceResources = array();
-		$quoteHumanResources = array();
+        if (!isset($projectId) && !isset($quoteId)) {
+            throw new Exception("Invalid Parameters", 1);
+        }
 
-		$shareCollection = array();
+        $quote = null;
+        $project = null;
 
-		if ( isset($projectId) ) {
-			$project = $app['orm.em']->getRepository('Orcamentos\Model\Project')->find($projectId);
-			$version = count($project->getQuoteCollection()) + 1;
-		} else {
-			$quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
-			$project = $quote->getProject();
-			$version = $quote->getVersion();
+        $quoteEquipmentResources = array();
+        $quoteServiceResources = array();
+        $quoteHumanResources = array();
 
-			$quoteResources = $quote->getResourceQuoteCollection();
-			if ( count($quoteResources) > 0) {
-				foreach ($quoteResources as $quoteResource) {
-					$resource = $quoteResource->getResource();
-					$type = $resource->getType();
-					switch (get_class($type)) {
+        $shareCollection = array();
 
-					 	case 'Orcamentos\Model\EquipmentType':
-					 		$quoteEquipmentResources[] = $quoteResource;
-					 		break;
+        if (isset($projectId)) {
+            $project = $app['orm.em']->getRepository('Orcamentos\Model\Project')->find($projectId);
+            $version = count($project->getQuoteCollection()) + 1;
+        } else {
+            $quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
+            $project = $quote->getProject();
+            $version = $quote->getVersion();
 
-					 	case 'Orcamentos\Model\ServiceType':
-					 		$quoteServiceResources[] = $quoteResource;
-					 		break;
+            $quoteResources = $quote->getResourceQuoteCollection();
+            if (count($quoteResources) > 0) {
+                foreach ($quoteResources as $quoteResource) {
+                    $resource = $quoteResource->getResource();
+                    $type = $resource->getType();
+                    switch (get_class($type)) {
 
-					 	case 'Orcamentos\Model\HumanType':
-					 		$quoteHumanResources[] = $quoteResource;
-					 		break;
-					};
-				}
-			}
-		}
+                        case 'Orcamentos\Model\EquipmentType':
+                            $quoteEquipmentResources[] = $quoteResource;
+                            break;
 
-		if($project && $project->getCompany()->getId() != $app['session']->get('companyId')){
-		    return $this->redirectMessage($app,'Orçamento inválido','/project');
-		}
+                        case 'Orcamentos\Model\ServiceType':
+                            $quoteServiceResources[] = $quoteResource;
+                            break;
 
-		$equipmentResources = array();
-		$serviceResources = array();
-		$humanResources = array();
+                        case 'Orcamentos\Model\HumanType':
+                            $quoteHumanResources[] = $quoteResource;
+                            break;
+                    };
+                }
+            }
+        }
 
-		$resources = $project->getCompany()->getResourceCollection();
+        if ($project && $project->getCompany()->getId() != $app['session']->get('companyId')) {
+            return $this->redirectMessage($app, 'Orçamento inválido', '/project');
+        }
 
-		foreach ($resources as $resource) {
-			$type = $resource->getType();
-			switch (get_class($type)) {
+        $equipmentResources = array();
+        $serviceResources = array();
+        $humanResources = array();
 
-			 	case 'Orcamentos\Model\EquipmentType':
-			 		$equipmentResources[] = $resource;
-			 		break;
+        $resources = $project->getCompany()->getResourceCollection();
 
-			 	case 'Orcamentos\Model\ServiceType':
-			 		$serviceResources[] = $resource;
-			 		break;
+        foreach ($resources as $resource) {
+            $type = $resource->getType();
+            switch (get_class($type)) {
 
-			 	case 'Orcamentos\Model\HumanType':
-			 		$humanResources[] = $resource;
-			 		break;
-			};
-		}
+                case 'Orcamentos\Model\EquipmentType':
+                    $equipmentResources[] = $resource;
+                    break;
 
-		return $app['twig']->render('quote/edit.twig',
-			array(
-				'quoteEquipmentResources' => $quoteEquipmentResources,
-				'quoteServiceResources' => $quoteServiceResources,
-				'quoteHumanResources' => $quoteHumanResources,
-				'equipmentResources' => $equipmentResources,
-				'serviceResources' => $serviceResources,
-				'humanResources' => $humanResources,
-				'quote' => $quote,
-				'project' => $project,
-				'version' => $version
-			)
-		);
-	}
+                case 'Orcamentos\Model\ServiceType':
+                    $serviceResources[] = $resource;
+                    break;
 
-	public function detail(Request $request, Application $app, $quoteId)
-	{	
-		$resourceCollection = null;
-		
-		if ( !isset($quoteId) ) {
-		    return $this->redirectMessage($app,'Parâmetros inválidos','/project');
-		}
-		
-		$quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
+                case 'Orcamentos\Model\HumanType':
+                    $humanResources[] = $resource;
+                    break;
+            };
+        }
 
-		if($quote->getProject()->getCompany()->getId() != $app['session']->get('companyId')){
-		    return $this->redirectMessage($app,'Orçamento inválido','/project');
-		}
+        return $app['twig']->render(
+            'quote/edit.twig',
+            array(
+                'quoteEquipmentResources' => $quoteEquipmentResources,
+                'quoteServiceResources' => $quoteServiceResources,
+                'quoteHumanResources' => $quoteHumanResources,
+                'equipmentResources' => $equipmentResources,
+                'serviceResources' => $serviceResources,
+                'humanResources' => $humanResources,
+                'quote' => $quote,
+                'project' => $project,
+                'version' => $version
+            )
+        );
+    }
 
-		$resourceCollection = $quote->getResourceQuoteCollection();
+    public function detail(Request $request, Application $app, $quoteId)
+    {
+        $resourceCollection = null;
 
-		$result = $this->quoteCalculateCost($quote);
+        if (!isset($quoteId)) {
+            return $this->redirectMessage($app,'Parâmetros inválidos','/project');
+        }
 
-		$final = $result['final'];
-		$commission = $result['commission'];
-		$profit = $result['profit'];
-		$taxes = $result['taxes'];
+        $quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
 
-		$shareCollection = $quote->getShareCollection();
-		
-		$shareNotesCollection = array();
+        if ($quote->getProject()->getCompany()->getId() != $app['session']->get('companyId')) {
+            return $this->redirectMessage($app, 'Orçamento inválido', '/project');
+        }
 
-		foreach ($shareCollection as $sc) {
-			$notes = $sc->getShareNotesCollection();
-			foreach ($notes as $note) {
-				$shareNotesCollection[] = $note;
-			}
-		}
+        $resourceCollection = $quote->getResourceQuoteCollection();
 
-		if( count($shareNotesCollection) > 0 ) {
-			usort($shareNotesCollection, $app['sortCreated']);
-		}
-		
-		switch ($quote->getStatus()) {
-			case 1:
-			case '1':
-				$status = 'Esperando';
-				break;
-			
-			case 2:
-			case '2':
-				$status = 'Aprovado';
-				break;
+        $result = $this->quoteCalculateCost($quote);
 
-			case 3:
-			case '3':
-				$status = 'Não aprovado';
-				break;
-		}
+        $final = $result['final'];
+        $commission = $result['commission'];
+        $profit = $result['profit'];
+        $taxes = $result['taxes'];
 
-		return $app['twig']->render('quote/detail.twig',
-			array(
-				'quote' => $quote,
-				'shareNotesCollection' => $shareNotesCollection,
-				'shareCollection' => $shareCollection,
-				'resourceCollection' => $resourceCollection,
-				'final' => $final,
-				'commission' => $commission,
-				'profit' => $profit,
-				'status' => $status,
-				'taxes' => $taxes
-			)
-		);
-	}
+        $shareCollection = $quote->getShareCollection();
 
-	private function quoteCalculateCost($quote)
-        {
+        $shareNotesCollection = array();
 
-		$cost = 0;
-		$profit = 0;
-		$commission = 0;
-		$taxes = 0;
+        foreach ($shareCollection as $sc) {
+            $notes = $sc->getShareNotesCollection();
+            foreach ($notes as $note) {
+                $shareNotesCollection[] = $note;
+            }
+        }
 
-		foreach ($quote->getResourceQuoteCollection() as $resourceQuote) {
-			$cost = $cost + ($resourceQuote->getValue() * $resourceQuote->getAmount());
-		}
+        if (count($shareNotesCollection) > 0) {
+            usort($shareNotesCollection, $app['sortCreated']);
+        }
 
-		if ( $quote->getProfit()) {
-			$profit = $quote->getProfit() / 100;
-		}	
+        switch ($quote->getStatus()) {
+            case 1:
+            case '1':
+                $status = 'Esperando';
+                break;
 
-		if ( $quote->getCommission()) {
-			$commission = $quote->getCommission() / 100;
-		}	
+            case 2:
+            case '2':
+                $status = 'Aprovado';
+                break;
 
-		if ( $quote->getTaxes()) {
-			$taxes = $quote->getTaxes() / 100;
-		}
+            case 3:
+            case '3':
+                $status = 'Não aprovado';
+                break;
+        }
 
-		$final = $cost + 1;
-		$finalProfit = (($final - $cost) / $final); //calculo de quantos % de lucro
-		while($finalProfit < $profit) {
-			$tempCost = $cost + ($final * $commission) + ($final * $taxes);
-			$final++;
-			if ($final < $tempCost) {	
-				continue;
-			}
-			$finalProfit = (($final - $tempCost) / $final);
-		}
+        return $app['twig']->render(
+            'quote/detail.twig',
+            array(
+                'quote' => $quote,
+                'shareNotesCollection' => $shareNotesCollection,
+                'shareCollection' => $shareCollection,
+                'resourceCollection' => $resourceCollection,
+                'final' => $final,
+                'commission' => $commission,
+                'profit' => $profit,
+                'status' => $status,
+                'taxes' => $taxes
+            )
+        );
+    }
 
-		return array( 
-			'final' => $final, 
-			'commission' => $commission, 
-			'profit' => $profit, 
-			'taxes' => $taxes
-		);
-	}
+    private function quoteCalculateCost($quote)
+    {
+
+        $cost = 0;
+        $profit = 0;
+        $commission = 0;
+        $taxes = 0;
+
+        foreach ($quote->getResourceQuoteCollection() as $resourceQuote) {
+            $cost = $cost + ($resourceQuote->getValue() * $resourceQuote->getAmount());
+        }
+
+        if ($quote->getProfit()) {
+            $profit = $quote->getProfit() / 100;
+        }
+
+        if ($quote->getCommission()) {
+            $commission = $quote->getCommission() / 100;
+        }
+
+        if ($quote->getTaxes()) {
+            $taxes = $quote->getTaxes() / 100;
+        }
+
+        $final = $cost + 1;
+        $finalProfit = (($final - $cost) / $final); //calculo de quantos % de lucro
+
+        while ($finalProfit < $profit) {
+            $tempCost = $cost + ($final * $commission) + ($final * $taxes);
+            $final++;
+            if ($final < $tempCost) {
+                continue;
+            }
+            $finalProfit = (($final - $tempCost) / $final);
+        }
+
+        return array(
+            'final' => $final,
+            'commission' => $commission,
+            'profit' => $profit,
+            'taxes' => $taxes
+        );
+    }
 
 
-	public function create(Request $request, Application $app)
-	{	
-		$data = $request->request->all();
-		$data['companyId'] = $app['session']->get('companyId');
-    	        $data = json_encode($data);
-		$quoteService = new QuoteService();
-		$quoteService->setEm($app['orm.em']);
-		$quote = $quoteService->save($data);
-		return $app->redirect('/quote/detail/' . $quote->getId());
-	}
+    public function create(Request $request, Application $app)
+    {
+        $data = $request->request->all();
+        $data['companyId'] = $app['session']->get('companyId');
+                $data = json_encode($data);
+        $quoteService = new QuoteService();
+        $quoteService->setEm($app['orm.em']);
+        $quote = $quoteService->save($data);
+        return $app->redirect('/quote/detail/' . $quote->getId());
+    }
 
-	public function delete(Request $request, Application $app, $quoteId)
-	{	
-		$em = $app['orm.em'];
-		$quote = $em->getRepository('Orcamentos\Model\Quote')->find($quoteId);
-		$projectId = $quote->getProject()->getId();
-		$em->remove($quote);
-		$em->flush();
+    public function delete(Request $request, Application $app, $quoteId)
+    {
+        $em = $app['orm.em'];
+        $quote = $em->getRepository('Orcamentos\Model\Quote')->find($quoteId);
+        $projectId = $quote->getProject()->getId();
+        $em->remove($quote);
+        $em->flush();
 
-		return $app->redirect($_SERVER['HTTP_REFERER']);
-	}
+        return $app->redirect($_SERVER['HTTP_REFERER']);
+    }
 
-	public function preview(Request $request, Application $app, $quoteId)
-	{	
-		if ( !isset($quoteId) ) {
-			 return $this->redirectMessage($app,'Parâmetros inválidos','/project');
-		}
-		
-		$quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
-		
-		if($quote->getProject()->getCompany()->getId() != $app['session']->get('companyId')){
-		    return $this->redirectMessage($app,'Orçamento inválido','/project');
-		}
+    public function preview(Request $request, Application $app, $quoteId)
+    {
+        if (!isset($quoteId)) {
+             return $this->redirectMessage($app, 'Parâmetros inválidos', '/project');
+        }
 
-		$d = new DateTime($quote->getCreated());
-		$fmt = datefmt_create( "pt_BR" ,\IntlDateFormatter::LONG, \IntlDateFormatter::NONE,
-		    'America/Sao_Paulo', \IntlDateFormatter::GREGORIAN  );
+        $quote = $app['orm.em']->getRepository('Orcamentos\Model\Quote')->find($quoteId);
 
-		$city = '';
+        if ($quote->getProject()->getCompany()->getId() != $app['session']->get('companyId')) {
+            return $this->redirectMessage($app, 'Orçamento inválido', '/project');
+        }
 
-		if($quote->getProject()->getCompany()->getCity()){
-			$city = $quote->getProject()->getCompany()->getCity().', ';
-		}
-		
-		$createdSignature = $city . datefmt_format( $fmt , $d);
+        $d = new DateTime($quote->getCreated());
+        $fmt = datefmt_create(
+            "pt_BR",
+            IntlDateFormatter::LONG,
+            IntlDateFormatter::NONE,
+            'America/Sao_Paulo',
+            IntlDateFormatter::GREGORIAN
+        );
 
-		return $app['twig']->render('share/detail.twig',
-			array(
-				'quote' => $quote,
-				'createdSignature' => $createdSignature
-			)
-		);
-	}
+        $city = '';
 
-	public function duplicate(Request $request, Application $app, $quoteId)
-	{	
-		$quoteId = $request->get('quoteId');
+        if ($quote->getProject()->getCompany()->getCity()) {
+            $city = $quote->getProject()->getCompany()->getCity() . ', ';
+        }
 
-		if ( !isset($quoteId) ) {
-			throw new Exception("Invalid Parameters", 1);
-		}
-		
-		$data['quoteId'] = $quoteId;
-    	        $data = json_encode($data);
-		$quoteService = new QuoteService();
-		$quoteService->setEm($app['orm.em']);
-		$duplicate = $quoteService->duplicate($data);
+        $createdSignature = $city . datefmt_format($fmt, $d);
 
-		return $app->redirect($_SERVER['HTTP_REFERER']);
-	}
+        return $app['twig']->render(
+            'share/detail.twig',
+            array(
+                'quote' => $quote,
+                'createdSignature' => $createdSignature
+            )
+        );
+    }
 
+    public function duplicate(Request $request, Application $app, $quoteId)
+    {
+        $quoteId = $request->get('quoteId');
+
+        if (!isset($quoteId)) {
+            throw new Exception("Invalid Parameters", 1);
+        }
+
+        $data['quoteId'] = $quoteId;
+                $data = json_encode($data);
+        $quoteService = new QuoteService();
+        $quoteService->setEm($app['orm.em']);
+        $duplicate = $quoteService->duplicate($data);
+
+        return $app->redirect($_SERVER['HTTP_REFERER']);
+    }
 }
