@@ -10,7 +10,7 @@
         "doctrine/dbal": "*",
         "doctrine/orm": "*",
         "twig/twig": ">=1.8,<2.0-dev",
-        "intervention/image": "dev-master",
+        "intervention/image": "1.*",
         "symfony/twig-bridge": "2.1.*",
         "swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev",
         "dflydev/doctrine-orm-service-provider": "1.0.*@dev",
