@@ -9,15 +9,16 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\Console\Question\Question;
-
-use Orcamentos\Service\Company as CompanyService;
-use Orcamentos\Service\User as UserService;
 use Symfony\Component\Console\Input\ArrayInput;
+
+use Zend\Crypt\Password\Bcrypt;
 
 use Orcamentos\Model\EquipmentType;
 use Orcamentos\Model\ServiceType;
 use Orcamentos\Model\HumanType;
 use Orcamentos\Model\Plan;
+use Orcamentos\Model\Company;
+use Orcamentos\Model\User;
 
 class InitializeCommand extends Command
 {
@@ -34,8 +35,6 @@ class InitializeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
-
         try {
             $command = $this->getApplication()->find('orm:schema-tool:create');
             $returnCode = $command->run($input, $output);
@@ -58,29 +57,57 @@ class InitializeCommand extends Command
             return;
         }
 
-        $companyData = $userData = array();
+        // Inserting types
+        $equipmentType = new EquipmentType();
+        $equipmentType->setName('Computador');
+        $em->persist($equipmentType);
 
+        $serviceType = new ServiceType();
+        $serviceType->setName('Conta');
+        $em->persist($serviceType);
+
+        $humanType = new HumanType();
+        $humanType->setName('Funcionário');
+        $em->persist($humanType);
+
+        // Company Questions
         $output->writeln("<info>Company setup:</info>");
-        $companyData['name'] = $this->askFor('What is your company name:', 'Demo');
-        $companyData['telephone'] = $this->askFor('Company phone number:');
-        $companyData['email'] = $this->askFor('Company e-mail address:');
-        $companyData['responsable'] = null;
-        $company = $this->saveCompany($companyData);
 
+        $companyName = $this->askFor('What is your company name', 'Demo');
+        $companyTelephone = $this->askFor('Company phone number', '99 9999999');
+        $companyEmail = $this->askFor('Company e-mail address', 'admin@orcamentos.com');
+
+        $company = new Company();
+        $company->setName($companyName);
+        $company->setTelephone($companyTelephone);
+        $company->setEmail($companyEmail);
+        $company->setTaxes(6);
+
+        $em->persist($company);
+
+        // User questions
         $output->writeln("\n<info>User setup</info>");
-        $userData['name'] = $this->askFor('Full name of the user:');
-        $userData['email'] = $this->askFor('User\'s e-mail address:');
-        $userData['password'] = $this->askForPassword();
-        $userData['admin'] = true;
-        $userData['companyId'] = $company->getId();
+        $userName = $this->askFor('Full name of the user', 'Administrator');
+        $userEmail = $this->askFor('User\'s e-mail address', $companyEmail);
+        $userPassword = $this->askForPassword();
+        $userAdmin = true;
+        $userCompany = $company->getId();
 
-        $user = $this->saveUser($userData);
+        $user = new User();
+        $user->setName($userName);
+        $user->setEmail($userEmail);
+        $user->setPassword((new Bcrypt)->create($userPassword));
+        $user->setAdmin(true);
+        $user->setCompany($company);
 
+        $em->persist($user);
+
+        // Plan questions
         $output->writeln("\n<info>Plan setup:</info>");
-        $planName = $this->askFor('Enter a name for the default plan:');
-        $planPrice = 1 * $this->askFor('Enter the price for this plan (49.90):');
+        $planName = $this->askFor('Enter a name for the default plan', 'Default');
+        $planPrice = 0 + $this->askFor('Enter the price for this plan', '0');
 
-    	$plan = new Plan();
+        $plan = new Plan();
         $plan->setName($planName);
         $plan->setPrice($planPrice);
         $plan->setQuoteLimit(null);
@@ -89,58 +116,51 @@ class InitializeCommand extends Command
 
         $company->setPlan($plan);
 
-        $output->writeln("<info>Creating default types: <info>");
+        try {
+            $em->flush();
+            $output->writeln("<info>Initial setup complete!<info>");
+        } catch (\Exception $e) {
+            $output->writeln("<error>Failed to initialize the database</error>");
+        }
 
-        $equipmentType = new EquipmentType();
-	    $equipmentType->setName('Computador');
-	    $em->persist($equipmentType);
-	    $output->writeln("<info>- Equipment<info>");
-
-	    $serviceType = new ServiceType();
-	    $serviceType->setName('Conta');
-	    $em->persist($serviceType);
-	    $output->writeln("<info>- Service<info>");
-
-	    $humanType = new HumanType();
-	    $humanType->setName('Funcionário');
-	    $em->persist($humanType);
-	    $output->writeln("<info>- Human<info>");
-
-        $em->flush();
-
-        $output->writeln("<info>Initial setup complete!<info>");
     }
 
-    private function askForPassword()
+    private function createQuestion($question, $default)
     {
         $helper = $this->getHelper('question');
-        $question = new Question('<question>What is the user password:</question> ');
+        $q = "<question>$question</question> ";
+        if (!is_null($default)) {
+            $q .= "({$default}): ";
+        } else {
+            $q .= ': ';
+        }
+
+        return new Question($q);
+    }
+
+    private function getValue(Question $question, $default = null)
+    {
+        $value = $this->getHelper('question')->ask($this->input, $this->output, $question);
+
+        if (empty($value)) {
+            $value = $default;
+        }
+
+        return $value;
+    }
+
+    private function askForPassword($default = '123456')
+    {
+        $question = $this->createQuestion('What is the user password', '123456');
         $question->setHidden(true);
         $question->setHiddenFallback(false);
-        return $helper->ask($this->input, $this->output, $question);
+        return $this->getValue($question, $default);
     }
 
-    private function askFor($question)
+    private function askFor($question, $default = null)
     {
-        $helper = $this->getHelper('question');
-        $question = new Question("<question>$question</question> ");
-        return $helper->ask($this->input, $this->output, $question);
-    }
-
-    private function saveCompany(array $data)
-    {
-        $companyData = json_encode($data);
-        $companyService = new CompanyService();
-        $companyService->setEm($this->getEm());
-        return $companyService->save($companyData, null);
-    }
-
-    private function saveUser(array $data)
-    {
-        $userData = json_encode($data);
-        $userService = new UserService();
-        $userService->setEm($this->getEm());
-        return $userService->save($userData);
+        $question = $this->createQuestion($question, $default);
+        return $this->getValue($question, $default);
     }
 
     private function getEm()

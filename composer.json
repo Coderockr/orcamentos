@@ -25,7 +25,8 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
-            "Orcamentos\\": "src/"
+            "Orcamentos\\": "src/",
+            "Coderockr\\": "src/"
         }
     }
 }
