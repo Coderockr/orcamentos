@@ -35,9 +35,12 @@ $driverImpl = new Doctrine\ORM\Mapping\Driver\AnnotationDriver(
 );
 $config->setMetadataDriverImpl($driverImpl);
 
-$cache = new \Doctrine\Common\Cache\ApcCache();
+if(extension_loaded('apc') && ini_get('apc.enabled'))
+{
+    $cache = new \Doctrine\Common\Cache\ApcCache();
 
-$config->setMetadataCacheImpl($cache);
+    $config->setMetadataCacheImpl($cache);
+}
 
 $connectionOptions = $configValues['db.options'];
 
