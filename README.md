@@ -39,6 +39,8 @@ Instalar as dependências do projeto:
 
 `php composer.phar update`
 
+O projeto também necessita da extensão intl do PHP para trabalhar com datas. 
+
 ### Configuração
 
 Basta duplicar o arquivo `config/config.php.sample` para `config/config.php` e mudar as configurações de acesso ao banco de dados.
