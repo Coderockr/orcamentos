@@ -2,3 +2,4 @@ vendor
 tests/_reports
 config/config.php
 composer.lock
+.azk/
