@@ -31,7 +31,7 @@ Para criação de um virtual host no **Windows**, siga as instruções encontrad
 
 Clonar o projeto:
 
-Através da linha de comando, acessar sua pasta de projetos e clonar com `git clone git@github.com:Coderockr/orcamentos.git <nome da pasta do projeto>`
+Através da linha de comando, acessar sua pasta de projetos e clonar com `git clone https://github.com/Coderockr/orcamentos.git <nome da pasta do projeto>`
 
 Acessar a pasta criada `cd <nome da pasta do projeto>` e atualizar o Composer fornecido:
 
