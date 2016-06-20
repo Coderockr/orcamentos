@@ -6,7 +6,7 @@
         "silex/silex": "1.0.*",
         "symfony/http-kernel": "*",
         "symfony/browser-kit": "*",
-        "symfony/console": "*",
+        "symfony/console": "^2.5",
         "doctrine/dbal": "*",
         "doctrine/orm": "*",
         "twig/twig": ">=1.8,<2.0-dev",

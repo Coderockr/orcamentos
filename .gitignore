@@ -1,7 +1,6 @@
 vendor
 tests/_reports
 config/config.php
-composer.lock
 nbproject
 .idea
 .azk/
