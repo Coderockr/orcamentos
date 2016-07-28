@@ -112,6 +112,43 @@
         </div>
     </div>
     <div class="margin30">
+        <h4>Requisitos</h4>
+        <div class="row">
+            <fieldset id="checkRequisites">
+                {% if project.requisitesCollection | length > 0 %}
+                    {% for requisite in project.requisitesCollection %}
+                        <div class="col-md-3">
+                            <span class="thumbnail">
+                                <div class="caption">
+                            <label class="checkbox-inline">
+
+                                <input type="checkbox" id="requisite-{{ requisite.id }}" value="{{ requisite.id }}" name="requisites[]" {% for req in quoteRequisites %}{% if requisite.id == req.requisite.id %}checked{% endif %}{% endfor %}>
+                                <h4>{{ requisite.name }} </h4>
+                                <p>
+                                    {% if requisite.description %}
+                                        {{ requisite.description }}
+                                    {% else %}
+                                        &nbsp;
+                                    {% endif %}
+                                </p>
+                                <p>
+                                    <i class="glyphicon glyphicon-time"></i> <span class="expectedAmount">{{ requisite.expectedAmount }}</span>h estimadas
+                                </p>
+                            </label>
+                                    </div>
+                            </span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </fieldset>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <b>Total de Horas Previstas: </b><span class="total_horas">{{ totalExpectedAmount }}</span>h
+            </div>
+        </div>
+    </div>
+    <div class="margin30">
         <h4>Recursos</h4>
         <div class="row resources">
             <div class="col-md-3">
@@ -248,6 +285,6 @@
         </div>
     </div>
 </form>
-
+    <script src="/public/js/requisites.js"></script>
 {% endblock %}
     

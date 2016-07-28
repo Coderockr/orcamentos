@@ -1,0 +1,42 @@
+{% extends "layout.twig" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h3>Dados do Requisito</h3>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+</div>
+<form class="quote" action="/requisite/create" method="POST">
+    <input type="hidden" name="id" value="{{ requisite ? requisite.id : "" }}" />
+    <input type="hidden" name="projectId" value="{{ project.id }}" />
+    <div class="margin20">
+        <div class="row">
+            <div class="col-md-3">
+                <div>
+                    <label for="name">Cliente</label>
+                    <p><a href="/client/detail/{{ project.client.id }}">{{ project.client.name }}</a></p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div>
+                    <label for="project">Projeto</label>
+                    <p><a href="/project/detail/{{ project.id }}">{{ project.name }}</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="row margin30">
+
+        </div>
+    </div>
+
+    <div class="row submit">
+        <div class="col-md-12">
+            <button class="btn btn-success pull-right" type="submit" title="Salvar requisito">Salvar</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
+    

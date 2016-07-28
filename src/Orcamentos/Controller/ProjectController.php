@@ -164,11 +164,14 @@ class ProjectController extends BaseController
 
         $projectNotesCollection = $project->getPrivateNotesCollection();
 
+        $projectRequisitesCollection = $project->getRequisitesCollection();
+
         return $app['twig']->render('project/detail.twig', array(
             'project' => $project,
             'userId' => $user->getId(),
             'projectNotesCollection' => $projectNotesCollection,
-            'active_page' => 'project'
+            'active_page' => 'project',
+            'projectRequisitesCollection' => $projectRequisitesCollection
         ));
     }
 

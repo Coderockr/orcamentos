@@ -1,10 +1,10 @@
 {% extends "layout.twig" %}
 {% block content %}
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
             <h3>Projeto {{ project.name }}</h3>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             {% if app.session.get('isAdmin') %}
                 <div><a href="/project/edit/{{ project.id }}" class="btn btn-primary small pull-right" title="Editar projeto">Editar Projeto</a></div>
                 <div><a href="/quote/new/{{ project.id }}" class="btn btn-primary small marginr pull-right" title="Novo Orçamento">Novo Orçamento</a></div>
@@ -69,6 +69,75 @@
             {% endfor %}
         </div>
     {% endif %}
+
+
+    <div class="margin30">
+        <div class="row requisites">
+            <div class="col-md-4">
+                <h5>
+                    Requisitos
+                    <a href="#" title="Adicionar Requisito" class="glyphicon glyphicon-plus"></a>
+                    <a href="#" title="Cancelar adição de requisito" class="glyphicon glyphicon-minus"></a>
+                </h5>
+                <div class="thumbnail">
+                    <form class="form" id="projectRequisite">
+                        <input type="hidden" id="id" name="id" value="">
+                        <input type="hidden" id="projectId" name="projectId" value="{{ project.id }}">
+                        <div class="caption">
+                            <div>
+                                <label for="name">Nome *</label>
+                                <input type="text" name="name" id="name" required class="form-control" />
+                            </div>
+                            <div>
+                                <label for="description">Descrição</label>
+                                <input type="text" name="description" id="description" class="form-control" />
+                            </div>
+                            <div>
+                                <label for="expectedAmount">Quantidade Horas Estimada *</label>
+                                <input type="text" name="expectedAmount" id="expectedAmount" required class="form-control" />
+                            </div>
+                            <div>
+                                <label for="spentAmount">Quantidade Horas Gastas</label>
+                                <input type="text" name="spentAmount" id="spentAmount" class="form-control" />
+                            </div>
+                            <div>
+                                <button class="btn btn-success btn-block" type="submit" title="Salvar Requisito">Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+            <div class="col-md-6">&nbsp;</div>
+        </div>
+        <div class="row requisites-card">
+            {% if projectRequisitesCollection | length > 0 %}
+                {% for requisite in projectRequisitesCollection %}
+                    <div class="col-md-4">
+                        <span class="thumbnail" rel="{{ requisite.id }}">
+                            <div class="caption">
+                                <h4>{{ requisite.name }}</h4>
+                                <p class="description">{% if requisite.description %}{{ requisite.description }}{% else %}&nbsp;{% endif %}</p>
+                                <p class="expectedAmount">
+                                    <i class="glyphicon glyphicon-time"></i> {{ requisite.expectedAmount }}h estimadas
+                                </p>
+                                {% if requisite.spentAmount %}
+                                    <p class="spentAmount">
+                                        <i class="glyphicon glyphicon-time"></i> {{ requisite.spentAmount }}h gastas
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <a href="#" title="Editar Requisito" class="edit" attr-row="{{ requisite.id }}"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+                            <a data-href="/requisite/delete/{{ requisite.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove" title="Apagar requisito"></a>
+                        </span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
     <div class="row">
         <form action="/project/comment" method="POST" id="privateNote">
             <input type="hidden" name="projectId" value="{{ project.id }}"/>
@@ -96,5 +165,6 @@
                 </div>  
             {% endfor %}
         {% endif %}
-    </div>  
+    </div>
+    <script src="/public/js/requisites.js"></script>
 {% endblock %}

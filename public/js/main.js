@@ -8,13 +8,13 @@ $(document).ready(function () {
 		nicedit.text('');
 	}
 
-	$(".resources h5 .glyphicon-plus").click(function () {
+	$(".resources h5 .glyphicon-plus, .requisites  h5 .glyphicon-plus").click(function () {
 		$(this).parent().parent().find("div.thumbnail").slideDown();
 		$(this).parent().addClass("add");
 		return false;
 	});
 
-	$(document).on('click', ".resources h5 .glyphicon-minus", function () {
+	$(document).on('click', ".resources h5 .glyphicon-minus, .requisites h5 .glyphicon-minus", function () {
 		$(this).parent().parent().find("div.thumbnail").slideUp();
 		$(this).parent().removeClass("add");
 		var form = $(this).parent().parent().find('form');

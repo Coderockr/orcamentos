@@ -2,6 +2,7 @@
 
 namespace Orcamentos\Controller;
 
+use Orcamentos\Model\Requisite;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,6 +41,7 @@ class QuoteController extends BaseController
         $quoteEquipmentResources = array();
         $quoteServiceResources = array();
         $quoteHumanResources = array();
+        $quoteRequisites = array();
 
         $shareCollection = array();
 
@@ -72,6 +74,17 @@ class QuoteController extends BaseController
                     };
                 }
             }
+
+
+            $totalExpectedAmount = 0;
+
+            if (count($quote->getRequisiteQuoteCollection()) > 0) {
+                foreach ($quote->getRequisiteQuoteCollection() as $quoteRequisite){
+                    $quoteRequisites[] = $quoteRequisite;
+                    $totalExpectedAmount = $totalExpectedAmount + $quoteRequisite->getRequisite()->getExpectedAmount();
+                }
+            }
+
         }
 
         if ($project && $project->getCompany()->getId() != $app['session']->get('companyId')) {
@@ -113,7 +126,9 @@ class QuoteController extends BaseController
                 'humanResources' => $humanResources,
                 'quote' => $quote,
                 'project' => $project,
-                'version' => $version
+                'version' => $version,
+                'quoteRequisites' => $quoteRequisites,
+                'totalExpectedAmount' => $totalExpectedAmount
             )
         );
     }
@@ -310,4 +325,5 @@ class QuoteController extends BaseController
 
         return $app->redirect($_SERVER['HTTP_REFERER']);
     }
+
 }
