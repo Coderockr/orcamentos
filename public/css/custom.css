@@ -197,51 +197,51 @@ h3 {
 	margin-bottom: 20px;
 }
 
-.resources h5 .glyphicon {
+.resources h5 .glyphicon, .requisites h5 .glyphicon, .requisites-card h5 .glyphicon {
 	float: right;
 }
 
-.resources h5 .glyphicon-minus {
+.resources h5 .glyphicon-minus, .requisites h5 .glyphicon-minus, .requisites-card h5 .glyphicon-minus {
 	display: none;
 }
 
-.resources h5.add .glyphicon-minus {
+.resources h5.add .glyphicon-minus, .requisites h5.add .glyphicon-minus, .requisites-card h5.add .glyphicon-minus {
 	display: block;
 }
 
-.resources h5.add .glyphicon-plus {
+.resources h5.add .glyphicon-plus, .requisites h5.add .glyphicon-plus, .requisites-card h5.add .glyphicon-plus {
 	display: none;
 }
 
-.resources .thumbnail {
+.resources .thumbnail, .requisites .thumbnail, .requisites-card .thumbnail {
 	position: relative;
 }
 
-.resources .thumbnail .glyphicon-remove {
+.resources .thumbnail .glyphicon-remove, .requisites .thumbnail .glyphicon-remove, .requisites-card .thumbnail .glyphicon-remove {
 	opacity: 0;
 	position: absolute;
 	right: 17px;
 	top: 17px;
 }
 
-.resources .thumbnail:hover .glyphicon-remove {
+.resources .thumbnail:hover .glyphicon-remove, .requisites .thumbnail:hover .glyphicon-remove, .requisites-card .thumbnail:hover .glyphicon-remove {
 	opacity: 1;
 }
 
-.resources div.thumbnail {
+.resources div.thumbnail, .requisites div.thumbnail, .requisites-card div.thumbnail {
 	display: none;
 	transition: none;
 }
 
-.resources .thumbnail form .caption > div {
+.resources .thumbnail form .caption > div, .requisites .thumbnail form .caption > div, .requisites-card .thumbnail form .caption > div {
 	margin-bottom: 18px;
 }
 
-.resources .thumbnail form .caption > div:last-child {
+.resources .thumbnail form .caption > div:last-child, .requisites .thumbnail form .caption > div:last-child, .requisites-card .thumbnail form .caption > div:last-child {
 	margin-bottom: 0;
 }
 
-.resources .thumbnail form .caption > div label {
+.resources .thumbnail form .caption > div label, .requisites .thumbnail form .caption > div label, .requisites-card .thumbnail form .caption > div label {
 	margin-bottom: 5px;
 }
 
@@ -392,7 +392,7 @@ a.small {
 	padding: 10px 0 0;
 }
 
-.company .col-md-4 .edit {
+.company .col-md-4 .edit, .requisites .col-md-4 .edit, .requisites-card .col-md-4 .edit {
 	bottom: 25px;
 	right: 34px;
 	font-size: 0.85em;
@@ -400,13 +400,14 @@ a.small {
 	position: absolute;
 }
 
-.company .col-md-4:hover .edit {
+.company .col-md-4:hover .edit, .requisites .col-md-4:hover .edit, .requisites-card .col-md-4:hover .edit {
 	opacity: 1;
 }
 
-.company .col-md-4 .edit i {
+.company .col-md-4 .edit i, .requisites .col-md-4 .edit i, .requisites-card .col-md-4 .edit i {
 	margin-right: 0;
 }
+
 
 .loading {
 	background: url('../img/loading_small.gif');

@@ -59,6 +59,13 @@ class Project extends Entity
      */
     protected $privateNotesCollection;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Requisite", mappedBy="project", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     *
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $requisitesCollection;
+
     public function __construct()
     {
         $this->setCreated(date('Y-m-d H:i:s'));
@@ -143,4 +150,21 @@ class Project extends Entity
     {
         return $this->quoteCollection = $quoteCollection;
     }
+
+    /**
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getRequisitesCollection()
+    {
+        return $this->requisitesCollection;
+    }
+
+    /**
+     * @param Doctrine\Common\Collections\Collection $requisiteCollection
+     */
+    public function setRequisitesCollection($requisitesCollection)
+    {
+        $this->requisitesCollection = $requisitesCollection;
+    }
+
 }

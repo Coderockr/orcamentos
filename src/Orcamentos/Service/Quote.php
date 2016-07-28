@@ -2,6 +2,7 @@
 
 namespace Orcamentos\Service;
 
+use Orcamentos\Model\RequisiteQuote;
 use Orcamentos\Model\Resource as ResourceModel;
 use Orcamentos\Model\Quote as QuoteModel;
 use Orcamentos\Model\ResourceQuote as ResourceQuoteModel;
@@ -26,6 +27,8 @@ class Quote extends Service
     public function save($data)
     {
         $data = json_decode($data);
+        //var_dump($data->requisites);
+        //var_dump($data->quoteResource);
 
         if (!isset($data->projectId) || !isset($data->version) || !isset($data->taxes) || !isset($data->privateNotes)) {
             throw new Exception("Invalid Parameters", 1);
@@ -56,6 +59,7 @@ class Quote extends Service
         $this->em->persist($quote);
 
         $this->addResourceQuotes($data->quoteResource, $quote);
+        $this->addRequisiteQuotes($data->requisites, $quote);
 
         try {
             $this->em->flush();
@@ -117,6 +121,27 @@ class Quote extends Service
                 $this->em->persist($quoteResource);
 
                 $quoteResourceCollection->add($quoteResource);
+            }
+        }
+    }
+
+    public function addRequisiteQuotes($requisiteQuotes, $quote)
+    {
+        $quoteRequisiteCollection = $quote->getRequisiteQuoteCollection();
+
+        if (!$quoteRequisiteCollection) {
+            $quoteRequisiteCollection = new ArrayCollection();
+        }
+
+        $quoteRequisiteCollection->clear();
+
+        if (isset($requisiteQuotes)){
+            foreach ($requisiteQuotes as $id){
+                $requisite = $this->em->getRepository("Orcamentos\Model\Requisite")->find($id);
+                $requisiteQuote = new RequisiteQuote();
+                $requisiteQuote->setQuote($quote);
+                $requisiteQuote->setRequisite($requisite);
+                $this->em->persist($requisiteQuote);
             }
         }
     }

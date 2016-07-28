@@ -3,6 +3,7 @@
 namespace Orcamentos\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -99,7 +100,19 @@ class Quote extends Entity
      * @var Doctrine\Common\Collections\Collection
      */
     protected $shareCollection;
-    
+
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RequisiteQuote", mappedBy="quote", cascade={"all"}, orphanRemoval=true, fetch="LAZY")
+     */
+    protected $requisiteQuoteCollection;
+
+
+    /**
+     * Quote constructor.
+     */
     public function __construct()
     {
         $this->setCreated(date('Y-m-d H:i:s'));
@@ -248,5 +261,25 @@ class Quote extends Entity
         }
 
     }
+
+    /**
+     * @return ArrayCollection|\Doctrine\Common\Collections\Collection
+     */
+    public function getRequisiteQuoteCollection()
+    {
+        return $this->requisiteQuoteCollection;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\Collection $requisiteQuoteCollection
+     */
+    public function setRequisiteQuoteCollection($requisiteQuoteCollection)
+    {
+        $this->requisiteQuoteCollection = $requisiteQuoteCollection;
+    }
+
+
+
+
 
 }

@@ -69,6 +69,7 @@ $(document).ready(function () {
 	});
 
 	$(document).on('submit', ".company .resources .form", function () {
+
 		var dados = $(this).serialize();
 		var form = this;
 		$.ajax({
@@ -79,7 +80,10 @@ $(document).ready(function () {
 			success: function (data) {
 
 				column = $(form).parent().parent().attr('id');
+				console.log($(form).parent().parent());
+				console.log(column);
 				n = parseInt(columns.indexOf(column));
+				console.log(n);
 				var row = 0;
 
 				if (window.resources[n]) {
