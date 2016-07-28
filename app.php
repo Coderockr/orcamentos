@@ -92,6 +92,7 @@ $app->mount('/quote', new Orcamentos\Controller\QuoteController);
 $app->mount('/resource', new Orcamentos\Controller\ResourceController);
 $app->mount('/share', new Orcamentos\Controller\ShareController);
 $app->mount('/user', new Orcamentos\Controller\UserController);
+$app->mount('/requisite', new Orcamentos\Controller\RequisiteController);
 
 //getting the EntityManager
 $app->register(new DoctrineServiceProvider, array(
