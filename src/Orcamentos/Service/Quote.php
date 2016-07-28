@@ -27,8 +27,6 @@ class Quote extends Service
     public function save($data)
     {
         $data = json_decode($data);
-        //var_dump($data->requisites);
-        //var_dump($data->quoteResource);
 
         if (!isset($data->projectId) || !isset($data->version) || !isset($data->taxes) || !isset($data->privateNotes)) {
             throw new Exception("Invalid Parameters", 1);

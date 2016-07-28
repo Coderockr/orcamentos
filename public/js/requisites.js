@@ -94,19 +94,6 @@ $(document).ready(function () {
                         )
                     );
 
-                    /*
-                     template = thumbnail.append(
-                     caption.append(
-                     $('<h4>').append(data.name),
-                     $('<p>').append("Qtd " + expectedAmount)
-                     ),
-                     edit,
-                     anchor
-                     );
-                     */
-
-                    //$(form).parent().parent().append(template);
-
                     $('.requisites-card').prepend(template);
 
                 }
