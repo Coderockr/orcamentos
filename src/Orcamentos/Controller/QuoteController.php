@@ -253,10 +253,12 @@ class QuoteController extends BaseController
     {
         $data = $request->request->all();
         $data['companyId'] = $app['session']->get('companyId');
-                $data = json_encode($data);
+        $data = json_encode($data);
+
         $quoteService = new QuoteService();
         $quoteService->setEm($app['orm.em']);
         $quote = $quoteService->save($data);
+        
         return $app->redirect('/quote/detail/' . $quote->getId());
     }
 
