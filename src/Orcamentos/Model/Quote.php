@@ -174,6 +174,10 @@ class Quote extends Entity
     
     public function setProfit($profit)
     {
+        if (empty($profit)) {
+            $profit = 0.0;    
+        }
+
         return $this->profit = $profit;
     }   
 
@@ -184,6 +188,10 @@ class Quote extends Entity
     
     public function setCommission($commission)
     {
+        if (empty($commission)) {
+            $commission = 0.0;    
+        }
+        
         return $this->commission = $commission;
     }   
 
@@ -277,9 +285,4 @@ class Quote extends Entity
     {
         $this->requisiteQuoteCollection = $requisiteQuoteCollection;
     }
-
-
-
-
-
 }

@@ -4,3 +4,4 @@ config/config.php
 nbproject
 .idea
 .azk/
+composer.phar
