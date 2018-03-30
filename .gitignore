@@ -5,3 +5,5 @@ nbproject
 .idea
 .azk/
 composer.phar
+public/img/logotypes/*
+!public/img/logotypes/.gitkeep
