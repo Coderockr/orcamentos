@@ -3,6 +3,7 @@
     "description": "Silex sample",
     "require": {
         "php": ">=5.3.3",
+        "ext-intl": "*",
         "silex/silex": "1.0.*",
         "symfony/http-kernel": "*",
         "symfony/browser-kit": "*",
