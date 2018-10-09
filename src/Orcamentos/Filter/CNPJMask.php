@@ -10,11 +10,11 @@ class CNPJMask
 {
     /**
      * @param $cnpj
-     * @return int
+     * @return string
      */
     public function removeMask($cnpj)
     {
-        return (int)preg_replace("/\D/", '', $cnpj);
+        return (string)preg_replace("/\D/", '', $cnpj);
     }
 
     /**
@@ -24,7 +24,7 @@ class CNPJMask
     public function applyMask($cnpj)
     {
         // asserting that only digits will be present
-        $cnpj = (string)$this->removeMask($cnpj);
+        $cnpj = $this->removeMask($cnpj);
 
         // applying 14 digits
         $cnpj = str_pad($cnpj, 14, '0', STR_PAD_LEFT);
