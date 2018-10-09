@@ -3,13 +3,12 @@
 namespace Orcamentos\Service;
 
 use Orcamentos\Filter\CNPJMask;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class CNPJMaskTest
  * @package Orcamentos\Service
  */
-class CNPJMaskTest extends TestCase
+class CNPJMaskTest extends \PHPUnit\Framework\TestCase
 {
     public function dataForAddMask()
     {
@@ -56,7 +55,7 @@ class CNPJMaskTest extends TestCase
     }
 
     /**
-     * @dataProvider dataForRemoveMask
+     * @dataProvider dataForAddMask
      */
     public function testApplyMask($expected, $actual)
     {
