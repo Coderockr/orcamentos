@@ -3,6 +3,7 @@ namespace Orcamentos\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
+use Orcamentos\Filter\CNPJMask;
 
 /**
  * @ORM\Entity
@@ -91,11 +92,15 @@ class Client extends Entity
     
     public function getCnpj()
     {
-        return $this->cnpj;
+        $cnpjMask = new CNPJMask();
+        return $cnpjMask->applyMask($this->cnpj);
     }
     
     public function setCnpj($cnpj)
     {
+        $cnpjMask = new CNPJMask();
+        $cnpj = $cnpjMask->removeMask($cnpj);
+
         return $this->cnpj = $cnpj;
     }
 
