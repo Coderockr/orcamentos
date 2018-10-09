@@ -14,7 +14,7 @@
     <!-- Indicando qual é o diretório onde as classes de teste se encontram -->
     <testsuites>
         <testsuite name="Orçamentos Coderockr">
-            <directory suffix=".php">src/</directory>
+            <directory suffix=".php">tests/</directory>
         </testsuite>
     </testsuites>
  

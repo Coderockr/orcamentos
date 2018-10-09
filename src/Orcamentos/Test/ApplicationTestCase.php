@@ -3,9 +3,9 @@
 namespace Orcamentos\Test;
 
 use Mockery as m;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ApplicationTestCase extends PHPUnit_Framework_TestCase
+class ApplicationTestCase extends TestCase
 {
     protected $repositoryMock;
     protected $emMock;
